@@ -1,0 +1,19 @@
+<% if @users&.any? %>
+  <div class="space-y-2">
+    <% @users.each do |user| %>
+      <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow">
+        <div>
+          <p class="font-medium"><%= user.name %></p>
+          <p class="text-gray-600"><%= user.email %></p>
+        </div>
+        <%= button_to add_member_club_path(@club, user_id: user.id),
+                      method: :post,
+                      class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" do %>
+          Add Member
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% elsif @query.present? %>
+  <p class="text-gray-600">No users found matching "<%= @query %>"</p>
+<% end %> 
