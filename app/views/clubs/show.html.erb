@@ -1,0 +1,30 @@
+<div class="max-w-4xl mx-auto">
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <h1 class="text-3xl font-bold mb-2"><%= @club.name %></h1>
+        <p class="text-gray-600"><%= @club.description %></p>
+      </div>
+      <div class="space-x-2">
+        <%= link_to 'Edit', edit_club_path(@club), class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" %>
+        <%= button_to 'Delete', club_path(@club), method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded", data: { confirm: 'Are you sure?' } %>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <h2 class="text-xl font-semibold mb-4">Members</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <% @club.users.each do |user| %>
+          <div class="bg-gray-50 rounded p-4">
+            <p class="font-medium"><%= user.name %></p>
+            <p class="text-sm text-gray-600"><%= user.email %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <%= link_to 'Back to Clubs', clubs_path, class: "text-blue-500 hover:text-blue-700" %>
+    </div>
+  </div>
+</div> 
