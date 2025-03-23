@@ -30,7 +30,7 @@
 
   <body class="min-h-screen bg-cover bg-center bg-no-repeat flex bg-[#fafafa]">
     <!-- Sidebar Navigation -->
-    <div class="w-64 min-h-screen bg-white shadow-lg text-gray-700 p-4">
+    <div class="w-[300px] min-h-screen bg-white shadow-lg text-gray-700 p-4">
       <!-- Logo Area -->
       <div class="mb-8 flex justify-center items-center">
 
@@ -44,7 +44,7 @@
           <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
             <i class="fas fa-calendar text-gray-500"></i>
           </div>
-          <span class="text-gray-700 flex-1">Event</span>
+          <span class="text-gray-700 flex-1 flex items-start justify-start">Event</span>
         </button>
 
         <div class="relative">
@@ -52,7 +52,7 @@
             <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
               <i class="fas fa-users text-gray-500"></i>
             </div>
-            <span class="text-gray-700 flex-1">User Management</span>
+            <span class="text-gray-700 flex-1 flex items-start justify-start">User Management</span>
             <i class="fas fa-chevron-down text-gray-500 transform transition-transform duration-300" id="userManagementIcon"></i>
           </button>
           
@@ -61,20 +61,15 @@
               <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
                 <i class="fas fa-user text-gray-500"></i>
               </div>
-              <span class="text-gray-700 flex-1">Users</span>
+              <span class="text-gray-700 flex-1 flex items-start justify-start">Users</span>
             </button>
             <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item" onclick="setActiveSubNav(this, event)">
               <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
                 <i class="fas fa-user-tag text-gray-500"></i>
               </div>
-              <span class="text-gray-700 flex-1">Roles</span>
+              <span class="text-gray-700 flex-1 flex items-start justify-start">Permissions</span>
             </button>
-            <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item" onclick="setActiveSubNav(this, event)">
-              <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
-                <i class="fas fa-lock text-gray-500"></i>
-              </div>
-              <span class="text-gray-700 flex-1">Permissions</span>
-            </button>
+
           </div>
         </div>
       </nav>
