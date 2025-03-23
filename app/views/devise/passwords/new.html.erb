@@ -1,16 +1,199 @@
-<h2>Forgot your password?</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+
+<style>
+  .auth-section {
+    background-image: url('<%= asset_path('auth-selise-bg.svg') %>');
+    overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100vh;
+  height: 100vh;
+  background-repeat: no-repeat; 
+  background-position: bottom left; 
+  background-size: cover;
+  }
+
+  .auth-section {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100vh;
+    height: 100vh;
+  }
+  
+  .auth-section .sf-auth-logo {
+    max-height: 70px;
+    width: auto;
+  }
+  
+  .auth-section .auth-container {
+    min-height: calc(100vh - 138px);
+  }
+  
+  .auth-section .auth-container .auth-wrapper {
+    color: #444;
+    width: 360px;
+  }
+  
+  .auth-title {
+    color: #444;
+    font-weight: 300;
+  }
+  
+  
+  
+  .body-text {
+    letter-spacing: 0.6px;
+    line-height: 24px;
+    font-weight: 300;
+  }
+  
+  .auth-section .auth-footer .footer-logo-size {
+    max-width: 90px;
+    height: auto;
+  }  
+
+
+  @keyframes ani {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 400% 0;
+  }
+}
+
+.header-note {
+  height: 75vh;
+}
+
+.header-note--shadow {
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.loader-container {
+  min-height: 300px;
+}
+
+.auth-container {
+  z-index: 3;
+}
+
+.auth-wrapper {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 3px 3px 10px 0 rgba(0, 123, 255, 0.16); 
+}
+
+.auth-wrapper::before {
+  position: absolute;
+  right: -17.625rem;
+  bottom: 3.375rem;
+  width: 29.375rem;
+  height: 100%;
+  transform: rotate(145deg);
+  border-radius: 1.875rem;
+  background-color: rgba(0, 123, 255, 0.16); 
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.042);
+  content: '';
+  z-index: 1;
+}
+
+.auth-logo {
+  height: 74px;
+}
+
+.aside-container {
+  height: 100dvh;
+  width: 400px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  # z-index: 1;
+  background-color: white;
+}
+
+.gray-border {
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid #E0E0E0;
+}
+
+.mt-100 {
+  margin-top: 100px;
+}
+
+.auth-content {
+  position: relative;
+  z-index: 10;
+}
+
+.text-alto-gray {
+  color: #E0E0E0;
+}
+
+
+</style>
+<section class="auth-section">
+    <div class="flex-wrap flex-center" >
+      <div
+        class="auth-container w-[84%] flex justify-between items-center"
+      >
+        <div
+          class="header-note flex w-[36%] justify-end "
+        >
+          <div
+            class="text-[44px] m-0 p-[20px] header-note--shadow text-alto-gray font-bold mt-[40px]" >
+            <p class="mb-0 mt-100">WELCOME TO</p>
+            <p class="mt-4">CST Club House</p>
+          </div>
+        </div>
+        <div
+          class="auth-wrapper bg-white rounded-[24px] p-[32px] mr-[16px] mt-[24px] "
+        >
+          <div class="flex-center z-[3] relative">
+          <img src="<%= asset_path('cst-logo.png') %>" alt="logo">
+          </div>
+          <div class="auth-content">
+          <h3 class="auth-title text-center my-[12px]">
+            Reset your account password
+          </h3>
+            
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+         <div class="mb-4">
+              <%= f.label :email, class: "form-label" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", 
+                  class: "form-input",
+                  placeholder: "Email*" %>
+                  <%= render "devise/shared/error_messages", resource: resource %>
+            </div>
+
+            <button class="actions mb-6 w-full">
+            <%= f.submit "Send me reset password instructions",
+                class: "btn-primary" %>
+            </button>
+ 
+      <% end %>
+            
+      <div class="flex justify-end mb-4">
+<%= render "devise/shared/links" %>    </div>
+          </div>
+        </div>
+      </div>
+  
+
+      <div class="auth-footer w-full flex justify-center items-center ">
+       <div class="w-[76%] relative left-[-40px]">
+        <div  class="flex justify-start items-center w-[80%]">
+          <div class="mb-[8px]">
+            <img src="<%= asset_path('selise-logo.svg') %>" class="footer-logo-size" alt="logo">
+         </div>
+        </div>
+        <div class="gray-border"></div>
+         <p class="text-white text-sm mt-2">© 2025 SELISE CPQ. All rights reserved.</p>
+      </div>
+    </div>
+    </section>
+  
+  <div class="aside-container">
+  
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
