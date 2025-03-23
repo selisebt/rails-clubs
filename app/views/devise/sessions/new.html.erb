@@ -128,6 +128,15 @@
   color: #E0E0E0;
 }
 
+.logo-3d {
+  transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+  transition: transform 0.3s ease;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.auth-wrapper:hover .logo-3d {
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
 
 </style>
 <section class="auth-section">
@@ -147,8 +156,8 @@
         <div
           class="auth-wrapper bg-white rounded-[24px] p-[32px] mr-[16px] mt-[24px] "
         >
-          <div class="flex-center z-[3] relative">
-          <img src="<%= asset_path('cst-logo.png') %>" alt="logo">
+          <div class="flex justify-center items-center z-[3] relative">
+          <img src="<%= asset_path('cst-logo.png') %>" alt="logo" class="logo-3d rounded-full w-[150px] h-[150px] overflow-hidden">
           </div>
           <div class="auth-content">
           <h3 class="auth-title text-center my-[12px]">
