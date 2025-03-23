@@ -205,3 +205,202 @@
     transform: translateX(-50%) translateY(-100%);
   }
 }
+
+.table-header {
+  padding-left: 1.5rem; /* px-6 */
+  padding-right: 1.5rem; /* px-6 */
+  padding-top: 0.75rem; /* py-3 */
+  padding-bottom: 0.75rem; /* py-3 */
+  text-align: left; /* text-left */
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 500; /* font-medium */
+  color: #6b7280; /* text-gray-500 */
+  text-transform: uppercase; /* uppercase */
+  letter-spacing: 0.05em; /* tracking-wider */
+  background-color: #f9fafb; /* bg-gray-50 */
+}
+
+.table-container {
+  height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+
+.row-checked {
+  background-color: rgba(59, 130, 246, 0.1); /* Light blue background when checked */
+}
+
+/* Add these new styles for sticky header */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f8fafc; /* Light gray background for better distinction */
+}
+
+/* Update the header cells background to match */
+thead th {
+  background-color: #f8fafc !important; /* Override the existing bg-gray-50 class */
+}
+
+/* Add shadow to header when scrolling */
+.sticky-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #374151;
+  transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.dropdown-item:first-child {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.dropdown-item:last-child {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+/* Add modal styles */
+#inviteModal,
+#csvModal {
+  z-index: 100;
+}
+
+/* Optional: Add a fade-in animation */
+#inviteModal:not(.hidden) {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Optional: If you want to ensure the modal content is above the overlay */
+.modal-content {
+  z-index: 101;
+  position: relative;
+}
+
+/* Add styles for profile pictures */
+.profile-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+  background-color: #E5E7EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9CA3AF;
+}
+
+/* Add styles for profile upload */
+.profile-upload {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  border: 2px dashed #E5E7EB;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-upload:hover {
+  border-color: #60A5FA;
+}
+
+.profile-preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Modal styles */
+.modal-content {
+  z-index: 101;
+  position: relative;
+}
+
+.profile-upload {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  border: 2px dashed #E5E7EB;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-upload:hover {
+  border-color: #60A5FA;
+}
+
+.profile-preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Animation for modals */
+.modal-fade-in {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

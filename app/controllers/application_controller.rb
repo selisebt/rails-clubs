@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   include ErrorHandler
+  include Pagy::Backend
+  helper Pagy::Frontend
 
   before_action :authenticate_user!
 end
