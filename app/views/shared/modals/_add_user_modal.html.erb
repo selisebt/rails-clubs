@@ -1,10 +1,10 @@
-<div id="customerModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-[100]">
-  <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md mx-4" onclick="event.stopPropagation();">
+<div data-users-index-target="addUserModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-[100]">
+  <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md mx-4" data-action="users-index#stopPropagation">
     <!-- Modal Header -->
     <div class="px-6 py-4 border-b border-gray-200">
       <div class="flex items-center justify-between">
         <h3 class="text-lg font-semibold text-gray-900">Add New User</h3>
-        <button type="button" onclick="closeCustomerModal()" class="text-gray-400 hover:text-gray-500">
+        <button type="button" data-action="users-index#closeAddUserModal" class="text-gray-400 hover:text-gray-500">
           <i class="fas fa-times"></i>
         </button>
       </div>
@@ -15,8 +15,8 @@
       <form id="addCustomerForm" class="space-y-4">
         <div>
           <label for="customerEmail" class="form-label">Email Address</label>
-          <input type="email" 
-                 id="customerEmail" 
+          <input type="email"
+                 data-users-index-target="addUserEmail"
                  name="customerEmail" 
                  class="form-input"
                  placeholder="Enter email address">
@@ -25,8 +25,8 @@
 
         <div>
           <label for="customerName" class="form-label">Name</label>
-          <input type="text" 
-                 id="customerName" 
+          <input type="text"
+                 data-users-index-target="addUserName"
                  name="customerName" 
                  class="form-input"
                  placeholder="Enter name">
@@ -34,8 +34,8 @@
         
         <div>
           <label for="customerRole" class="form-label">Role</label>
-          <select id="customerRole" 
-                  name="customerRole" 
+          <select data-users-index-target="addUserRole"
+                  name="customerRole"
                   class="form-input">
             <option value="">Select role</option>
             <option value="Admin">Admin</option>
@@ -48,92 +48,26 @@
     
     <!-- Modal Footer -->
     <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end space-x-3">
-      <button type="button" 
-              onclick="closeCustomerModal()" 
+      <button type="button"
+              data-action="users-index#closeAddUserModal"
               class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
         Cancel
       </button>
-      <button type="button" 
-              onclick="submitCustomer()" 
+      <button type="button"
+              data-action="users-index#submitAddUser"
               class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
-        Add Customer
+        Add User
       </button>
     </div>
   </div>
 </div>
 
-<script>
-  // Make sure these functions are available globally
-  if (typeof window.openCustomerModal !== 'function') {
-    window.openCustomerModal = function() {
-      console.log('Opening customer modal');
-      const modal = document.getElementById('customerModal');
-      if (modal) {
-        modal.classList.remove('hidden');
-        document.getElementById('inviteDropdown')?.classList.remove('show');
-      } else {
-        console.error('Customer modal element not found');
-      }
-    };
-  }
-
-  if (typeof window.closeCustomerModal !== 'function') {
-    window.closeCustomerModal = function() {
-      console.log('Closing customer modal');
-      const modal = document.getElementById('customerModal');
-      if (modal) {
-        modal.classList.add('hidden');
-      }
-    };
-  }
-
-  if (typeof window.submitCustomer !== 'function') {
-    window.submitCustomer = function() {
-      const form = document.getElementById('addCustomerForm');
-      const email = document.getElementById('customerEmail').value;
-      const name = document.getElementById('customerName').value;
-      const role = document.getElementById('customerRole').value;
-
-      if (!email || !name || !role) {
-        alert('Please fill in all fields');
-        return;
-      }
-
-      // Add your form submission logic here
-      console.log('Submitting:', { email, name, role });
-      alert('Customer added successfully!');
-      closeCustomerModal();
-    };
-  }
-
-  // Add event listener for clicking outside modal
-  document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('customerModal');
-    if (modal) {
-      modal.addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeCustomerModal();
-        }
-      });
-    }
-
-    // Add click handler for the Add Customer button
-    const addUserBtn = document.getElementById('addUserBtn');
-    if (addUserBtn) {
-        addUserBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        openCustomerModal();
-      });
-    }
-  });
-</script>
-
 <style>
-  #customerModal {
+  [data-users-index-target="addUserModal"] {
     z-index: 100;
   }
 
-  #customerModal:not(.hidden) {
+  [data-users-index-target="addUserModal"]:not(.hidden) {
     animation: fadeIn 0.2s ease-in-out;
   }
 

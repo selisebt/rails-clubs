@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     invitations: "users/invitations"
   }
 
+  resource :account_settings, only: [:show, :update]
+
   resources :users
   resources :clubs do
     member do
