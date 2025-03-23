@@ -1,7 +1,8 @@
 class ClubsController < ApplicationController
-  before_action :set_club, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_club, only: %i[show edit update destroy search_members add_member]
 
   def index
+    @clubs = current_user.clubs
     respond_to do |format|
       format.html
       format.json { render json: @clubs, include: :users }
@@ -23,10 +24,15 @@ class ClubsController < ApplicationController
   end
 
   def create
+    raise StandardError, "You are not authorized to create a club" unless [ "admin" ].include?(current_user.role.name)
     @club = Club.new(club_params)
-    
+
     respond_to do |format|
       if @club.save
+        Membership.create!(
+          club_id: @club.reload.id,
+          user_id: current_user.id
+        )
         format.html { redirect_to @club, notice: "Club was successfully created." }
         format.json { render json: @club, status: :created, include: :users }
       else
@@ -56,14 +62,28 @@ class ClubsController < ApplicationController
     end
   end
 
+  def search_members
+    @query = params[:query]
+    @users = User.where.not(id: @club.users.pluck(:id))
+                .where("email LIKE ? OR name LIKE ?", "%#{@query}%", "%#{@query}%")
+                .limit(10)
+    respond_to do |format|
+      format.html { render partial: "search_results" }
+    end
+  end
+
+  def add_member
+    user = User.find(params[:user_id])
+    @club.memberships.create!(user: user)
+    respond_to do |format|
+      format.html { redirect_to @club, notice: "Member was successfully added." }
+    end
+  end
+
   private
 
   def set_club
     @club = Club.find(params[:id])
-  end
-
-  def set_clubs
-    @clubs = Club.all
   end
 
   def club_params
