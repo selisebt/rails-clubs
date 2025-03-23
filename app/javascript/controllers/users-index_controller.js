@@ -19,12 +19,14 @@ export default class extends Controller {
     "editName",
     "editEmail",
     "editRole",
+    "editUserId",
     "deleteUserName",
     "addUserModal",
     "addUserEmail",
     "addUserName",
     "addUserRole",
-    "inviteEmail"
+    "inviteEmail",
+    "fileError"
   ]
 
   connect() {
@@ -75,8 +77,9 @@ export default class extends Controller {
         if (file && file.name.endsWith('.csv')) {
           this.fileInputTarget.files = e.dataTransfer.files
           this.showFileInfo(file)
+          this.fileErrorTarget.classList.add('hidden')
         } else {
-          alert('Please upload a CSV file')
+          this.fileErrorTarget.classList.remove('hidden')
         }
       })
     }
@@ -120,14 +123,13 @@ export default class extends Controller {
     if (this.hasFileInfoTarget) this.fileInfoTarget.classList.add('hidden')
   }
 
-  submitCsvUpload() {
+  submitCsvUpload(event) {
     if (!this.fileInputTarget.files[0]) {
-      alert('Please select a CSV file first')
-      return
+      event.preventDefault()
+      this.fileErrorTarget.classList.remove('hidden')
+    } else {
+      this.fileErrorTarget.classList.add('hidden')
     }
-    // Add your CSV upload logic here
-    alert('CSV uploaded successfully!')
-    this.closeCsvModal()
   }
 
   showFileInfo(file) {
@@ -143,20 +145,6 @@ export default class extends Controller {
 
   // Edit modal functions
   openEditModal(event) {
-    const button = event.currentTarget
-    const name = button.dataset.name
-    const email = button.dataset.email
-    const role = button.dataset.role
-    const avatarUrl = button.dataset.avatar
-
-    this.editNameTarget.value = name
-    this.editEmailTarget.value = email
-    this.editRoleTarget.value = role
-
-    if (avatarUrl) {
-      this.handleProfilePicturePreview(avatarUrl)
-    }
-
     this.editModalTarget.classList.remove('hidden')
   }
 
@@ -165,6 +153,7 @@ export default class extends Controller {
     if (this.hasEditNameTarget) this.editNameTarget.value = ''
     if (this.hasEditEmailTarget) this.editEmailTarget.value = ''
     if (this.hasEditRoleTarget) this.editRoleTarget.value = ''
+    if (this.hasEditUserIdTarget) this.editUserIdTarget.value = ''
     this.removeProfilePicture()
   }
 
@@ -226,8 +215,6 @@ export default class extends Controller {
   }
 
   submitAddUser() {
-    // Add your add user logic here
-    alert('User added successfully!')
     this.closeAddUserModal()
   }
 
@@ -244,6 +231,7 @@ export default class extends Controller {
   }
 
   triggerFileInput() {
+    this.fileErrorTarget.classList.add('hidden')
     this.fileInputTarget.click()
   }
 } 

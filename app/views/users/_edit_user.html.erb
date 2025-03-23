@@ -1,0 +1,53 @@
+<%= turbo_frame_tag 'edit_user' do %>
+  <%= form_with(model: user, id: "editUserForm", class: "space-y-6", data: { turbo_frame: 'all_users' }) do |f| %>
+    <!-- Modal Body -->
+    <div class="px-6 py-4">
+      <%= f.hidden_field :id, data: { users_index_target: "editUserId" } %>
+      <div class="space-y-6">
+        <!-- Profile Picture Section -->
+        <div class="flex flex-col items-center">
+          <input type="file" data-users-index-target="profilePicture" class="hidden" accept="image/*" data-action="users-index#handleProfilePicture">
+          <label for="profilePicture" class="cursor-pointer">
+            <div class="profile-upload flex items-center justify-center overflow-hidden">
+              <div data-users-index-target="profilePreview" class="profile-preview hidden"></div>
+              <div data-users-index-target="uploadPlaceholder" class="flex flex-col items-center">
+                <i class="fas fa-camera text-2xl text-gray-400 mb-2"></i>
+                <span class="text-sm text-gray-500">Upload Photo</span>
+              </div>
+            </div>
+          </label>
+          <button type="button" data-action="users-index#removeProfilePicture" class="mt-2 text-sm text-red-600 hover:text-red-800 hidden" data-users-index-target="removePhotoBtn">
+            Remove photo
+          </button>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="form-label">Full Name</label>
+            <%= f.text_field :name, data: { users_index_target: "editName" }, class: "form-input" %>
+          </div>
+
+          <div>
+            <label class="form-label">Email Address</label>
+            <%= f.email_field :email, data: { users_index_target: "editEmail" }, class: "form-input", disabled: true %>
+          </div>
+
+          <div>
+            <label class="form-label">Role</label>
+            <%= f.select :role, Role.all.map { |role| [ role.name.titleize, role.id ] }, {}, data: { users_index_target: "editRole" }, class: "form-input" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end space-x-3">
+      <button data-action="users-index#closeEditModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+        Cancel
+      </button>
+      <button class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+        Save Changes
+      </button>
+    </div>
+  <% end %>
+<% end %>

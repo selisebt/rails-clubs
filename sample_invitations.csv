@@ -1,4 +1,4 @@
-email,name
-kw2@selisegroup.com,Kinely Wangchuk
-kc@selisegroup.com,Khushant Chhetri
-tna@selisegroup.com,Tek Nath
+email,name,role_id
+kw13@selisegroup.com,Kinely Wangchuk,1
+kc1@selisegroup.com,Khushant Chhetri,2
+tna@selisegroup.com,Tek Nath,2
