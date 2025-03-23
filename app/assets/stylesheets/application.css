@@ -49,3 +49,159 @@
 .btn-primary:hover {
   background-color: #60a5fa; /* hover:bg-blue-400 */
 }
+
+.auth-section {
+  background-image: url('auth-selise-bg.svg');
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100vh;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: cover;
+}
+
+.auth-section {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100vh;
+  height: 100vh;
+}
+
+
+.auth-section .auth-container {
+  min-height: calc(100vh - 138px);
+}
+
+.auth-section .auth-container .auth-wrapper {
+  color: #444;
+  width: 360px;
+}
+
+.auth-title {
+  color: #444;
+  font-weight: 300;
+}
+
+
+.body-text {
+  letter-spacing: 0.6px;
+  line-height: 24px;
+  font-weight: 300;
+}
+
+.auth-section .auth-footer .footer-logo-size {
+  max-width: 90px;
+  height: auto;
+}
+
+
+@keyframes ani {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 400% 0;
+  }
+}
+
+.header-note {
+  height: 75vh;
+}
+
+.header-note--shadow {
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.loader-container {
+  min-height: 300px;
+}
+
+.auth-container {
+  z-index: 3;
+}
+
+.auth-wrapper {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 3px 3px 10px 0 rgba(0, 123, 255, 0.16);
+}
+
+.auth-wrapper::before {
+  position: absolute;
+  right: -17.625rem;
+  bottom: 3.375rem;
+  width: 29.375rem;
+  height: 100%;
+  transform: rotate(145deg);
+  border-radius: 1.875rem;
+  background-color: rgba(0, 123, 255, 0.16);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.042);
+  content: '';
+  z-index: 1;
+}
+
+.auth-logo {
+  height: 74px;
+}
+
+.aside-container {
+  height: 100dvh;
+  width: 400px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: white;
+}
+
+.gray-border {
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid #E0E0E0;
+}
+
+.mt-100 {
+  margin-top: 100px;
+}
+
+.auth-content {
+  position: relative;
+  z-index: 10;
+}
+
+.text-alto-gray {
+  color: #E0E0E0;
+}
+
+.logo-3d {
+  transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+  transition: transform 0.3s ease;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.auth-wrapper:hover .logo-3d {
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
+
+
+.flash-message {
+  animation: flashMessage 6s forwards;
+}
+@keyframes flashMessage {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+  8% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  92% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+}
