@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = user
     respond_to do |format|
       format.html
       format.json { render json: { user: user } }
@@ -15,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-
+    @user = user
   end
 
   def update

@@ -1,7 +1,7 @@
 class BulkInviteUsersJob < ApplicationJob
   queue_as :default
 
-  def perform(csv_data)
+  def perform(csv_data, inviter_id)
     require "csv"
 
     CSV.parse(csv_data, headers: true) do |row|
@@ -12,7 +12,7 @@ class BulkInviteUsersJob < ApplicationJob
 
       User.invite!(
         { email: email, name: name },
-        current_user
+        User.find(inviter_id)
       )
     end
   end
