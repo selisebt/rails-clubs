@@ -6,6 +6,7 @@ export default class extends Controller {
   connect() {
     this.clubForm = document.getElementById("delete-club-form")
     this.announcementForm = document.getElementById("delete-announcement-form")
+    this.eventForm = document.getElementById("delete-event-form")
     this.closeOnEscape = this.closeOnEscape.bind(this)
     document.addEventListener("keydown", this.closeOnEscape)
   }
@@ -17,11 +18,15 @@ export default class extends Controller {
   open(event) {
     const clubId = event.currentTarget.dataset.clubId
     const announcementId = event.currentTarget.dataset.announcementId
+    const eventId = event.currentTarget.dataset.eventId
 
     if (clubId && this.clubForm) {
       this.clubForm.action = `/clubs/${clubId}`
     } else if (announcementId && this.announcementForm) {
       this.announcementForm.action = `/announcements/${announcementId}`
+    } else if (eventId && this.eventForm) {
+      const clubId = window.location.pathname.split('/')[2] // Get club_id from URL
+      this.eventForm.action = `/clubs/${clubId}/events/${eventId}`
     }
 
     this.modalTarget.classList.remove("hidden")
