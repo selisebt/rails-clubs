@@ -1,8 +1,11 @@
-<div class="w-full mx-auto px-4 sm:px-6 lg:px-8" data-controller="modal">
+<div class="w-full mx-auto px-[24px]" data-controller="modal">
   <div id="flash" class="mb-4"></div>
 
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
+  <div class="bg-white rounded-lg shadow-sm p-6 my-[16px] flex items-center">
+    <div class="icon-style">
+      <i class="fas fa-calendar text-white"></i>
+    </div>
+    <div class="flex-1 mx-[12px]">
       <h1 class="text-2xl font-semibold text-gray-900">Events for <%= @club.name %></h1>
       <p class="mt-2 text-sm text-gray-700">A list of all events in your club.</p>
     </div>
@@ -16,7 +19,7 @@
     </div>
   </div>
 
-  <div class="bg-white rounded-lg shadow table-container overflow-y-auto mt-[16px]">
+  <div class="bg-white rounded-lg shadow table-container h-[calc(100vh-170px)] overflow-y-auto mt-[24px]">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-white sticky-header">
         <tr> 
