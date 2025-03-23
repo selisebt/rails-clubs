@@ -1,5 +1,15 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+
 require 'spec_helper'
+require 'factory_bot_rails'
+require 'simplecov'
+require 'database_cleaner'
+
+# For test coverage report
+SimpleCov.start :rails do
+  # add_filter 'app/mailers/application_mailer.rb'
+end
+
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
@@ -22,8 +32,8 @@ require 'rspec/rails'
 # of increasing the boot-up time by auto-requiring all files in the support
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
-#
-# Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
+
+Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -32,6 +42,7 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
@@ -61,10 +72,26 @@ RSpec.configure do |config|
   # behaviour is considered legacy and will be removed in a future version.
   #
   # To enable this behaviour uncomment the line below.
-  # config.infer_spec_type_from_file_location!
+  config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+
+    # Load Seeds when required
+    # load(Rails.root.join('db/seeds/release01/00_tenant.rb'))
+  end
+
+  config.before do
+    DatabaseCleaner.start
+  end
+
+  config.after do
+    DatabaseCleaner.clean
+  end
 end
