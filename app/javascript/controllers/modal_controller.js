@@ -4,7 +4,8 @@ export default class extends Controller {
   static targets = ["modal", "overlay"]
 
   connect() {
-    this.form = document.getElementById("delete-club-form")
+    this.clubForm = document.getElementById("delete-club-form")
+    this.announcementForm = document.getElementById("delete-announcement-form")
     this.closeOnEscape = this.closeOnEscape.bind(this)
     document.addEventListener("keydown", this.closeOnEscape)
   }
@@ -15,7 +16,14 @@ export default class extends Controller {
 
   open(event) {
     const clubId = event.currentTarget.dataset.clubId
-    this.form.action = `/clubs/${clubId}`
+    const announcementId = event.currentTarget.dataset.announcementId
+
+    if (clubId && this.clubForm) {
+      this.clubForm.action = `/clubs/${clubId}`
+    } else if (announcementId && this.announcementForm) {
+      this.announcementForm.action = `/announcements/${announcementId}`
+    }
+
     this.modalTarget.classList.remove("hidden")
     this.overlayTarget.classList.remove("hidden")
     document.body.style.overflow = "hidden"
