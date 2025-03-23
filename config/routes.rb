@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     member do
       get :search_members
       post :add_member
+      delete :delete_member
     end
   end
 

@@ -74,9 +74,22 @@ class ClubsController < ApplicationController
 
   def add_member
     user = User.find(params[:user_id])
-    @club.memberships.create!(user: user)
-    respond_to do |format|
-      format.html { redirect_to @club, notice: "Member was successfully added." }
+
+    if @club.memberships.create(user: user)
+      redirect_to @club, notice: "Member added successfully."
+    else
+      redirect_to @club, alert: "Failed to add member."
+    end
+  end
+
+  def delete_member
+    @club = Club.find(params[:id])
+    membership = @club.memberships.find_by(user_id: params[:user_id])
+
+    if membership&.destroy
+      redirect_to @club, notice: "Member removed successfully."
+    else
+      redirect_to @club, alert: "Failed to remove member."
     end
   end
 
