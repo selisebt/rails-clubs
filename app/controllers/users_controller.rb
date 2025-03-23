@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-
+    @user = user
   end
 
   def update
