@@ -47,84 +47,51 @@
       </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
-      <% dummy_users = [
-        { name: "Amad uddin usama", email: "amad@example.com", role: "Admin" },
-        { name: "Sarah Johnson", email: "sarah.j@example.com", role: "User" },
-        { name: "Michael Chen", email: "michael.c@example.com", role: "Editor" },
-        { name: "Emily Davis", email: "emily.d@example.com", role: "User" },
-        { name: "James Wilson", email: "james.w@example.com", role: "Admin" },
-        { name: "Lisa Anderson", email: "lisa.a@example.com", role: "Editor" },
-        { name: "David Taylor", email: "david.t@example.com", role: "User" },
-        { name: "Emma Brown", email: "emma.b@example.com", role: "User" },
-        { name: "Robert Martin", email: "robert.m@example.com", role: "Editor" },
-        { name: "Emily Davis", email: "emily.d@example.com", role: "User" },
-        { name: "James Wilson", email: "james.w@example.com", role: "Admin" },
-        { name: "Lisa Anderson", email: "lisa.a@example.com", role: "Editor" },
-        { name: "David Taylor", email: "david.t@example.com", role: "User" },
-        { name: "Emma Brown", email: "emma.b@example.com", role: "User" },
-        { name: "Robert Martin", email: "robert.m@example.com", role: "Editor" },
-        { name: "Emily Davis", email: "emily.d@example.com", role: "User" },
-        { name: "James Wilson", email: "james.w@example.com", role: "Admin" },
-        { name: "Lisa Anderson", email: "lisa.a@example.com", role: "Editor" },
-        { name: "David Taylor", email: "david.t@example.com", role: "User" },
-        { name: "Emma Brown", email: "emma.b@example.com", role: "User" },
-        { name: "Robert Martin", email: "robert.m@example.com", role: "Editor" },
-        { name: "Emily Davis", email: "emily.d@example.com", role: "User" },
-        { name: "James Wilson", email: "james.w@example.com", role: "Admin" },
-        { name: "Lisa Anderson", email: "lisa.a@example.com", role: "Editor" },
-        { name: "David Taylor", email: "david.t@example.com", role: "User" },
-        { name: "Emma Brown", email: "emma.b@example.com", role: "User" },
-        { name: "Robert Martin", email: "robert.m@example.com", role: "Editor" },
-        { name: "Sofia Garcia", email: "sofia.g@example.com", role: "User" }
-      ] %>
-
-      <% dummy_users.each do |user| %>
+      <% @users.each do |user| %>
         <tr class="hover:bg-gray-50 transition-colors duration-200" data-row>
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="flex items-center">
-              <div class="profile-circle" style="background-image: url('<%= user[:avatar_url] || '' %>')">
-                <% if !user[:avatar_url] %>
+              <div class="profile-circle" style="background-image: url('<%= user.attachment || '' %>')">
+                <% unless user.attachment %>
                   <i class="fas fa-user text-xl"></i>
                 <% end %>
               </div>
               <div class="ml-4 text-sm font-medium text-gray-900">
-                <%= user[:name] %>
+                <%= user.name %>
               </div>
             </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <%= user[:email] %>
+            <%= user.email %>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
               <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                <%= user[:role] == 'Admin' ? 'bg-red-100 text-red-800' :
-                                                 user[:role] == 'Editor' ? 'bg-yellow-100 text-yellow-800' :
-                                                   'bg-green-100 text-green-800' %>">
-                <%= user[:role] %>
+                <%= user.role.name == 'admin' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' %>">
+                <%= user.role.name.capitalize %>
               </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <div class="flex justify-end space-x-3">
               <button
                 data-action="users-index#openEditModal"
-                data-name="<%= user[:name] %>"
-                data-email="<%= user[:email] %>"
-                data-role="<%= user[:role] %>"
-                data-avatar="<%= user[:avatar_url] %>"
+                data-name="<%= user.name %>"
+                data-email="<%= user.email %>"
+                data-role="<%= user.role.name.capitalize %>"
+                data-avatar="<%= user.attachment %>"
                 class="text-gray-400 hover:text-gray-500"
-                  title="Edit User">
+                title="Edit User">
                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
               </button>
               <button
                 data-action="users-index#openDeleteModal"
-                data-name="<%= user[:name] %>"
+                data-name="<%= user.name %>"
                 class="text-gray-400 hover:text-red-500"
                 title="Delete User">
-                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                  </svg>
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
               </button>
             </div>
           </td>
@@ -136,7 +103,7 @@
 
   <!-- Pagination -->
   <div class="mt-4 flex justify-center">
-    <%== pagy_nav(@pagy) %>
+    <%== pagy_nav(@pagy)  %>
   </div>
 
   <!-- Render modals -->
