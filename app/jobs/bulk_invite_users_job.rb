@@ -7,11 +7,12 @@ class BulkInviteUsersJob < ApplicationJob
     CSV.parse(csv_data, headers: true) do |row|
       email = row["email"]
       name = row["name"]
+      role_id = row["role_id"]
 
       next if email.blank?
 
       User.invite!(
-        { email: email, name: name },
+        { email: email, name: name, role_id: role_id },
         User.find(inviter_id)
       )
     end

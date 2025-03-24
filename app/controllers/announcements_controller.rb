@@ -38,6 +38,13 @@ class AnnouncementsController < ApplicationController
     end
   end
 
+  def edit
+    @announcement = announcement
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def destroy
     announcement.destroy!
     respond_to do |format|

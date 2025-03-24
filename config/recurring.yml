@@ -14,9 +14,23 @@ development:
     class: EventReminderJob
     queue: default
     schedule: every day at 9am
+  update_event_status:
+    class: UpdateEventStatusJob
+    queue: default
+    schedule: every hour
+
+test:
+  update_event_status:
+    class: UpdateEventStatusJob
+    queue: default
+    schedule: every hour
 
 production:
   event_reminder:
     class: EventReminderJob
     queue: default
     schedule: every day at 9am
+  update_event_status:
+    class: UpdateEventStatusJob
+    queue: default
+    schedule: every hour

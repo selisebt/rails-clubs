@@ -1,28 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe Club, type: :model do
-  describe 'validations' do
-    it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:description) }
+  it "has a valid factory" do
+    expect(build(:club)).to be_valid
   end
 
-  describe 'associations' do
-    it { should have_many(:memberships).dependent(:destroy) }
-    it { should have_many(:users).through(:memberships) }
+  let(:club) { build(:club) }
+
+  describe "ActiveRecord associations" do
+    it { expect(club).to have_many(:memberships).dependent(:destroy) }
+    it { expect(club).to have_many(:users).through(:memberships) }
+    it { expect(club).to have_many(:budgets).dependent(:destroy) }
   end
 
-  describe 'creation' do
-    let(:user) { create(:user) }
-    let(:club) { build(:club) }
+  describe "ActiveModel validations" do
+    it { expect(club).to validate_presence_of(:name) }
+    it { expect(club).to validate_presence_of(:description) }
 
-    it 'creates a valid club' do
-      expect(club).to be_valid
-      expect(club.save).to be true
-    end
-
-    it 'associates with creator' do
-      club.users << user
-      expect(club.users).to include(user)
-    end
+    it { expect(club).to validate_uniqueness_of(:name) }
   end
 end
