@@ -2,15 +2,15 @@
   <div class="flex items-center">
     <div class="flex-shrink-0">
       <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-      <% if user.attachment&.file&.attached? %>
-        <%= image_tag user.attachment.file, class: "h-8 w-8 rounded-full" %>
+        <% if user.attachment&.file&.attached? %>
+          <%= image_tag user.attachment.file, class: "h-8 w-8 rounded-full" %>
         <% else %>
           <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
             <svg class="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
             </svg>
           </div>
-      <% end %>
+        <% end %>
       </div>
     </div>
     <div class="ml-3">
@@ -18,23 +18,22 @@
       <p class="text-sm text-gray-500"><%= user.email %></p>
     </div>
   </div>
-    <div class="flex items-center justify-start space-x-2">
-    <% if ['admin'].include?(current_user.role.name) && user.email != current_user.email %>
+  <div class="flex items-center justify-start space-x-2">
+    <% if [ 'admin' ].include?(current_user.role.name) && user.email != current_user.email %>
       <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <span type="button"
-        class="text-red-600 hover:text-red-900"
-        data-action="modal#open"
-        data-user-id="<%= user.id %>"
-        data-user-name="<%= user.name %>">
+        <button type="button"
+                class="text-red-600 hover:text-red-900"
+                data-action="modal#open"
+                data-user-id="<%= user.id %>"
+                data-user-name="<%= user.name %>">
           <svg class="h-5 w-5 text-red-600 hover:text-red-800 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
           </svg>
-        </span>
+        </button>
       </div>
-      
-  <% end %>
-  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-  <%= user.role.name.titlecase %>
-  </span>
-    </div>
+    <% end %>
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+      <%= user.role.name.titlecase %>
+    </span>
+  </div>
 </div>
