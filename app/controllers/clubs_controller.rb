@@ -4,23 +4,29 @@ class ClubsController < ApplicationController
   def index
     @clubs = current_user.clubs
     respond_to do |format|
-      format.html
+      format.html { render :index, layout: "application" }
       format.json { render json: @clubs, include: :users }
     end
   end
 
   def show
     respond_to do |format|
-      format.html
+      format.html { render :show, layout: "application" }
       format.json { render json: @club, include: :users }
     end
   end
 
   def new
     @club = Club.new
+    respond_to do |format|
+      format.html { render :new, layout: "application" }
+    end
   end
 
   def edit
+    respond_to do |format|
+      format.html { render :edit, layout: "application" }
+    end
   end
 
   def create
@@ -33,10 +39,18 @@ class ClubsController < ApplicationController
           club_id: @club.reload.id,
           user_id: current_user.id
         )
-        format.html { redirect_to @club, notice: "Club was successfully created." }
+        @clubs = current_user.clubs
+        flash[:notice] = "Club created successfully."
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update("main-container", template: 'clubs/index'),
+            turbo_stream.update("flash", partial: "shared/flash", locals: { message: "Club created successfully.", type: "success" })
+          ]
+        end
         format.json { render json: @club, status: :created, include: :users }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        flash[:error] = @club.errors.full_messages.join(", ")
+        format.html { render :new, layout: "application" }
         format.json { render json: @club.errors, status: :unprocessable_entity }
       end
     end
@@ -65,8 +79,8 @@ class ClubsController < ApplicationController
   def search_members
     @query = params[:query]
     @users = User.where.not(id: @club.users.pluck(:id))
-                .where("email LIKE ? OR name LIKE ?", "%#{@query}%", "%#{@query}%")
-                .limit(10)
+                 .where("email LIKE ? OR name LIKE ?", "%#{@query}%", "%#{@query}%")
+                 .limit(10)
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.update("search-results", partial: "search_results")
