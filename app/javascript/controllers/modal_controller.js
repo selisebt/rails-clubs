@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus"
+import {Controller} from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["modal", "overlay", "title", "message"]
@@ -26,8 +26,8 @@ export default class extends Controller {
       this.titleTarget.textContent = 'Delete Club'
       this.messageTarget.textContent = 'Are you sure you want to delete this club? This action cannot be undone.'
       document.getElementById('delete-club-form').action = `/clubs/${clubId}`
-      document.getElementById('delete-club-form').classList.remove('hidden')
-      document.getElementById('delete-member-form').classList.add('hidden')
+      // document.getElementById('delete-club-form').classList.remove('hidden')
+      // document.getElementById('delete-member-form').classList.add('hidden')
     } else if (userId) {
       // Member deletion
       this.currentAction = 'member'
