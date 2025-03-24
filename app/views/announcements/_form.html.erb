@@ -10,6 +10,44 @@
               placeholder: "Title*" %>
         </div>
 
+        <div class="w-[calc(50%-32px)] mt-[16px]">
+          <%= f.label :priority, class: "form-label" %>
+          <div class="mt-1 w-full">
+            <div class="dropdown w-full">
+              <button type="button" onclick="toggleStatusDropdown()" class="form-input w-full flex items-center justify-between">
+                <span id="selectedStatus"><%= event.status&.titleize || 'Select Status' %></span>
+                <i class="fas fa-chevron-down ml-2 text-sm"></i>
+              </button>
+              <div id="statusDropdown" class="dropdown-content">
+                <div class="dropdown-item" onclick="selectStatus('draft')">
+                  <i class="fas fa-file-alt mr-3"></i>
+                  <div>
+                    <p class="font-medium">Draft</p>
+
+                  </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item" onclick="selectStatus('published')">
+                  <i class="fas fa-check-circle mr-3"></i>
+                  <div>
+                    <p class="font-medium">Published</p>
+
+                  </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item" onclick="selectStatus('cancelled')">
+                  <i class="fas fa-times-circle mr-3"></i>
+                  <div>
+                    <p class="font-medium">Cancelled</p>
+
+                  </div>
+                </div>
+              </div>
+              <%= f.hidden_field :status %>
+            </div>
+          </div>
+        </div>
+
         <div class="mb-4 w-[30%]">
           <%= f.label :priority, class: "block text-sm font-medium text-gray-700" %>
           <div class="mt-1">
@@ -55,3 +93,28 @@
     </div>
   </div>
 <% end %> 
+
+
+<script>
+  function toggleStatusDropdown() {
+    document.getElementById("statusDropdown").classList.toggle("show");
+  }
+
+  function selectStatus(status) {
+    document.getElementById("selectedStatus").textContent = status.charAt(0).toUpperCase() + status.slice(1);
+    document.getElementById("event_status").value = status;
+    document.getElementById("statusDropdown").classList.remove("show");
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('.dropdown')) {
+      const dropdowns = document.getElementsByClassName("dropdown-content");
+      Array.from(dropdowns).forEach(dropdown => {
+        if (dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+        }
+      });
+    }
+  });
+</script>
