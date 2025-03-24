@@ -6,19 +6,11 @@
       <div class="space-y-6">
         <!-- Profile Picture Section -->
         <div class="flex flex-col items-center">
-          <input type="file" data-users-index-target="profilePicture" class="hidden" accept="image/*" data-action="users-index#handleProfilePicture">
-          <label for="profilePicture" class="cursor-pointer">
-            <div class="profile-upload flex items-center justify-center overflow-hidden">
-              <div data-users-index-target="profilePreview" class="profile-preview hidden"></div>
-              <div data-users-index-target="uploadPlaceholder" class="flex flex-col items-center">
-                <i class="fas fa-camera text-2xl text-gray-400 mb-2"></i>
-                <span class="text-sm text-gray-500">Upload Photo</span>
-              </div>
-            </div>
-          </label>
-          <button type="button" data-action="users-index#removeProfilePicture" class="mt-2 text-sm text-red-600 hover:text-red-800 hidden" data-users-index-target="removePhotoBtn">
-            Remove photo
-          </button>
+          <div class="profile-upload" style="background-image: url(<%= user.attachment&.file&.attached? ?  url_for(user.attachment.file)  : nil %>)">
+            <% unless user.attachment&.file&.attached? %>
+              <i class="fas fa-user text-xl"></i>
+            <% end %>
+          </div>
         </div>
 
         <div class="space-y-4">
@@ -29,7 +21,9 @@
 
           <div>
             <label class="form-label">Email Address</label>
-            <%= f.email_field :email, data: { users_index_target: "editEmail" }, class: "form-input", disabled: true %>
+            <div class="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 text-gray-500 sm:text-sm p-2">
+              <%= user.email %>
+            </div>
           </div>
 
           <div>

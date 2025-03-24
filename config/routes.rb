@@ -1,15 +1,19 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations',
-    passwords: 'users/passwords',
-    confirmations: 'users/confirmations',
-    invitations: 'users/invitations'
+    sessions: "users/sessions",
+    registrations: "users/registrations",
+    passwords: "users/passwords",
+    confirmations: "users/confirmations",
+    invitations: "users/invitations"
   }
 
-  resource :account_settings, only: [:show, :update]
+  resource :account_settings, only: [ :show, :update ]
 
-  resources :users
+  resources :users do
+    member do
+      get :delete
+    end
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

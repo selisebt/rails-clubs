@@ -10,7 +10,7 @@
         </button>
         <div id="inviteDropdown" data-users-index-target="inviteDropdown" class="dropdown-content">
           <div class="dropdown-divider"></div>
-          <a href="#" data-turbo="false" class="dropdown-item" data-action="users-index#openAddUserModal">
+          <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openAddUserModal">
             <i class="fas fa-user-plus mr-3"></i>
             <div>
               <div class="font-medium">Add a user</div>
@@ -18,7 +18,7 @@
             </div>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" data-turbo="false" class="dropdown-item" data-action="users-index#openCsvModal">
+          <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openCsvModal">
             <i class="fas fa-file-upload mr-3"></i>
             <div>
               <div class="font-medium">CSV Upload</div>
@@ -52,8 +52,8 @@
           <tr class="hover:bg-gray-50 transition-colors duration-200" data-row>
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
-                <div class="profile-circle" style="background-image: url('<%= user.attachment || '' %>')">
-                  <% unless user.attachment %>
+                <div class="profile-circle" style="background-image: url(<%= user.attachment&.file&.attached? ?  url_for(user.attachment.file)  : nil %>)">
+                  <% unless user.attachment&.file&.attached? %>
                     <i class="fas fa-user text-xl"></i>
                   <% end %>
                 </div>
@@ -82,15 +82,15 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                   </svg>
                 <% end %>
-                <button
-                  data-action="users-index#openDeleteModal"
-                  data-name="<%= user.name %>"
-                  class="text-gray-400 hover:text-red-500"
-                  title="Delete User">
+                <%= link_to delete_user_path(id: user.id),
+                            data: { action: 'users-index#openDeleteModal', turbo_frame: 'delete_user' },
+                            method: :get,
+                            class: 'text-gray-400 hover:text-red-500',
+                            title: 'Delete User' do %>
                   <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                   </svg>
-                </button>
+                <% end %>
               </div>
             </td>
           </tr>

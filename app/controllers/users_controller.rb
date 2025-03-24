@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
-
   def index
-    @pagy, @users = pagy(users, limit: 10)
+    @pagy, @users = pagy(users, limit: 10, request_path: users_path)
     @roles = Role.all
 
     respond_to do |format|
@@ -24,9 +23,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def delete
+    respond_to do |format|
+      format.html { render partial: "delete_user", locals: { user: user } }
+    end
+  end
+
   def update
     user.update!(user_params)
-    @pagy, @users = pagy(users, limit: 10)
+    @pagy, @users = pagy(users, limit: 10, request_path: users_path)
     @roles = Role.all
     respond_to do |format|
       format.html { render :index, layout: false }
@@ -36,8 +41,17 @@ class UsersController < ApplicationController
 
   def destroy
     user.destroy!
+    @pagy, @users = pagy(users, limit: 10, request_path: users_path)
+    @roles = Role.all
+
     respond_to do |format|
-      format.html
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update("all_users", template: "users/index", layout: false),
+          turbo_stream.update("flash", partial: "shared/flash", locals: { message: "User deleted successfully", type: "success" })
+        ]
+      end
+      format.html { redirect_to users_path, notice: "User deleted successfully" }
       format.json { render json: { done: true } }
     end
   end

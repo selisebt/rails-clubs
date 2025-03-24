@@ -160,8 +160,6 @@ export default class extends Controller {
   // Delete modal functions
   openDeleteModal(event) {
     const button = event.currentTarget
-    const name = button.dataset.name
-    this.deleteUserNameTarget.textContent = name
     this.deleteModalTarget.classList.remove('hidden')
   }
 
