@@ -1,22 +1,70 @@
-<h2><%= t "devise.invitations.edit.header" %></h2>
+<section class="auth-section">
+  <div class="flex-wrap flex-center">
+    <div
+      class="auth-container w-[84%] flex justify-between items-center"
+    >
+      <div
+        class="header-note flex w-[36%] justify-end "
+      >
+        <div
+          class="text-[44px] m-0 p-[20px] header-note--shadow text-alto-gray font-bold mt-[40px]">
+          <p class="mb-0 mt-100">WELCOME TO</p>
+          <p class="mt-4">CST Club House</p>
+        </div>
+      </div>
+      <div
+        class="auth-wrapper bg-white rounded-[24px] p-[32px] mr-[16px] mt-[24px] "
+      >
+        <div class="flex justify-center items-center z-[3] relative">
+          <img src="<%= asset_path('cst-logo.png') %>" alt="logo" class="logo-3d rounded-full w-[150px] h-[150px] overflow-hidden">
+        </div>
+        <div class="auth-content">
+          <h3 class="auth-title text-center my-[12px]"><%= t "devise.invitations.edit.header" %></h3>
 
-<%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :invitation_token, readonly: true %>
+          <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put }) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+            <%= f.hidden_field :invitation_token, readonly: true %>
 
-  <% if f.object.class.require_password_on_accepting %>
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password %>
+            <% if f.object.class.require_password_on_accepting %>
+              <div class="field">
+                <%= f.label :password %><br/>
+                <%= f.password_field :password, class: "form-input" %>
+              </div>
+
+              <div class="field">
+                <%= f.label :password_confirmation %><br/>
+                <%= f.password_field :password_confirmation, class: "form-input" %>
+              </div>
+            <% end %>
+
+            <button class="actions mb-6 mt-6 w-full">
+              <%= f.submit t("devise.invitations.edit.submit_button"),
+                           class: "btn-primary" %>
+            </button>
+          <% end %>
+          <div class="flex justify-end mb-4">
+            <%= render "devise/shared/links" %>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation %>
-    </div>
-  <% end %>
 
-  <div class="actions">
-    <%= f.submit t("devise.invitations.edit.submit_button") %>
+    <div class="auth-footer w-full flex justify-center items-center ">
+      <div class="w-[76%] relative left-[-40px]">
+        <div class="flex justify-start items-center w-[80%]">
+          <div class="mb-[8px]">
+            <img src="<%= asset_path('selise-logo.svg') %>" class="footer-logo-size" alt="logo">
+          </div>
+        </div>
+        <div class="gray-border"></div>
+        <p class="text-white text-sm mt-2">© 2025 SELISE CPQ. All rights reserved.</p>
+      </div>
+    </div>
   </div>
-<% end %>
+</section>
+
+<div class="aside-container">
+<% turbo_frame_tag 'invitation' %>
+</div>
+
