@@ -1,3 +1,1 @@
-require 'pagy'
-require 'pagy/extras/tailwind'
-Pagy::VARS[:items] = 10
+require 'pagy/extras/pagy'
