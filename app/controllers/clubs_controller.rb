@@ -68,6 +68,9 @@ class ClubsController < ApplicationController
                 .where("email LIKE ? OR name LIKE ?", "%#{@query}%", "%#{@query}%")
                 .limit(10)
     respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("search-results", partial: "search_results")
+      end
       format.html { render partial: "search_results" }
     end
   end
@@ -76,9 +79,20 @@ class ClubsController < ApplicationController
     user = User.find(params[:user_id])
 
     if @club.memberships.create(user: user)
-      redirect_to @club, notice: "Member added successfully."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.append("club_members", partial: "clubs/member", locals: { user: user }),
+            turbo_stream.update("search-results", "")
+          ]
+        end
+        format.html { redirect_to @club, notice: "Member added successfully." }
+      end
     else
-      redirect_to @club, alert: "Failed to add member."
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.update("flash", partial: "shared/flash", locals: { alert: "Failed to add member." }) }
+        format.html { redirect_to @club, alert: "Failed to add member." }
+      end
     end
   end
 
