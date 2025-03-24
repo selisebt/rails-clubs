@@ -1,52 +1,61 @@
-<div class="min-h-screen bg-gray-50" data-controller="modal" data-club-id="<%= @club.id %>">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Header Section -->
-    <div class="bg-white shadow rounded-lg mb-8">
-      <div class="px-4 py-5 sm:px-6">
-        <div class="flex justify-between items-center">
-          <div>
-            <h1 class="text-3xl font-bold text-gray-900"><%= @club.name %></h1>
-            <p class="mt-1 text-sm text-gray-500">Created <%= time_ago_in_words(@club.created_at) %> ago</p>
-          </div>
-          <div class="flex space-x-3">
-            <%= link_to edit_club_path(@club, cancel_path: club_path(@club)), class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+<div class="w-full mx-auto px-[24px] bg-gray-50 pt-[24px]" data-controller="modal" data-club-id="<%= @club.id %>">
+  <div class="bg-white rounded-lg shadow-sm py-[24px] px-[18px] flex items-center mb-[24px]">
+    <div class="icon-style">
+      <i class="fas fa-house text-white"></i>
+    </div>
+    <div class="flex-1 mx-[12px]">
+      <h1 class="text-2xl font-semibold text-gray-900"><%= @club.name %></h1>
+      <p class="mt-1 text-sm text-gray-500">Created <%= time_ago_in_words(@club.created_at) %> ago</p>
+    </div>
+    <div class="flex space-x-3">
+            <%= link_to edit_club_path(@club, cancel_path: club_path(@club)), class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none" do %>
               <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
               </svg>
               Edit Club
             <% end %>
-            <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" data-action="modal#open" data-club-id="<%= @club.id %>">
+            <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none " data-action="modal#open" data-club-id="<%= @club.id %>">
               <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
               </svg>
               Delete Club
             </button>
           </div>
-        </div>
-      </div>
     </div>
+  <div class="">
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-[16px]">
       <!-- Main Content -->
-      <div class="lg:col-span-2 space-y-8">
+      <div class="lg:col-span-2 space-y-[16px]  h-[calc(100vh-170px)] overflow-y-auto">
         <!-- Description Section -->
-        <div class="bg-white shadow rounded-lg">
-          <div class="px-4 py-5 sm:p-6">
-            <h2 class="text-lg font-medium text-gray-900 mb-4">About</h2>
-            <p class="text-gray-700 whitespace-pre-wrap"><%= @club.description %></p>
+        <div class="bg-white shadow-sm rounded-lg">
+          <div class="px-4 py-5 flex items-start">
+            <div class="icon-style">
+              <i class="fas fa-info text-white"></i>
+            </div>
+            <div class="ml-3 flex-1">
+              <h2 class="text-lg font-medium text-gray-800">About</h2>
+              <p class="text-gray-500 whitespace-pre-wrap text-[14px]"><%= @club.description %></p>
+            </div>
           </div>
         </div>
 
         <!-- Members Section -->
-        <div class="bg-white shadow rounded-lg">
+        <div class="bg-white shadow-sm rounded-lg">
           <div class="px-4 py-5 sm:p-6">
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="text-lg font-medium text-gray-900">Members</h2>
-              <div class="flex items-center space-x-2">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                  <%= pluralize(@club.users.count, 'member') %>
-                </span>
+            <div class="flex justify-between items-center mb-4 sticky-header bg-white normal-header">
+              <div class="flex items-center">
+              <div class="icon-style">
+                <i class="fas fa-users text-white"></i>
               </div>
+                <h2 class="text-lg font-medium text-gray-800 ml-3">Members</h2>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                    <%= pluralize(@club.users.count, 'member') %>
+                  </span>
+                </div>
             </div>
 
             <%= turbo_frame_tag "search_members" do %>
@@ -63,36 +72,41 @@
       </div>
 
       <!-- Sidebar -->
-      <div class="space-y-8">
+      <div class="space-y-[16px]">
         <!-- Club Stats -->
-        <div class="bg-white shadow rounded-lg">
-          <div class="px-4 py-5 sm:p-6">
-            <h2 class="text-lg font-medium text-gray-900 mb-4">Club Statistics</h2>
+        <div class="bg-white shadow-sm rounded-lg">
+          <div class="px-4 py-5">
+          <div class="flex items-center mb-[16px]">
+            <div class="icon-style">
+                <i class="fas fa-chart-line text-white"></i>
+              </div>
+            <h2 class="text-lg font-medium text-gray-800 ml-3">Club Statistics</h2>
+          </div>
             <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6">
                 <dt class="text-sm font-medium text-gray-500 truncate">Total Members</dt>
-                <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= @club.users.count %></dd>
+                <dd class="mt-1 text-3xl font-semibold text-gray-500 text-center"><%= @club.users.count %></dd>
               </div>
               <div class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6">
                 <dt class="text-sm font-medium text-gray-500 truncate">Created</dt>
-                <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= @club.created_at.strftime("%B %d, %Y") %></dd>
+                <dd class="mt-1 text-2xl font-semibold text-gray-500"><%= @club.created_at.strftime("%B %d, %Y") %></dd>
               </div>
             </dl>
           </div>
         </div>
 
         <!-- Club Actions -->
-        <div class="bg-white shadow rounded-lg">
+        <div class="bg-white shadow-sm rounded-lg">
           <div class="px-4 py-5 sm:p-6">
-            <h2 class="text-lg font-medium text-gray-900 mb-4">Quick Actions</h2>
+            <h2 class="text-lg font-medium text-gray-800 mb-4">Quick Actions</h2>
             <div class="space-y-3">
-              <%= link_to "#", class: "w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+              <%= link_to "#", class: "w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none " do %>
                 <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
                 Create Event
               <% end %>
-              <%= link_to "#", class: "w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" do %>
+              <%= link_to "#", class: "w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none" do %>
                 <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
@@ -106,7 +120,7 @@
   </div>
 
   <!-- Confirmation Modal -->
-  <div data-modal-target="overlay" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden transition-opacity" data-action="click->modal#closeBackground"></div>
+  <div data-modal-target="overlay" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden transition-opacity z-[10]" data-action="click->modal#closeBackground"></div>
   <div data-modal-target="modal" class="fixed inset-0 z-10 overflow-y-auto hidden">
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
       <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
@@ -117,7 +131,7 @@
             </svg>
           </div>
           <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-            <h3 class="text-base font-semibold leading-6 text-gray-900" data-modal-target="title">Delete Club</h3>
+            <h3 class="text-base font-semibold leading-6 text-gray-900">Delete Club</h3>
             <div class="mt-2">
               <p class="text-sm text-gray-500" data-modal-target="message">Are you sure you want to delete this club?
                 This action cannot be undone.</p>

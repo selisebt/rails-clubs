@@ -1,7 +1,7 @@
 <% if @users&.any? %>
-  <div class="space-y-4">
+  <div class="space-y-2">
     <% @users.each do |user| %>
-      <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+      <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow">
         <div class="flex items-center">
           <% if user.attachment&.file&.attached? %>
             <%= image_tag user.attachment.file, class: "h-8 w-8 rounded-full" %>
@@ -13,12 +13,12 @@
             </div>
           <% end %>
           <div class="ml-3">
-            <p class="text-sm font-medium text-gray-900"><%= user.name %></p>
-            <p class="text-sm text-gray-500"><%= user.email %></p>
+            <p class="text-sm font-medium"><%= user.name %></p>
+            <p class="text-sm text-gray-600"><%= user.email %></p>
           </div>
         </div>
         <%= button_to add_member_club_path(@club, user_id: user.id),
-            class: "inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+            class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500",
             data: { turbo: true } do %>
           Add Member
         <% end %>
