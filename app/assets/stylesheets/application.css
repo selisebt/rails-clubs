@@ -9,6 +9,16 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+/* Global scrollbar hiding */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
 .form-input {
   @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
@@ -51,7 +61,7 @@
 }
 
 .auth-section {
-  background-image: url('auth-selise-bg.svg');
+  background-image: url("auth-selise-bg.svg");
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 100vh;
@@ -68,7 +78,6 @@
   height: 100vh;
 }
 
-
 .auth-section .auth-container {
   min-height: calc(100vh - 138px);
 }
@@ -83,7 +92,6 @@
   font-weight: 300;
 }
 
-
 .body-text {
   letter-spacing: 0.6px;
   line-height: 24px;
@@ -94,7 +102,6 @@
   max-width: 90px;
   height: auto;
 }
-
 
 @keyframes ani {
   from {
@@ -137,7 +144,7 @@
   border-radius: 1.875rem;
   background-color: rgba(0, 123, 255, 0.16);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.042);
-  content: '';
+  content: "";
   z-index: 1;
 }
 
@@ -157,7 +164,7 @@
 .gray-border {
   position: relative;
   z-index: 10;
-  border-top: 1px solid #E0E0E0;
+  border-top: 1px solid #e0e0e0;
 }
 
 .mt-100 {
@@ -170,7 +177,7 @@
 }
 
 .text-alto-gray {
-  color: #E0E0E0;
+  color: #e0e0e0;
 }
 
 .logo-3d {
@@ -182,7 +189,6 @@
 .auth-wrapper:hover .logo-3d {
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
 }
-
 
 .flash-message {
   animation: flashMessage 6s forwards;
@@ -226,7 +232,12 @@
 }
 
 .row-checked {
-  background-color: rgba(59, 130, 246, 0.1); /* Light blue background when checked */
+  background-color: rgba(
+    59,
+    130,
+    246,
+    0.1
+  ); /* Light blue background when checked */
 }
 
 /* Add these new styles for sticky header */
@@ -244,7 +255,7 @@ thead th {
 
 /* Add shadow to header when scrolling */
 .sticky-header::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: -1px;
@@ -253,6 +264,9 @@ thead th {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
 }
 
+.normal-header.sticky-header::after {
+  background: none;
+}
 /* Dropdown styles */
 .dropdown {
   position: relative;
@@ -335,11 +349,11 @@ thead th {
   border-radius: 9999px;
   background-size: cover;
   background-position: center;
-  background-color: #E5E7EB;
+  background-color: #e5e7eb;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #9CA3AF;
+  color: #9ca3af;
 }
 
 /* Add styles for profile upload */
@@ -347,13 +361,13 @@ thead th {
   width: 8rem;
   height: 8rem;
   border-radius: 9999px;
-  border: 2px dashed #E5E7EB;
+  border: 2px dashed #e5e7eb;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .profile-upload:hover {
-  border-color: #60A5FA;
+  border-color: #60a5fa;
 }
 
 .profile-preview {
@@ -374,13 +388,13 @@ thead th {
   width: 8rem;
   height: 8rem;
   border-radius: 9999px;
-  border: 2px dashed #E5E7EB;
+  border: 2px dashed #e5e7eb;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .profile-upload:hover {
-  border-color: #60A5FA;
+  border-color: #60a5fa;
 }
 
 .profile-preview {
@@ -405,7 +419,6 @@ thead th {
   }
 }
 
-
 .pagy {
   @apply flex space-x-1 font-semibold text-sm text-gray-500;
   a:not(.gap) {
@@ -413,7 +426,8 @@ thead th {
     &:hover {
       @apply bg-gray-300;
     }
-    &:not([href]) { /* disabled links */
+    &:not([href]) {
+      /* disabled links */
       @apply text-gray-300 bg-gray-100 cursor-default;
     }
     &.current {
@@ -426,4 +440,99 @@ thead th {
       @apply bg-gray-100 border-none rounded-md;
     }
   }
+}
+/* Custom styles for the dropdown */
+.form-input[type="select"],
+select.form-input {
+  padding-right: 2.5rem; /* Add space for the arrow */
+  background-position: right 0.75rem center; /* Position the arrow */
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #374151;
+  transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.dropdown-item:first-child {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.dropdown-item:last-child {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+.icon-style {
+  background: linear-gradient(to right, rgb(96 165 250), rgb(59 130 246));
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.icon-style i {
+  color: white;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
