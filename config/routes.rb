@@ -9,11 +9,18 @@ Rails.application.routes.draw do
     invitations: "users/invitations"
   }
 
-  resources :users
+  resource :account_settings, only: [ :show, :update ]
+
+  resources :users do
+    member do
+      get :delete
+    end
+  end
   resources :clubs do
     member do
       get :search_members
       post :add_member
+      delete :delete_member
     end
   end
 
