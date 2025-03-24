@@ -1,153 +1,105 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= content_for(:title) || "Rails Clubs" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
+<head>
+  <title><%= content_for(:title) || "Rails Clubs" %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
 
-    <!-- TailwindCSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield :head %>
+  <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+  <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+  <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <%# Includes all stylesheet files in app/assets/stylesheets %>
+  <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
 
-  <body class="min-h-screen bg-cover bg-center bg-no-repeat flex bg-[#fafafa]">
-    <!-- Sidebar Navigation -->
-    <div class="w-[300px] min-h-screen bg-white shadow-lg text-gray-700 p-4">
-      <!-- Logo Area -->
-      <div class="mb-8 flex justify-center items-center">
+<body class="min-h-screen bg-cover bg-center bg-no-repeat flex bg-[#fafafa]">
+<%= render "shared/flash" %>
+<% unless %w[
+  /users/sign_in
+  /users/password/new
+  /users/password
+  /users/password/edit
+  /users/invitation/accept
+].include?(request.path) %>
+  <!-- Sidebar Navigation -->
+  <div class="w-[300px] min-h-screen bg-white shadow-lg text-gray-700 p-4" data-controller="navigation">
+    <!-- Logo Area -->
+    <div class="mb-8 flex justify-center items-center">
+      <img src="<%= asset_path('selise-logo.svg') %>" alt="logo">
+    </div>
 
-        <img src="<%= asset_path('selise-logo.svg') %>" alt="logo">
-      </div>
-
-      <!-- Navigation Links -->
-      <nav class="space-y-4">
-      
-      <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-item" onclick="setActiveNav(this)">
-          <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
-            <i class="fas fa-calendar text-gray-500"></i>
-          </div>
-          <span class="text-gray-700 flex-1 flex items-start justify-start">Event</span>
-        </button>
-
-        <div class="relative">
-          <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-item" onclick="toggleAccordion('userManagement', this)">
-            <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
-              <i class="fas fa-users text-gray-500"></i>
-            </div>
-            <span class="text-gray-700 flex-1 flex items-start justify-start">User Management</span>
-            <i class="fas fa-chevron-down text-gray-500 transform transition-transform duration-300" id="userManagementIcon"></i>
-          </button>
-          
-          <div class="hidden pl-12 mt-2 space-y-2" id="userManagement">
-            <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item" onclick="setActiveSubNav(this, event)">
-              <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
-                <i class="fas fa-user text-gray-500"></i>
-              </div>
-              <span class="text-gray-700 flex-1 flex items-start justify-start">Users</span>
-            </button>
-            <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item" onclick="setActiveSubNav(this, event)">
-              <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
-                <i class="fas fa-user-tag text-gray-500"></i>
-              </div>
-              <span class="text-gray-700 flex-1 flex items-start justify-start">Permissions</span>
-            </button>
-
-          </div>
+    <!-- Navigation Links -->
+    <nav class="space-y-4">
+      <%= button_to clubs_path, method: :get, class: "w-full flex items-center space-x-3 p-3 rounded-lg group nav-item #{'/clubs'.include?(request.path) ? 'active' : ''}", data: { action: 'click->navigation#setActiveNav' } do %>
+        <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
+          <i class="fas fa-calendar text-gray-500"></i>
         </div>
-      </nav>
+        <span class="text-gray-700 flex-1 flex items-start justify-start">Clubs</span>
+      <% end %>
 
-      <!-- User Profile at Bottom -->
-      <div class="absolute bottom-4 left-4 flex items-center space-x-3 p-3">
-        <div class="w-8 h-8 rounded-full bg-gray-200"></div>
+      <!--      <div class="relative">-->
+      <%= button_to users_path, method: :get, class: "w-full flex items-center space-x-3 p-3 rounded-lg group nav-item #{'/users'.include?(request.path) ? 'active' : ''}", data: { action: 'click->navigation#setActiveNav' } do %>
+        <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
+          <i class="fas fa-users text-gray-500"></i>
+        </div>
+        <span class="text-gray-700 flex-1 flex items-start justify-start">User Management</span>
+        <!--          <i class="fas fa-chevron-down text-gray-500 transform transition-transform duration-300" data-navigation-target="userManagementIcon"></i>-->
+      <% end %>
+      <!--        <div class="<%#= '/users'.include?(request.path) ? '' : 'hidden' %> pl-12 mt-2 space-y-2" data-navigation-target="userManagement">-->
+      <!--          <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item <%#= '/users'.include?(request.path) ? 'active' : '' %>" data-action="click->navigation#setActiveSubNav">-->
+      <!--            <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">-->
+      <!--              <i class="fas fa-user text-gray-500"></i>-->
+      <!--            </div>-->
+      <!--            <span class="text-gray-700 flex-1 flex items-start justify-start">Users</span>-->
+      <!--          </button>-->
+      <!--          <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item" data-action="click->navigation#setActiveSubNav">-->
+      <!--            <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">-->
+      <!--              <i class="fas fa-user-tag text-gray-500"></i>-->
+      <!--            </div>-->
+      <!--            <span class="text-gray-700 flex-1 flex items-start justify-start">Permissions</span>-->
+      <!--          </button>-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </nav>
+
+    <!-- User Profile at Bottom -->
+    <div class="absolute bottom-4 left-4 flex items-center space-x-3 p-3">
+
+      <%= link_to account_settings_path, class: "flex items-center space-x-3" do %>
         <div>
           <p class="text-sm font-medium text-gray-700">Account settings</p>
           </div>
 
-      </div>
+      <% end %>
+      <%= button_to(
+            "Log Out",
+            destroy_user_session_path,
+            method: :delete,
+            class: "ml-4 text-sm text-gray-700 hover:text-gray-900"
+          ) %>
     </div>
-
-    <main class="flex-1">
-      <%= yield %>
-    </main>
-
-    <!-- Add this JavaScript at the bottom of the body tag -->
-    <script>
-      const style = document.createElement('style');
-      style.textContent = `
-        .nav-item, .nav-sub-item {
-          transition: all 300ms ease-in-out;
-        }
-        .nav-item:hover, .nav-sub-item:hover, .nav-item.active, .nav-sub-item.active {
-          background-color: rgb(243 244 246);
-        }
-        .nav-item:hover div, .nav-item.active div,
-        .nav-sub-item:hover div, .nav-sub-item.active div {
-          background: linear-gradient(to right, rgb(96 165 250), rgb(59 130 246));
-        }
-        .nav-item:hover i, .nav-item.active i,
-        .nav-sub-item:hover i, .nav-sub-item.active i {
-          color: white;
-        }
-        .nav-item:hover span, .nav-item.active span,
-        .nav-sub-item:hover span, .nav-sub-item.active span {
-          background: linear-gradient(to right, rgb(96 165 250), rgb(59 130 246));
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-        }
-      `;
-      document.head.appendChild(style);
-
-      function toggleAccordion(id, element) {
-        const content = document.getElementById(id);
-        const icon = document.getElementById(id + 'Icon');
-        content.classList.toggle('hidden');
-        icon.classList.toggle('rotate-180');
-        setActiveNav(element);
-      }
-
-      function setActiveNav(element) {
-        // Remove active class from all items
-        document.querySelectorAll('.nav-item, .nav-sub-item').forEach(item => {
-          item.classList.remove('active');
-        });
-
-        // Add active class to clicked item
-        element.classList.add('active');
-      }
-
-      function setActiveSubNav(element, event) {
-        event.preventDefault();
-        // Remove active class from all items
-        document.querySelectorAll('.nav-item, .nav-sub-item').forEach(item => {
-          item.classList.remove('active');
-        });
-
-        // Add active class to clicked sub item
-        element.classList.add('active');
-        
-        // Keep parent active
-        const parentButton = element.closest('.relative').querySelector('button');
-        parentButton.classList.add('active');
-      }
-    </script>
-  </body>
+  </div>
+<% end %>
+<%= turbo_frame_tag 'main-container', class: 'flex-1' do %>
+  <main class="flex-1">
+    <%= yield %>
+  </main>
+<% end %>
+</body>
 </html>
