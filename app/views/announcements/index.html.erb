@@ -1,46 +1,45 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-controller="modal">
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-2xl font-semibold text-gray-900">Announcements</h1>
-      <p class="mt-2 text-sm text-gray-700">A list of all announcements in the system.</p>
+<div class="p-[24px] pb-0 " data-controller="modal">
+  <div class="bg-white rounded-lg shadow-sm py-[24px] px-[18px] flex items-center mb-[24px]">
+    <div class="icon-style">
+      <i class="fas fa-house text-white"></i>
     </div>
-    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-      <%= link_to new_announcement_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto" do %>
+    <div class="flex-1 mx-[12px]">
+
+      <h2 class="text-lg font-medium text-gray-800 ">Announcements</h2>
+      <p class="mt-1 text-sm text-gray-500">A list of all announcements in the system.</p>
+    </div>
+    <div class=" w-fit">
+      <%= link_to new_announcement_path, class: "btn-primary flex items-center" do %>
         <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
-        Add announcement
+        <p>Add announcement</p>
       <% end %>
     </div>
-  </div>
+   </div>
 
-  <div class="mt-8 flex flex-col">
-    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-          <table class="min-w-full divide-y divide-gray-300">
-            <thead class="bg-gray-50">
+  
+
+  <div class="bg-white rounded-lg shadow table-container overflow-y-auto h-[calc(100vh-170px)]">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="sticky-header bg-white"> 
               <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Message</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Priority</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Club</th>
-                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span class="sr-only">Actions</span>
+                <th scope="col" class="table-header">Message</th>
+                <th scope="col" class="table-header">Priority</th>
+                <th scope="col" class="table-header">Club</th>
+                <th scope="col" class="table-header">Actions
                 </th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
+            <tbody class="bg-white divide-y divide-gray-200">
               <%= turbo_stream_from "announcements" %>
               <%= render @announcements %>
             </tbody>
           </table>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- Confirmation Modal -->
-  <div data-modal-target="overlay" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden transition-opacity" data-action="click->modal#closeBackground"></div>
+  <div data-modal-target="overlay" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden transition-opacity z-[10]" data-action="click->modal#closeBackground"></div>
   <div data-modal-target="modal" class="fixed inset-0 z-10 overflow-y-auto hidden">
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
       <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
