@@ -1,0 +1,43 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/clubs":
+    post:
+      summary: Create Club
+      tags:
+      - Clubs
+      parameters: []
+      responses:
+        '200':
+          description: Club Created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                club:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                  required:
+                  - name
+                  - description
+    get:
+      summary: List Clubs
+      tags:
+      - Clubs
+      responses:
+        '200':
+          description: Clubs Listed
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
