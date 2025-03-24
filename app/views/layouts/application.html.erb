@@ -30,7 +30,13 @@
 
 <body class="min-h-screen bg-cover bg-center bg-no-repeat flex bg-[#fafafa]">
 <%= render "shared/flash" %>
-<% unless %w[/users/sign_in /users/password/new /users/password /users/password/edit].include?(request.path) %>
+<% unless %w[
+  /users/sign_in
+  /users/password/new
+  /users/password
+  /users/password/edit
+  /users/invitation/accept
+].include?(request.path) %>
   <!-- Sidebar Navigation -->
   <div class="w-[300px] min-h-screen bg-white shadow-lg text-gray-700 p-4" data-controller="navigation">
     <!-- Logo Area -->
@@ -47,35 +53,34 @@
         <span class="text-gray-700 flex-1 flex items-start justify-start">Events</span>
       </button>
 
-<!--      <div class="relative">-->
-        <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-item <%= '/users'.include?(request.path) ? 'active' : '' %>" data-action="click->navigation#setActiveNav">
-          <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
-            <i class="fas fa-users text-gray-500"></i>
-          </div>
-          <span class="text-gray-700 flex-1 flex items-start justify-start">User Management</span>
-<!--          <i class="fas fa-chevron-down text-gray-500 transform transition-transform duration-300" data-navigation-target="userManagementIcon"></i>-->
-        </button>
-
-<!--        <div class="<%#= '/users'.include?(request.path) ? '' : 'hidden' %> pl-12 mt-2 space-y-2" data-navigation-target="userManagement">-->
-<!--          <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item <%#= '/users'.include?(request.path) ? 'active' : '' %>" data-action="click->navigation#setActiveSubNav">-->
-<!--            <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">-->
-<!--              <i class="fas fa-user text-gray-500"></i>-->
-<!--            </div>-->
-<!--            <span class="text-gray-700 flex-1 flex items-start justify-start">Users</span>-->
-<!--          </button>-->
-<!--          <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item" data-action="click->navigation#setActiveSubNav">-->
-<!--            <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">-->
-<!--              <i class="fas fa-user-tag text-gray-500"></i>-->
-<!--            </div>-->
-<!--            <span class="text-gray-700 flex-1 flex items-start justify-start">Permissions</span>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--      <div class="relative">-->
+      <%= button_to users_path, method: :get, class: "w-full flex items-center space-x-3 p-3 rounded-lg group nav-item #{'/users'.include?(request.path) ? 'active' : ''}", data: { action: 'click->navigation#setActiveNav' } do %>
+        <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
+          <i class="fas fa-users text-gray-500"></i>
+        </div>
+        <span class="text-gray-700 flex-1 flex items-start justify-start">User Management</span>
+        <!--          <i class="fas fa-chevron-down text-gray-500 transform transition-transform duration-300" data-navigation-target="userManagementIcon"></i>-->
+      <% end %>
+      <!--        <div class="<%#= '/users'.include?(request.path) ? '' : 'hidden' %> pl-12 mt-2 space-y-2" data-navigation-target="userManagement">-->
+      <!--          <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item <%#= '/users'.include?(request.path) ? 'active' : '' %>" data-action="click->navigation#setActiveSubNav">-->
+      <!--            <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">-->
+      <!--              <i class="fas fa-user text-gray-500"></i>-->
+      <!--            </div>-->
+      <!--            <span class="text-gray-700 flex-1 flex items-start justify-start">Users</span>-->
+      <!--          </button>-->
+      <!--          <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item" data-action="click->navigation#setActiveSubNav">-->
+      <!--            <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">-->
+      <!--              <i class="fas fa-user-tag text-gray-500"></i>-->
+      <!--            </div>-->
+      <!--            <span class="text-gray-700 flex-1 flex items-start justify-start">Permissions</span>-->
+      <!--          </button>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </nav>
 
     <!-- User Profile at Bottom -->
     <div class="absolute bottom-4 left-4 flex items-center space-x-3 p-3">
-      
+
       <%= link_to account_settings_path, class: "flex items-center space-x-3" do %>
         <div>
           <p class="text-sm font-medium text-gray-700">Account settings</p>
@@ -90,8 +95,10 @@
     </div>
   </div>
 <% end %>
-<main class="flex-1">
-  <%= yield %>
-</main>
+<%= turbo_frame_tag 'main-container', class: 'flex-1' do %>
+  <main class="flex-1">
+    <%= yield %>
+  </main>
+<% end %>
 </body>
 </html>

@@ -6,7 +6,7 @@
           <h1 class="text-2xl font-bold text-gray-900">Account Settings</h1>
         </div>
 
-        <%= form_with(model: @user, url: account_settings_path, method: :patch, class: "space-y-6") do |f| %>
+        <%= form_with(model: @user, url: account_settings_path, method: :patch, data: { turbo: false }, class: "space-y-6") do |f| %>
           <% if @user.errors.any? %>
             <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
               <div class="flex">
@@ -45,14 +45,14 @@
                 <div>
                   <%= attachment_form.label :file, "Profile Picture", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
-                    <%= attachment_form.file_field :file, 
-                        class: "block w-full text-sm text-gray-500
+                    <%= attachment_form.file_field :file,
+                                                   class: "block w-full text-sm text-gray-500
                                file:mr-4 file:py-2 file:px-4
                                file:rounded-full file:border-0
                                file:text-sm file:font-semibold
                                file:bg-indigo-50 file:text-indigo-700
                                hover:file:bg-indigo-100",
-                        accept: "image/*" %>
+                                                   accept: "image/*" %>
                   </div>
                   <p class="mt-1 text-sm text-gray-500">PNG, JPG, GIF up to 10MB</p>
                 </div>
