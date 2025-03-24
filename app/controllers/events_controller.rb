@@ -21,7 +21,7 @@ class EventsController < ApplicationController
 
     if @event.save
       respond_to do |format|
-        format.turbo_stream
+        # format.turbo_stream
         format.html { redirect_to club_events_path(@club), notice: "Event was successfully created." }
       end
     else
@@ -32,7 +32,7 @@ class EventsController < ApplicationController
   def update
     if @event.update(event_params)
       respond_to do |format|
-        format.turbo_stream
+        # format.turbo_stream
         format.html { redirect_to club_events_path(@club), notice: "Event was successfully updated." }
       end
     else
@@ -43,7 +43,7 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      format.turbo_stream
+      # format.turbo_stream
       format.html { redirect_to club_events_path(@club), notice: "Event was successfully deleted." }
     end
   end

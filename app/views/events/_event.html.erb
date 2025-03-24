@@ -1,7 +1,10 @@
 <%= turbo_frame_tag event do %>
   <tr class="hover:bg-gray-50 transition-colors duration-200">
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-      <%= link_to event.description, club_event_path(@club, event), class: "hover:text-blue-600" %>
+      <%= link_to event.name, club_event_path(@club, event), class: "hover:text-blue-600" %>
+    </td>
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+      <%= event.description %>
     </td>
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
       <%= event&.from&.strftime("%B %d, %Y %H:%M") %>
@@ -19,7 +22,7 @@
             else
               'bg-yellow-100 text-yellow-800'
             end %>">
-        <%= event&.status %>
+        <%= event&.status&.titleize %>
       </span>
     </td>
     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

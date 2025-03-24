@@ -23,11 +23,12 @@
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-white sticky-header">
         <tr> 
+          <th scope="col" class="table-header">Name</th>
           <th scope="col" class="table-header">Description</th>
           <th scope="col" class="table-header">From</th>
           <th scope="col" class="table-header">To</th>
           <th scope="col" class="table-header">Status</th>
-          <th scope="col" class="table-header">Actions</th>
+          <th scope="col" class="table-header text-right">Actions</th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
@@ -39,7 +40,7 @@
   </div>
 
   <!-- Confirmation Modal -->
-  <div data-modal-target="overlay" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden transition-opacity" data-action="click->modal#closeBackground"></div>
+  <div data-modal-target="overlay" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden transition-opacity z-10" data-action="click->modal#closeBackground"></div>
   <div data-modal-target="modal" class="fixed inset-0 z-10 overflow-y-auto hidden">
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
       <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
