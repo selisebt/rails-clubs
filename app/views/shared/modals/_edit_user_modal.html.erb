@@ -1,68 +1,14 @@
-<div id="editModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-[100]">
-<div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
-  <!-- Modal Header -->
-  <div class="px-6 py-4 border-b border-gray-200">
-    <div class="flex items-center justify-between">
-      <h3 class="text-lg font-semibold text-gray-900">Edit User</h3>
-      <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-500">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-  </div>
-  
-  <!-- Modal Body -->
-  <div class="px-6 py-4">
-    <form id="editUserForm">
-      <div class="space-y-6">
-        <!-- Profile Picture Section -->
-        <div class="flex flex-col items-center">
-          <input type="file" id="profilePicture" class="hidden" accept="image/*" onchange="handleProfilePicture(event)">
-          <label for="profilePicture" class="cursor-pointer">
-            <div class="profile-upload flex items-center justify-center overflow-hidden">
-              <div id="profilePreview" class="profile-preview hidden"></div>
-              <div id="uploadPlaceholder" class="flex flex-col items-center">
-                <i class="fas fa-camera text-2xl text-gray-400 mb-2"></i>
-                <span class="text-sm text-gray-500">Upload Photo</span>
-              </div>
-            </div>
-          </label>
-          <button type="button" onclick="removeProfilePicture()" class="mt-2 text-sm text-red-600 hover:text-red-800 hidden" id="removePhotoBtn">
-            Remove photo
-          </button>
-        </div>
-
-        <div class="space-y-4">
-          <div>
-            <label class="form-label">Full Name</label>
-            <input type="text" id="editName" class="form-input">
-          </div>
-          
-          <div>
-            <label class="form-label">Email Address</label>
-            <input type="email" id="editEmail" class="form-input">
-          </div>
-          
-          <div>
-            <label class="form-label">Role</label>
-            <select id="editRole" class="form-input">
-              <option value="User">User</option>
-              <option value="Editor">Editor</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </div>
-        </div>
+<div id="editModal" data-users-index-target="editModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-[100]">
+  <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-gray-200">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-gray-900">Edit User</h3>
+        <button data-action="users-index#closeEditModal" class="text-gray-400 hover:text-gray-500">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
-    </form>
+    </div>
+    <%= turbo_frame_tag 'edit_user' %>
   </div>
-  
-  <!-- Modal Footer -->
-  <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end space-x-3">
-    <button onclick="closeEditModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
-      Cancel
-    </button>
-    <button onclick="submitEdit()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
-      Save Changes
-    </button>
-  </div>
-</div>
 </div> 

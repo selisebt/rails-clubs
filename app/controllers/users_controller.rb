@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all
+    @pagy, @users = pagy(users, limit: 10, request_path: users_path)
+    @roles = Role.all
+
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -16,21 +18,40 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = user
+    respond_to do |format|
+      format.html { render partial: "edit_user", locals: { user: user } }
+    end
+  end
+
+  def delete
+    respond_to do |format|
+      format.html { render partial: "delete_user", locals: { user: user } }
+    end
   end
 
   def update
     user.update!(user_params)
+    @pagy, @users = pagy(users, limit: 10, request_path: users_path)
+    @roles = Role.all
     respond_to do |format|
-      format.html
+      format.html { render :index, layout: false }
       format.json { render json: { done: true } }
     end
   end
 
   def destroy
     user.destroy!
+    @pagy, @users = pagy(users, limit: 10, request_path: users_path)
+    @roles = Role.all
+
     respond_to do |format|
-      format.html
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update("all_users", template: "users/index", layout: false),
+          turbo_stream.update("flash", partial: "shared/flash", locals: { message: "User deleted successfully", type: "success" })
+        ]
+      end
+      format.html { redirect_to users_path, notice: "User deleted successfully" }
       format.json { render json: { done: true } }
     end
   end
@@ -41,7 +62,14 @@ class UsersController < ApplicationController
     @user ||= User.find(params[:id])
   end
 
+  def users
+    User.all
+        .search_by_name(params[:query])
+        .search_by_email(params[:query])
+        .where.not(id: current_user.id)
+  end
+
   def user_params
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :email, :role_id)
   end
 end

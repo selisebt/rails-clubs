@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   devise_for :users, controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations",
@@ -7,11 +9,18 @@ Rails.application.routes.draw do
     invitations: "users/invitations"
   }
 
-  resources :users
+  resource :account_settings, only: [ :show, :update ]
+
+  resources :users do
+    member do
+      get :delete
+    end
+  end
   resources :clubs do
     member do
       get :search_members
       post :add_member
+      delete :delete_member
     end
 
     resources :events
