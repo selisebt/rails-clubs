@@ -1,22 +1,30 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = {
-    url: String
+  static targets = ["form", "input", "results"]
+
+  connect() {
+    this.debounceTimer = null
   }
 
-  perform(event) {
-    const query = event.target.value
-    if (query.length < 2) return
-
-    fetch(`${this.urlValue}?query=${encodeURIComponent(query)}`, {
-      headers: {
-        Accept: "text/html"
+  perform() {
+    clearTimeout(this.debounceTimer)
+    
+    this.debounceTimer = setTimeout(() => {
+      const query = this.inputTarget.value
+      if (query.length >= 2) {
+        fetch(`${this.formTarget.action}?query=${encodeURIComponent(query)}`, {
+          headers: {
+            Accept: "text/html"
+          }
+        })
+        .then(response => response.text())
+        .then(html => {
+          this.resultsTarget.innerHTML = html
+        })
+      } else {
+        this.resultsTarget.innerHTML = ""
       }
-    })
-    .then(response => response.text())
-    .then(html => {
-      document.getElementById("search-results").innerHTML = html
-    })
+    }, 300)
   }
 } 
