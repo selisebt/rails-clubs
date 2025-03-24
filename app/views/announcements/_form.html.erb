@@ -10,67 +10,64 @@
               placeholder: "Title*" %>
         </div>
 
-        <div class="w-[calc(50%-32px)] mt-[16px]">
+        <div class="w-[calc(30%)]">
           <%= f.label :priority, class: "form-label" %>
           <div class="mt-1 w-full">
             <div class="dropdown w-full">
-              <button type="button" onclick="toggleStatusDropdown()" class="form-input w-full flex items-center justify-between">
-                <span id="selectedStatus"><%= event.status&.titleize || 'Select Status' %></span>
+              <button type="button" onclick="togglePriorityDropdown()" class="form-input w-full flex items-center justify-between">
+                <span id="selectedPriority"><%= announcement.priority&.titleize || 'Select Priority' %></span>
                 <i class="fas fa-chevron-down ml-2 text-sm"></i>
               </button>
-              <div id="statusDropdown" class="dropdown-content">
-                <div class="dropdown-item" onclick="selectStatus('draft')">
-                  <i class="fas fa-file-alt mr-3"></i>
-                  <div>
-                    <p class="font-medium">Draft</p>
+              <div id="priorityDropdown" class="dropdown-content">
+                <div class="dropdown-item" onclick="selectPriority('low')">
 
+                  <div>
+                    <p class="font-medium">Low</p>
                   </div>
                 </div>
                 <div class="dropdown-divider"></div>
-                <div class="dropdown-item" onclick="selectStatus('published')">
-                  <i class="fas fa-check-circle mr-3"></i>
-                  <div>
-                    <p class="font-medium">Published</p>
+                <div class="dropdown-item" onclick="selectPriority('medium')">
 
+                  <div>
+                    <p class="font-medium">Medium</p>
                   </div>
                 </div>
                 <div class="dropdown-divider"></div>
-                <div class="dropdown-item" onclick="selectStatus('cancelled')">
-                  <i class="fas fa-times-circle mr-3"></i>
-                  <div>
-                    <p class="font-medium">Cancelled</p>
+                <div class="dropdown-item" onclick="selectPriority('high')">
 
+                  <div>
+                    <p class="font-medium">High</p>
                   </div>
                 </div>
               </div>
-              <%= f.hidden_field :status %>
+              <%= f.hidden_field :priority %>
             </div>
           </div>
         </div>
 
-        <div class="mb-4 w-[30%]">
-          <%= f.label :priority, class: "block text-sm font-medium text-gray-700" %>
-          <div class="mt-1">
-            <%= f.select :priority, 
-                options_for_select([
-                  ['Low', 'low'],
-                  ['Medium', 'medium'],
-                  ['High', 'high']
-                ], announcement.priority),
-                {},
-                class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
-          </div>
-        </div>
+        <div class="w-[30%]">
+          <%= f.label :club_id, "Club", class: "form-label" %>
+          <div class="mt-1 w-full">
+            <div class="dropdown w-full">
+              <button type="button" onclick="toggleClubDropdown()" class="form-input w-full flex items-center justify-between">
+                <span id="selectedClub"><%= announcement.club&.name || 'Select Club' %></span>
+                <i class="fas fa-chevron-down ml-2 text-sm"></i>
+              </button>
+              <div id="clubDropdown" class="dropdown-content">
+                <% Club.all.each do |club| %>
+                  <div class="dropdown-item" onclick="selectClub('<%= club.id %>', '<%= club.name %>')">
 
-        <div class="mb-4 w-[30%]">
-          <%= f.label :club_id, "Club", class: "block text-sm font-medium text-gray-700" %>
-          <div class="mt-1">
-            <%= f.collection_select :club_id, 
-                Club.all, 
-                :id, 
-                :name, 
-                { include_blank: "Select a club" },
-                class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+                    <div>
+                      <p class="font-medium"><%= club.name %></p>
+                    </div>
+                  </div>
+                  <% unless club == Club.last %>
+                    <div class="dropdown-divider"></div>
+                  <% end %>
+                <% end %>
+              </div>
+              <%= f.hidden_field :club_id %>
+            </div>
           </div>
         </div>
 
@@ -96,17 +93,27 @@
 
 
 <script>
-  function toggleStatusDropdown() {
-    document.getElementById("statusDropdown").classList.toggle("show");
+  function togglePriorityDropdown() {
+    document.getElementById("priorityDropdown").classList.toggle("show");
   }
 
-  function selectStatus(status) {
-    document.getElementById("selectedStatus").textContent = status.charAt(0).toUpperCase() + status.slice(1);
-    document.getElementById("event_status").value = status;
-    document.getElementById("statusDropdown").classList.remove("show");
+  function selectPriority(priority) {
+    document.getElementById("selectedPriority").textContent = priority.charAt(0).toUpperCase() + priority.slice(1);
+    document.getElementById("announcement_priority").value = priority;
+    document.getElementById("priorityDropdown").classList.remove("show");
   }
 
-  // Close dropdown when clicking outside
+  function toggleClubDropdown() {
+    document.getElementById("clubDropdown").classList.toggle("show");
+  }
+
+  function selectClub(clubId, clubName) {
+    document.getElementById("selectedClub").textContent = clubName;
+    document.getElementById("announcement_club_id").value = clubId;
+    document.getElementById("clubDropdown").classList.remove("show");
+  }
+
+  // Close dropdowns when clicking outside
   document.addEventListener('click', function(event) {
     if (!event.target.closest('.dropdown')) {
       const dropdowns = document.getElementsByClassName("dropdown-content");
