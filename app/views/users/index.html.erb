@@ -1,216 +1,37 @@
-<style>
-  .table-container {
-    height: calc(100vh - 110px);
-    overflow-y: auto;
-  }
-  
-  .row-checked {
-    background-color: rgba(59, 130, 246, 0.1); /* Light blue background when checked */
-  }
-
-  /* Add these new styles for sticky header */
-  .sticky-header {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: #f8fafc; /* Light gray background for better distinction */
-  }
-
-  /* Update the header cells background to match */
-  thead th {
-    background-color: #f8fafc !important; /* Override the existing bg-gray-50 class */
-  }
-
-  /* Add shadow to header when scrolling */
-  .sticky-header::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent);
-  }
-
-  /* Dropdown styles */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    margin-top: 0.5rem;
-    min-width: 200px;
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    z-index: 50;
-  }
-
-  .dropdown-content.show {
-    display: block;
-  }
-
-  .dropdown-item {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    color: #374151;
-    transition: all 0.2s;
-  }
-
-  .dropdown-item:hover {
-    background-color: #f3f4f6;
-  }
-
-  .dropdown-item:first-child {
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-  }
-
-  .dropdown-item:last-child {
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-  }
-
-  .dropdown-divider {
-    height: 1px;
-    background-color: #e5e7eb;
-  }
-
-  /* Add modal styles */
-  #inviteModal,
-  #csvModal {
-    z-index: 100;
-  }
-
-  /* Optional: Add a fade-in animation */
-  #inviteModal:not(.hidden) {
-    animation: fadeIn 0.2s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* Optional: If you want to ensure the modal content is above the overlay */
-  .modal-content {
-    z-index: 101;
-    position: relative;
-  }
-
-  /* Add styles for profile pictures */
-  .profile-circle {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 9999px;
-    background-size: cover;
-    background-position: center;
-    background-color: #E5E7EB;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #9CA3AF;
-  }
-
-  /* Add styles for profile upload */
-  .profile-upload {
-    width: 8rem;
-    height: 8rem;
-    border-radius: 9999px;
-    border: 2px dashed #E5E7EB;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .profile-upload:hover {
-    border-color: #60A5FA;
-  }
-
-  .profile-preview {
-    width: 100%;
-    height: 100%;
-    border-radius: 9999px;
-    background-size: cover;
-    background-position: center;
-  }
-
-  /* Modal styles */
-  .modal-content {
-    z-index: 101;
-    position: relative;
-  }
-
-  .profile-upload {
-    width: 8rem;
-    height: 8rem;
-    border-radius: 9999px;
-    border: 2px dashed #E5E7EB;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .profile-upload:hover {
-    border-color: #60A5FA;
-  }
-
-  .profile-preview {
-    width: 100%;
-    height: 100%;
-    border-radius: 9999px;
-    background-size: cover;
-    background-position: center;
-  }
-
-  /* Animation for modals */
-  .modal-fade-in {
-    animation: fadeIn 0.2s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-</style>
-
-<div class="container mx-auto px-4 py-8">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-gray-700">All Users</h1>
-    <div class="dropdown">
-      <button type="button" onclick="toggleDropdown()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
-        <i class="fas fa-plus mr-2"></i>
-        Invite User
-        <i class="fas fa-chevron-down ml-2 text-sm"></i>
-      </button>
-      <div id="inviteDropdown" class="dropdown-content">
-        
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item" id="addUserBtn">
-          <i class="fas fa-user-plus mr-3"></i>
-          <div>
-            <div class="font-medium">Add a user</div>
-            <div class="text-sm text-gray-400">Add a single user manually</div>
-          </div>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item" id="csvUploadBtn">
-          <i class="fas fa-file-upload mr-3"></i>
-          <div>
-            <div class="font-medium">CSV Upload</div>
-            <div class="text-sm text-gray-400">Bulk import users via CSV</div>
-          </div>
-        </a>
+<%= turbo_frame_tag 'all_users' do %>
+  <div class="container mx-auto px-4 py-8" data-controller="users-index">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-gray-700">All Users</h1>
+      <div class="dropdown">
+        <button type="button" data-action="users-index#toggleDropdown" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
+          <i class="fas fa-plus mr-2"></i>
+          Invite User
+          <i class="fas fa-chevron-down ml-2 text-sm"></i>
+        </button>
+        <div id="inviteDropdown" data-users-index-target="inviteDropdown" class="dropdown-content">
+          <div class="dropdown-divider"></div>
+          <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openAddUserModal">
+            <i class="fas fa-user-plus mr-3"></i>
+            <div>
+              <div class="font-medium">Add a user</div>
+              <div class="text-sm text-gray-400">Add a single user manually</div>
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openCsvModal">
+            <i class="fas fa-file-upload mr-3"></i>
+            <div>
+              <div class="font-medium">CSV Upload</div>
+              <div class="text-sm text-gray-400">Bulk import users via CSV</div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-<!-- Table -->
-  <div class="bg-white rounded-lg shadow table-container overflow-y-auto">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-white sticky-header"> 
+    <!-- Table -->
+    <div class="bg-white rounded-lg shadow table-container overflow-y-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-white sticky-header">
         <tr>
           <th scope="col" class="table-header">
             Name
@@ -225,296 +46,71 @@
             Action
           </th>
         </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        <% dummy_users = [
-          { name: "Amad uddin usama", email: "amad@example.com", role: "Admin" },
-          { name: "Sarah Johnson", email: "sarah.j@example.com", role: "User" },
-          { name: "Michael Chen", email: "michael.c@example.com", role: "Editor" },
-          { name: "Emily Davis", email: "emily.d@example.com", role: "User" },
-          { name: "James Wilson", email: "james.w@example.com", role: "Admin" },
-          { name: "Lisa Anderson", email: "lisa.a@example.com", role: "Editor" },
-          { name: "David Taylor", email: "david.t@example.com", role: "User" },
-          { name: "Emma Brown", email: "emma.b@example.com", role: "User" },
-          { name: "Robert Martin", email: "robert.m@example.com", role: "Editor" },
-          { name: "Emily Davis", email: "emily.d@example.com", role: "User" },
-          { name: "James Wilson", email: "james.w@example.com", role: "Admin" },
-          { name: "Lisa Anderson", email: "lisa.a@example.com", role: "Editor" },
-          { name: "David Taylor", email: "david.t@example.com", role: "User" },
-          { name: "Emma Brown", email: "emma.b@example.com", role: "User" },
-          { name: "Robert Martin", email: "robert.m@example.com", role: "Editor" },
-          { name: "Emily Davis", email: "emily.d@example.com", role: "User" },
-          { name: "James Wilson", email: "james.w@example.com", role: "Admin" },
-          { name: "Lisa Anderson", email: "lisa.a@example.com", role: "Editor" },
-          { name: "David Taylor", email: "david.t@example.com", role: "User" },
-          { name: "Emma Brown", email: "emma.b@example.com", role: "User" },
-          { name: "Robert Martin", email: "robert.m@example.com", role: "Editor" },
-          { name: "Emily Davis", email: "emily.d@example.com", role: "User" },
-          { name: "James Wilson", email: "james.w@example.com", role: "Admin" },
-          { name: "Lisa Anderson", email: "lisa.a@example.com", role: "Editor" },
-          { name: "David Taylor", email: "david.t@example.com", role: "User" },
-          { name: "Emma Brown", email: "emma.b@example.com", role: "User" },
-          { name: "Robert Martin", email: "robert.m@example.com", role: "Editor" },
-          { name: "Sofia Garcia", email: "sofia.g@example.com", role: "User" }
-        ] %>
-
-        <% dummy_users.each do |user| %>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+        <% @users.each do |user| %>
           <tr class="hover:bg-gray-50 transition-colors duration-200" data-row>
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
-                <div class="profile-circle" style="background-image: url('<%= user[:avatar_url] || '' %>')">
-                  <% if !user[:avatar_url] %>
+                <div class="profile-circle" style="background-image: url(<%= user.attachment&.file&.attached? ?  url_for(user.attachment.file)  : nil %>)">
+                  <% unless user.attachment&.file&.attached? %>
                     <i class="fas fa-user text-xl"></i>
                   <% end %>
                 </div>
                 <div class="ml-4 text-sm font-medium text-gray-900">
-                  <%= user[:name] %>
+                  <%= user.name %>
                 </div>
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <%= user[:email] %>
+              <%= user.email %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">
-              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                <%= user[:role] == 'Admin' ? 'bg-red-100 text-red-800' : 
-                    user[:role] == 'Editor' ? 'bg-yellow-100 text-yellow-800' : 
-                    'bg-green-100 text-green-800' %>">
-                <%= user[:role] %>
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                <%= user.role.name == 'admin' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' %>">
+                <%= user.role.name.capitalize %>
               </span>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
               <div class="flex justify-end space-x-3">
-                <button 
-                  onclick="openEditModal(this)" 
-                  data-name="<%= user[:name] %>"
-                  data-email="<%= user[:email] %>"
-                  data-role="<%= user[:role] %>"
-                  data-avatar="<%= user[:avatar_url] %>"
-                  class="text-blue-600 hover:text-blue-800">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button 
-                  onclick="openDeleteModal(this)"
-                  data-name="<%= user[:name] %>"
-                  class="text-red-600 hover:text-red-800">
-                  <i class="fas fa-trash"></i>
-                </button>
+                <%= link_to edit_user_path(id: user.id),
+                            data: { action: 'users-index#openEditModal', turbo_frame: 'edit_user' },
+                            method: :get,
+                            class: 'text-gray-400 hover:text-gray-500',
+                            title: 'Edit User' do %>
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                  </svg>
+                <% end %>
+                <%= link_to delete_user_path(id: user.id),
+                            data: { action: 'users-index#openDeleteModal', turbo_frame: 'delete_user' },
+                            method: :get,
+                            class: 'text-gray-400 hover:text-red-500',
+                            title: 'Delete User' do %>
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                <% end %>
               </div>
             </td>
           </tr>
         <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-4 flex justify-center">
+      <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+    </div>
+
+    <!-- Render modals -->
+    <div id="inviteModal" data-users-index-target="inviteModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-[100]">
+      <%= render partial: 'shared/modals/invite_user_modal' %>
+    </div>
+    <%= render partial: 'shared/modals/csv_upload_modal' %>
+    <%= render partial: 'shared/modals/edit_user_modal' %>
+    <%= render partial: 'shared/modals/delete_user_modal' %>
+    <%= render partial: 'shared/modals/add_user_modal' %>
   </div>
-</div>
-
-<!-- Render modals -->
-<div id="inviteModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-[100]">
-<%= render partial: 'shared/modals/invite_user_modal' %>
-</div>
-<%= render partial: 'shared/modals/csv_upload_modal' %>
-<%= render partial: 'shared/modals/edit_user_modal' %>
-<%= render partial: 'shared/modals/delete_user_modal' %>
-<%= render partial: 'shared/modals/add_user_modal' %>
-
-<!-- Add JavaScript -->
-<script>
-  // Modal functions
-  window.openModal = function() {
-    document.getElementById('inviteModal').classList.remove('hidden');
-    document.getElementById('inviteDropdown').classList.remove('show');
-  }
-
-  window.closeModal = function() {
-    document.getElementById('inviteModal').classList.add('hidden');
-  }
-
-  window.openCsvModal = function() {
-    document.getElementById('csvModal').classList.remove('hidden');
-    document.getElementById('inviteDropdown').classList.remove('show');
-  }
-
-  window.closeCsvModal = function() {
-    document.getElementById('csvModal').classList.add('hidden');
-    removeFile();
-  }
-
-  window.removeFile = function() {
-    const fileInput = document.getElementById('fileInput');
-    const dropContent = document.getElementById('dropContent');
-    const fileInfo = document.getElementById('fileInfo');
-    
-    if (fileInput) fileInput.value = '';
-    if (dropContent) dropContent.classList.remove('hidden');
-    if (fileInfo) fileInfo.classList.add('hidden');
-  }
-
-  window.submitCsvUpload = function() {
-    const fileInput = document.getElementById('fileInput');
-    if (!fileInput.files[0]) {
-      alert('Please select a CSV file first');
-      return;
-    }
-    // Add your CSV upload logic here
-    alert('CSV uploaded successfully!');
-    closeCsvModal();
-  }
-
-  // Initialize event listeners
-  document.addEventListener('DOMContentLoaded', function() {
-    // Invite One User button
-    
-
-    // CSV Upload button
-    const csvUploadBtn = document.getElementById('csvUploadBtn');
-    if (csvUploadBtn) {
-      csvUploadBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        openCsvModal();
-      });
-    }
-
-    // CSV drag and drop functionality
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-
-    if (dropZone) {
-      dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('border-blue-500');
-      });
-
-      dropZone.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('border-blue-500');
-      });
-
-      dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('border-blue-500');
-        const file = e.dataTransfer.files[0];
-        if (file && file.name.endsWith('.csv')) {
-          fileInput.files = e.dataTransfer.files;
-          showFileInfo(file);
-        } else {
-          alert('Please upload a CSV file');
-        }
-      });
-    }
-
-    if (fileInput) {
-      fileInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          showFileInfo(file);
-        }
-      });
-    }
-
-    // Close modals when clicking outside
-    window.onclick = function(event) {
-      if (event.target.classList.contains('fixed')) {
-        if (event.target.id === 'inviteModal') closeModal();
-        if (event.target.id === 'csvModal') closeCsvModal();
-      }
-    };
-  });
-
-  function showFileInfo(file) {
-    const dropContent = document.getElementById('dropContent');
-    const fileInfo = document.getElementById('fileInfo');
-    const fileName = document.getElementById('fileName');
-    
-    dropContent.classList.add('hidden');
-    fileInfo.classList.remove('hidden');
-    fileName.textContent = file.name;
-  }
-
-  // Dropdown toggle
-  window.toggleDropdown = function() {
-    document.getElementById("inviteDropdown").classList.toggle("show");
-  }
-
-  // Close dropdown when clicking outside
-  document.addEventListener('click', function(event) {
-    if (!event.target.closest('.dropdown')) {
-      const dropdowns = document.getElementsByClassName("dropdown-content");
-      Array.from(dropdowns).forEach(dropdown => {
-        if (dropdown.classList.contains('show')) {
-          dropdown.classList.remove('show');
-        }
-      });
-    }
-  });
-
-  window.openEditModal = function(button) {
-    const name = button.dataset.name;
-    const email = button.dataset.email;
-    const role = button.dataset.role;
-    const avatarUrl = button.dataset.avatar;
-    
-    document.getElementById('editName').value = name;
-    document.getElementById('editEmail').value = email;
-    document.getElementById('editRole').value = role;
-    
-    if (avatarUrl) {
-      handleProfilePicturePreview(avatarUrl);
-    }
-    
-    document.getElementById('editModal').classList.remove('hidden');
-  }
-
-  window.closeEditModal = function() {
-    document.getElementById('editModal').classList.add('hidden');
-  }
-
-  window.openDeleteModal = function(button) {
-    const name = button.dataset.name;
-    document.getElementById('deleteUserName').textContent = name;
-    document.getElementById('deleteModal').classList.remove('hidden');
-  }
-
-  window.closeDeleteModal = function() {
-    document.getElementById('deleteModal').classList.add('hidden');
-  }
-
-  window.handleProfilePicture = function(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        handleProfilePicturePreview(e.target.result);
-      }
-      reader.readAsDataURL(file);
-    }
-  }
-
-  window.handleProfilePicturePreview = function(imageUrl) {
-    const preview = document.getElementById('profilePreview');
-    const placeholder = document.getElementById('uploadPlaceholder');
-    const removeBtn = document.getElementById('removePhotoBtn');
-    
-    if (imageUrl) {
-      preview.style.backgroundImage = `url(${imageUrl})`;
-      preview.classList.remove('hidden');
-      placeholder.classList.add('hidden');
-      removeBtn.classList.remove('hidden');
-    } else {
-      removeProfilePicture();
-    }
-  }
-
-  window.removeProfilePicture = function() {
-    const input = document.getElementById('profilePicture');
-    const preview = document.getElementById('profilePreview');
-    const placeholder = document.getElementById('uploadPlaceholder');
-    const removeBtn = document.getElementById('removePhotoBtn');
-    
-    input.value = '';
-    preview.style.backgroundImage = '';
-    preview.classList.add('hidden');
-    placeholder.classList.remove('hidden');
-    removeBtn.classList.add('hidden');
-  }
-</script>
+<% end %>
