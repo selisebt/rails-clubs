@@ -96,4 +96,7 @@ RSpec.configure do |config|
   config.after do
     DatabaseCleaner.clean
   end
+
+  # Add Devise test helpers
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end
