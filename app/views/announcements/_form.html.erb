@@ -1,24 +1,16 @@
-<%= form_with(model: announcement, class: "space-y-8 divide-y divide-gray-200") do |f| %>
-  <div class="space-y-8 divide-y divide-gray-200">
-    <div>
-      <div>
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-          <%= announcement.new_record? ? "New Announcement" : "Edit Announcement" %>
-        </h3>
-        <p class="mt-1 text-sm text-gray-500">
-          <%= announcement.new_record? ? "Create a new announcement." : "Update the announcement details." %>
-        </p>
-      </div>
+<%= form_with(model: announcement, class: "space-y-8") do |f| %>
+  <div class="space-y-8 ">
 
-      <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-        <div class="sm:col-span-4">
-          <%= f.label :message, class: "block text-sm font-medium text-gray-700" %>
-          <div class="mt-1">
-            <%= f.text_area :message, rows: 3, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
-          </div>
+      <div class="flex flex-wrap w-full justify-between">
+
+        <div class="mb-4 w-[calc(40%-32px)] ">
+          <%= f.label :title, class: "form-label" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", 
+              class: "form-input",
+              placeholder: "Title*" %>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="mb-4 w-[30%]">
           <%= f.label :priority, class: "block text-sm font-medium text-gray-700" %>
           <div class="mt-1">
             <%= f.select :priority, 
@@ -32,7 +24,7 @@
           </div>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="mb-4 w-[30%]">
           <%= f.label :club_id, "Club", class: "block text-sm font-medium text-gray-700" %>
           <div class="mt-1">
             <%= f.collection_select :club_id, 
@@ -43,8 +35,17 @@
                 class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
           </div>
         </div>
+
+        <div class="w-[calc(60%-16px)]">
+          <%= f.label :message, class: "form-label" %>
+          <div class="mt-1">
+            <%= f.text_area :message, rows: 3, class: "form-input" %>
+          </div>
+        </div>
+
+        
       </div>
-    </div>
+
   </div>
 
   <div class="pt-5">
