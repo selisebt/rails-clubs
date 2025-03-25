@@ -75,7 +75,7 @@ This will create a docker container with the name `cst-clubhouse` and run the `t
   rails s -b 0.0.0.0
 ```
 
-### Useful `git` commands (not to run inside container)
+## Useful `git` commands (not to run inside container)
 
 The following commands are useful when working with `git` for this workshop:
 
