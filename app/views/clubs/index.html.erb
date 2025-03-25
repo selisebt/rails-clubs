@@ -3,14 +3,14 @@
     <div class="flex justify-between items-center mb-8 bg-white rounded-lg p-[16px] shadow-sm">
 
       <div class="flex items-center">
-            <div class="icon-style">
-                <i class="fas fa-chart-line text-white"></i>
-              </div>
-            <div class="ml-4">
-            <h2 class="text-lg font-medium text-gray-800 ">Clubs</h2>
-            <p class=" text-sm text-gray-500">List of all the clubs</p>
-            </div>
-          </div>
+        <div class="icon-style">
+          <i class="fas fa-chart-line text-white"></i>
+        </div>
+        <div class="ml-4">
+          <h2 class="text-lg font-medium text-gray-800 ">Clubs</h2>
+          <p class=" text-sm text-gray-500">List of all the clubs</p>
+        </div>
+      </div>
 
       <% if @clubs.size > 0 %>
         <%= link_to new_club_path, class: "btn-primary w-fit flex items-center" do %>
@@ -49,12 +49,12 @@
               <div class="bg-blue-300 text-white px-6 py-2 rounded-md transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                 <div class="flex space-x-2">
 
-                  <%= link_to club_path(club), class:"relative overflow-hidden" do %>
+                  <%= link_to club_path(club), class: "relative overflow-hidden" do %>
                     <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 group">
                       <i class="fas fa-eye text-gray-500 transition-all duration-300 group-hover:text-white"></i>
                     </div>
                   <% end %>
-                  <%= link_to edit_club_path(club), class: "relative overflow-hidden" do %>
+                  <%= link_to edit_club_path(club, cancel_path: clubs_path), class: "relative overflow-hidden" do %>
                     <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 group">
                       <i class="fas fa-edit text-gray-500 transition-all duration-300 group-hover:text-white"></i>
                     </div>
