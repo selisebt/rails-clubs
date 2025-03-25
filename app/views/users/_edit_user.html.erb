@@ -5,10 +5,12 @@
       <%= f.hidden_field :id, data: { users_index_target: "editUserId" } %>
       <div class="space-y-6">
         <!-- Profile Picture Section -->
-        <div class="flex flex-col items-center">
-          <div class="profile-upload" style="background-image: url(<%= user.attachment&.file&.attached? ?  url_for(user.attachment.file)  : nil %>)">
+        <div class="flex flex-col items-center justify-center">
+          <div class="profile-upload bg-cover" style="background-image: url(<%= user.attachment&.file&.attached? ?  url_for(user.attachment.file)  : nil %>)">
             <% unless user.attachment&.file&.attached? %>
-              <i class="fas fa-user text-xl"></i>
+              <div class="bg-gray-100 w-full h-full flex items-center justify-center rounded-full">
+              <i class="fas fa-user text-[30px] text-gray-400"></i>
+              </div>
             <% end %>
           </div>
         </div>
@@ -28,7 +30,9 @@
 
           <div>
             <label class="form-label">Role</label>
-            <%= f.select :role, Role.all.map { |role| [ role.name.titleize, role.id ] }, {}, data: { users_index_target: "editRole" }, class: "form-input" %>
+            <div class="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 text-gray-500 sm:text-sm p-2">
+              <%= user.role.name&.titleize %>
+            </div>
           </div>
         </div>
       </div>
