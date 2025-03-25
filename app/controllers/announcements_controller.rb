@@ -25,11 +25,10 @@ class AnnouncementsController < ApplicationController
   end
 
   def create
-    announcement = Announcement.new(announcement_params)
     @club = club
     @announcements = club.announcements
     respond_to do |format|
-      if announcement.save
+      if Announcements::CreateAnnouncement.new(announcement_params).create
         flash.now[:notice] = "Announcement created successfully."
         format.turbo_stream do
           render turbo_stream: [
@@ -39,7 +38,7 @@ class AnnouncementsController < ApplicationController
         end
         format.json { render json: { done: true } }
       else
-        flash.now[:error] = announcement.errors.full_messages.join(", ")
+        flash.now[:error] = "Please check your input."
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.update("main-container", template: "announcements/index"),
