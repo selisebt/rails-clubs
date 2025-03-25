@@ -7,6 +7,116 @@ roles.each do |role_name|
 end
 puts "Roles created successfully!"
 
+puts "Creating Permissions..."
+
+permissions = [
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'user',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true,
+      'self_update': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'club',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'event',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'announcement',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'club_member',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'user',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false,
+      'self_update': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'club',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'event',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'announcement',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'club_member',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false
+    }
+  }
+]
+permissions.each do |permission|
+  Permission.find_or_create_by!(permission)
+end
+
 puts "Creating an admin user..."
 User.create!(
   email: 'td@selisegroup.com',
