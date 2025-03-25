@@ -1,4 +1,62 @@
+<<<<<<< Updated upstream
 email,name
 kw2@selisegroup.com,Kinely Wangchuk
 kc@selisegroup.com,Khushant Chhetri
 tna@selisegroup.com,Tek Nath
+=======
+email,name,role_id
+kw13@selisegroup.com,Kinely Wangchuk,9
+kc1@selisegroup.com,Khushant Chhetri,10
+tna@selisegroup.com,Tek Nath,11
+sp1@selisegroup.com,Sonam Penjor,9
+jd1@selisegroup.com,Jigme Dorji,10
+pd2@selisegroup.com,Pema Dorji,11
+km3@selisegroup.com,Karma Mothey,9
+sb4@selisegroup.com,Sonam Bhutia,10
+np5@selisegroup.com,Nima Penjor,11
+kp6@selisegroup.com,Karma Phuntsho,9
+td7@selisegroup.com,Tenzing Dorji,10
+nd8@selisegroup.com,Namgay Dorji,11
+lk9@selisegroup.com,Leytshen Khandu,9
+pb10@selisegroup.com,Pema Bidha,10
+km11@selisegroup.com,Kezang Moni,11
+jd12@selisegroup.com,Jangchuk Dorji,9
+tp13@selisegroup.com,Tshering Penjor,10
+np14@selisegroup.com,Norbu Phuntsho,11
+kk15@selisegroup.com,Kezang Khandu,9
+sd16@selisegroup.com,Sonam Dema,10
+lg17@selisegroup.com,Lekzin Gyeltshen,11
+bt18@selisegroup.com,Bhutan Tenzin,9
+pw19@selisegroup.com,Pema Wangdi,10
+kt20@selisegroup.com,Kezang Tobgay,11
+td21@selisegroup.com,Tandin Dorji,9
+nm22@selisegroup.com,Nima Moni,10
+ps23@selisegroup.com,Pema Seldon,11
+sb24@selisegroup.com,Sonam Bidha,9
+tp25@selisegroup.com,Tashi Phuntsho,10
+ts26@selisegroup.com,Tshomo Seldon,11
+rg27@selisegroup.com,Rigzin Gyeltshen,9
+kt28@selisegroup.com,Kezang Tshering,10
+pm29@selisegroup.com,Pema Moni,11
+jd30@selisegroup.com,Jigme Dema,9
+ks31@selisegroup.com,Karma Seldon,10
+kp32@selisegroup.com,Karma Phuntsho,11
+sp33@selisegroup.com,Sonam Penjor,9
+sd34@selisegroup.com,Sonam Dema,10
+np35@selisegroup.com,Norbu Penjor,11
+pd36@selisegroup.com,Pema Dorji,9
+kk37@selisegroup.com,Kezang Khandu,10
+tp38@selisegroup.com,Tshering Penjor,11
+np39@selisegroup.com,Nima Penjor,9
+jd40@selisegroup.com,Jigme Dorji,10
+pb41@selisegroup.com,Pema Bidha,11
+kp42@selisegroup.com,Karma Phuntsho,9
+td43@selisegroup.com,Tandin Dorji,10
+nd44@selisegroup.com,Namgay Dorji,11
+lk45@selisegroup.com,Leytshen Khandu,9
+ps46@selisegroup.com,Pema Seldon,10
+ts47@selisegroup.com,Tshomo Seldon,11
+kt48@selisegroup.com,Kezang Tobgay,9
+nm49@selisegroup.com,Nima Moni,10
+lg50@selisegroup.com,Lekzin Gyeltshen,11
+>>>>>>> Stashed changes
