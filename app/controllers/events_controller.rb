@@ -16,7 +16,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = @club.events.build
+    @event = @club.events.build(status: 'scheduled')
     respond_to do |format|
       format.html { render :new, layout: "application" }
     end
