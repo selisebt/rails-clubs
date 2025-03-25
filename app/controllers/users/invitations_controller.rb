@@ -2,7 +2,7 @@ class Users::InvitationsController < Devise::InvitationsController
   def create
     if params[:csv]
       csv_data = params[:csv].read
-      BulkInviteUsersJob.perform_now(csv_data, current_user.id)
+      BulkInviteUsersJob.perform_later(csv_data, current_user.id)
 
       @pagy, @users = pagy(User.where.not(id: current_user.id), limit: 10, request_path: users_path)
       @roles = Role.all
