@@ -49,7 +49,7 @@ class AnnouncementsController < ApplicationController
   private
 
   def announcement_params
-    params.require(:announcement).permit(:message, :priority, :club_id)
+    params.require(:announcement).permit(:title, :message, :priority, :club_id)
   end
 
   def announcement
