@@ -4,7 +4,6 @@ class BulkInviteUsersJob < ApplicationJob
   def perform(csv_data, inviter_id)
     require "csv"
 
-
     CSV.parse(csv_data, headers: true, skip_blanks: true) do |row|
       email = row["email"]&.strip
       name = row["name"]&.strip
