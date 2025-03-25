@@ -30,7 +30,9 @@
 
           <div>
             <label class="form-label">Role</label>
-            <%= f.select :role, Role.all.map { |role| [ role.name.titleize, role.id ] }, {}, data: { users_index_target: "editRole" }, class: "form-input" %>
+            <div class="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 text-gray-500 sm:text-sm p-2">
+              <%= user.role.name&.titleize %>
+            </div>
           </div>
         </div>
       </div>
