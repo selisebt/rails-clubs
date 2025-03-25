@@ -97,3 +97,26 @@ Run these commands in the project folder.
 
 3. TODO: Reset all changes
 
+
+## Branches
+
+The following branches are available in the project:
+
+1. `main` - The main branch of the project
+2. `feature/rails-setup-0` - Rails setup
+3. `feature/devise-setup-1` - Devise setup
+4. `feature/db-models-2` - Database models
+5. `feature/user-management-3` - User management
+6. `feature/fe/user-management-4` - User management frontend
+7. `feature/clubs-5` - Clubs
+8. `feature/fe/clubs-6` - Clubs frontend
+9. `feature/club-api-tests-7` - Club API tests
+10. `feature/announcements-8` - Announcements
+11. `feature/fe/announcements-9` - Announcements frontend
+12. `feature/events-10` - Events
+13. `feature/fe/events-11` - Events frontend
+14. `feature/event-reminder-12` - Event remainder
+15. `feature/budgeting-13` - Budgeting
+16. `feature/fe/budgeting-14` - Budgeting frontend
+17. `feature/containerization-15` - Containerization
+18. `feature/CICD-16` - CI/CD
