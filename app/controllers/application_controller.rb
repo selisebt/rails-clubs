@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   include ErrorHandler
+  include Permissions
   include Pagy::Backend
   helper Pagy::Frontend
 
