@@ -5,10 +5,12 @@
       <%= f.hidden_field :id, data: { users_index_target: "editUserId" } %>
       <div class="space-y-6">
         <!-- Profile Picture Section -->
-        <div class="flex flex-col items-center">
-          <div class="profile-upload" style="background-image: url(<%= user.attachment&.file&.attached? ?  url_for(user.attachment.file)  : nil %>)">
+        <div class="flex flex-col items-center justify-center">
+          <div class="profile-upload bg-cover" style="background-image: url(<%= user.attachment&.file&.attached? ?  url_for(user.attachment.file)  : nil %>)">
             <% unless user.attachment&.file&.attached? %>
-              <i class="fas fa-user text-xl"></i>
+              <div class="bg-gray-100 w-full h-full flex items-center justify-center rounded-full">
+              <i class="fas fa-user text-[30px] text-gray-400"></i>
+              </div>
             <% end %>
           </div>
         </div>

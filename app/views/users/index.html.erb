@@ -4,7 +4,7 @@
       <h1 class="text-3xl font-bold text-gray-700">All Users</h1>
       <%= form_with url: users_path, method: :get, class: "flex items-center space-x-2", data: { turbo_frame: "all_users", turbo_action: "advance" } do |f| %>
         <div class="relative">
-          <%= f.text_field :query, 
+          <%= f.text_field :query,
               value: params[:query],
               class: "form-input pl-10 w-64",
               placeholder: "Search users...",
