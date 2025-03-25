@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def index
+    permit!(current_user, "user", "read")
     @pagy, @users = pagy(users, limit: 10, request_path: users_path)
     @roles = Role.all
 
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    permit!(current_user, "user", "read")
     @user = user
     respond_to do |format|
       format.html
@@ -21,18 +23,21 @@ class UsersController < ApplicationController
   end
 
   def edit
+    permit!(current_user, "user", "update")
     respond_to do |format|
       format.html { render partial: "edit_user", locals: { user: user } }
     end
   end
 
   def delete
+    permit!(current_user, "user", "delete")
     respond_to do |format|
       format.html { render partial: "delete_user", locals: { user: user } }
     end
   end
 
   def update
+    permit!(current_user, "user", "update")
     user.update!(user_params)
     @pagy, @users = pagy(users, limit: 10, request_path: users_path)
     @roles = Role.all
@@ -43,6 +48,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    permit!(current_user, "user", "delete")
     user.destroy!
     @pagy, @users = pagy(users, limit: 10, request_path: users_path)
     @roles = Role.all

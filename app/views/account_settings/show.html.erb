@@ -1,27 +1,27 @@
 <div class="p-[24px] pb-0 bg-gray-50">
 
-    <div class="flex justify-between items-center mb-6 bg-white rounded-lg shadow py-[24px] px-[18px]">
-      <div class="icon-style">
-        <i class="fa fa-gear text-white"></i>
-      </div>
-      <div class="flex-1 mx-[12px]">
-        <h1 class="text-2xl font-semibold text-gray-600">Account Settings</h1>
-        <p class="text-sm text-gray-500">Set you account</p>
-      </div>
-      
+  <div class="flex justify-between items-center mb-6 bg-white rounded-lg shadow py-[24px] px-[18px]">
+    <div class="icon-style">
+      <i class="fa fa-gear text-white"></i>
     </div>
+    <div class="flex-1 mx-[12px]">
+      <h1 class="text-2xl font-semibold text-gray-600">Account Settings</h1>
+      <p class="text-sm text-gray-500">Set you account</p>
+    </div>
+
+  </div>
   <div class="w-full space-x-[16px] flex">
     <div class="bg-white rounded overflow-hidden w-[40%]">
       <div class="px-6 py-8">
-          <div class="flex justify-between items-center mb-6 ">
-            <div class="icon-style">
-              <i class="fa fa-address-card text-white"></i>
-            </div>
-            <div class="flex-1 mx-[12px]">
-            <h3 class="text-xl font-semibold text-gray-500">Profile</h1>
-  </div>
+        <div class="flex justify-between items-center mb-6 ">
+          <div class="icon-style">
+            <i class="fa fa-address-card text-white"></i>
+          </div>
+          <div class="flex-1 mx-[12px]">
+            <h3 class="text-xl font-semibold text-gray-500">Profile</h3>
+          </div>
         </div>
-       
+
         <%= form_with(model: @user, url: account_settings_path, method: :patch, data: { turbo: false }, class: "space-y-6") do |f| %>
           <% if @user.errors.any? %>
             <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
@@ -49,16 +49,16 @@
             <div data-controller="profile-image" class="w-full items-center flex flex-col justify-center">
               <div class="relative cursor-pointer group" data-action="click->profile-image#triggerFileInput">
                 <% if @user.attachment&.file&.attached? %>
-                  <%= image_tag @user.attachment.file, 
-                      class: "w-32 h-32 rounded-full object-cover transition-transform duration-300 group-hover:scale-110",
-                      data: { profile_image_target: "preview" } %>
+                  <%= image_tag @user.attachment.file,
+                                class: "w-32 h-32 rounded-full object-cover transition-transform duration-300 group-hover:scale-110",
+                                data: { profile_image_target: "preview" } %>
                 <% else %>
                   <div class="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                        data-profile-image-target="iconContainer">
                     <i class="fas fa-user text-3xl text-gray-400"></i>
                   </div>
                 <% end %>
-                
+
                 <div class="absolute inset-0 flex items-center justify-center rounded-full bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <i class="fas fa-camera text-2xl text-white"></i>
                 </div>
@@ -73,17 +73,17 @@
                     </div>
                     <div class="">
                       <%= attachment_form.file_field :file,
-                          class: "hidden block w-full text-sm text-gray-500
+                                                     class: "hidden block w-full text-sm text-gray-500
                                  file:mr-4 file:py-2 file:px-4
                                  file:rounded-full file:border-0
                                  file:text-sm file:font-semibold
                                  file:bg-indigo-50 file:text-indigo-700
                                  hover:file:bg-indigo-100",
-                          accept: "image/*",
-                          data: {
-                            profile_image_target: "input",
-                            action: "change->profile-image#preview"
-                          } %>
+                                                     accept: "image/*",
+                                                     data: {
+                                                       profile_image_target: "input",
+                                                       action: "change->profile-image#preview"
+                                                     } %>
                     </div>
                   </div>
                 <% end %>
@@ -91,11 +91,18 @@
             </div>
           </div>
           <div>
-          <label class="form-label">Email</label>
-          <div class="form-input border-none text-gray-400 bg-gray-50">
-            <%= @user.email %>
+            <label class="form-label">Email</label>
+            <div class="form-input border-none text-gray-400 bg-gray-50">
+              <%= @user.email %>
+            </div>
           </div>
-        </div>
+          <div>
+            <label class="form-label">Role</label>
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+              <%= @user.role.name == 'admin' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' %>">
+              <%= @user.role.name.capitalize %>
+            </span>
+          </div>
           <div class="w-full">
             <%= f.label :name, class: "form-label" %>
             <%= f.text_field :name, class: "form-input" %>
@@ -109,14 +116,15 @@
     </div>
 
     <div class="bg-white rounded overflow-hidden w-[calc(60%-16px)] p-[16px]">
-    <div class="flex justify-between items-center mb-6 ">
-          <div class="icon-style">
-             <i class="fa fa-address-card text-white"></i>
-          </div>
-          <div class="flex-1 mx-[12px]">
-          <h3 class="text-xl font-semibold text-gray-500">Clubs</h1>
-          <p class="text-[14px] font-semibold text-gray-400">List of clubs you are a member of<p>
-</div>
+      <div class="flex justify-between items-center mb-6 ">
+        <div class="icon-style">
+          <i class="fa fa-address-card text-white"></i>
+        </div>
+        <div class="flex-1 mx-[12px]">
+          <h3 class="text-xl font-semibold text-gray-500">Clubs</h3>
+          <p class="text-[14px] font-semibold text-gray-400">List of clubs you are a member of
+          <p>
+        </div>
       </div>
       <div class="flex flex-col items-center justify-center h-[400px] p-6">
         <i class="fas fa-clock text-4xl text-gray-300 mb-4"></i>
