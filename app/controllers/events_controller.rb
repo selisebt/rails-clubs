@@ -4,16 +4,28 @@ class EventsController < ApplicationController
 
   def index
     @events = @club.events.order(from: :asc)
+    respond_to do |format|
+      format.html { render :index, layout: "application" }
+    end
   end
 
   def show
+    respond_to do |format|
+      format.html { render :show, layout: "application" }
+    end
   end
 
   def new
     @event = @club.events.build
+    respond_to do |format|
+      format.html { render :new, layout: "application" }
+    end
   end
 
   def edit
+    respond_to do |format|
+      format.html { render :edit, layout: "application" }
+    end
   end
 
   def create
