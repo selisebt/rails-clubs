@@ -1,46 +1,128 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-#
 
-puts "Cleaning up existing data..."
-ActiveRecord::Base.connection.execute("DELETE FROM memberships")
-ActiveRecord::Base.connection.execute("DELETE FROM clubs")
-ActiveRecord::Base.connection.execute("DELETE FROM users")
-ActiveRecord::Base.connection.execute("DELETE FROM roles")
-puts "Cleanup completed."
+puts "Creating Roles..."
+roles = ['admin', 'member']
+roles.each do |role_name|
+  puts "Seeding role: #{role_name}"
+  Role.find_or_create_by!(name: role_name)
+end
+puts "Roles created successfully!"
 
-puts "Creating new roles..."
-admin_role = Role.create!(
-  name: 'admin'
-)
+puts "Creating Permissions..."
 
-member_role = Role.create!(
-  name: 'member'
-)
+permissions = [
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'user',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true,
+      'self_update': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'club',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'event',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'announcement',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'admin'),
+    resource: 'club_member',
+    actions: {
+      'create': true,
+      'read': true,
+      'update': true,
+      'delete': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'user',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false,
+      'self_update': true
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'club',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'event',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'announcement',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false
+    }
+  },
+  {
+    role: Role.find_by(name: 'member'),
+    resource: 'club_member',
+    actions: {
+      'create': false,
+      'read': true,
+      'update': false,
+      'delete': false
+    }
+  }
+]
+permissions.each do |permission|
+  Permission.find_or_create_by!(permission)
+end
 
-puts "Creating admin user..."
+puts "Creating an admin user..."
 User.create!(
   email: 'td@selisegroup.com',
   name: 'Thinley Jimmy Dorji',
   password: 'password123',
   password_confirmation: 'password123',
-  role_id: admin_role.id
+  role_id: Role.find_by(name: 'admin').id
 )
-
-puts "Seed completed successfully!"
+puts "User seed completed successfully!"
