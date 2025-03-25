@@ -1,3 +1,11 @@
+<style>
+  .card:hover i {
+    color: gray !important;
+  }
+  .card:hover .icon-container:hover i {
+    color: white !important;
+  }
+</style>
 <div class="min-h-screen bg-gray-50 p-[24px]" data-controller="modal">
   <div class="">
     <div class="flex justify-between items-center mb-8 bg-white rounded-lg p-[16px] shadow-sm">
@@ -25,13 +33,29 @@
     <% if @clubs.any? %>
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <% @clubs.each do |club| %>
-          <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-all duration-300 relative group">
-            <div class="p-6 transition-all duration-300 group-hover:blur-sm">
-              <div class="flex items-center justify-between">
-                <h3 class="text-lg font-medium text-gray-900">
-                  <%= link_to club.name, club_path(club), class: "hover:text-indigo-600" %>
-                </h3>
+          <div class="card bg-white overflow-hidden shadow rounded-lg transition-all duration-100 relative group hover:border-2 hover:border-blue-300">
+            <!-- Top right action buttons - Modified z-index and positioning -->
+            <div class="absolute top-2 right-2 z-10 invisible group-hover:visible transition-all duration-100">
+              <div class="flex space-x-2">
+                <%= link_to edit_club_path(club, cancel_path: clubs_path), class: "relative" do %>
+                  <div class="icon-container w-8 h-8 flex items-center justify-center rounded-lg bg-white shadow-md hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 group">
+                    <i class="fas fa-edit text-gray-500 group-hover:text-white"></i>
+                  </div>
+                <% end %>
+                <div class="relative">
+                  <button type="button" class="icon-container w-8 h-8 flex items-center justify-center rounded-lg bg-white shadow-md hover:bg-gradient-to-r hover:from-red-400 hover:to-red-600 group" data-action="modal#open" data-club-id="<%= club.id %>">
+                    <i class="fas fa-trash text-gray-500 group-hover:text-white"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
 
+            <!-- Main content -->
+            <%= link_to club_path(club), class: "block p-6" do %>
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-medium text-gray-900 hover:text-indigo-600">
+                  <%= club.name %>
+                </h3>
               </div>
 
               <p class="mt-2 text-sm text-gray-500 line-clamp-3">
@@ -44,29 +68,7 @@
                 </svg>
                 <%= pluralize(club.users.count, 'member') %>
               </div>
-            </div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="bg-blue-300 text-white px-6 py-2 rounded-md transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                <div class="flex space-x-2">
-
-                  <%= link_to club_path(club), class: "relative overflow-hidden" do %>
-                    <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 group">
-                      <i class="fas fa-eye text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    </div>
-                  <% end %>
-                  <%= link_to edit_club_path(club, cancel_path: clubs_path), class: "relative overflow-hidden" do %>
-                    <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 group">
-                      <i class="fas fa-edit text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    </div>
-                  <% end %>
-                  <div class="relative overflow-hidden">
-                    <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent transition-all duration-300 hover:bg-gradient-to-r hover:from-red-400 hover:to-red-600 group" data-action="modal#open" data-club-id="<%= club.id %>">
-                      <i class="fas fa-trash text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <% end %>
           </div>
         <% end %>
       </div>
