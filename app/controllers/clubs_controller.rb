@@ -4,6 +4,7 @@ class ClubsController < ApplicationController
   before_action :set_club, only: %i[show edit update destroy search_members add_member]
 
   def index
+    permit!(current_user, "club", "read")
     @clubs = current_user.clubs
     respond_to do |format|
       format.html { render :index, layout: "application" }
@@ -12,6 +13,7 @@ class ClubsController < ApplicationController
   end
 
   def show
+    permit!(current_user, "club", "read")
     respond_to do |format|
       format.html { render :show, layout: "application" }
       format.json { render json: @club, include: :users }
@@ -19,6 +21,7 @@ class ClubsController < ApplicationController
   end
 
   def new
+    permit!(current_user, "club", "create")
     @club = Club.new
     respond_to do |format|
       format.html { render :new, layout: "application" }
@@ -26,13 +29,14 @@ class ClubsController < ApplicationController
   end
 
   def edit
+    permit!(current_user, "club", "update")
     respond_to do |format|
       format.html { render :edit, layout: "application" }
     end
   end
 
   def create
-    raise StandardError, "You are not authorized to create a club" unless [ "admin" ].include?(current_user.role.name)
+    permit!(current_user, "club", "create")
     @club = Club.new(club_params)
 
     respond_to do |format|
@@ -42,7 +46,7 @@ class ClubsController < ApplicationController
           user_id: current_user.id
         )
         @clubs = current_user.clubs
-        flash[:notice] = "Club created successfully."
+        flash.now[:notice] = "Club created successfully."
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.update("main-container", template: "clubs/index"),
@@ -51,7 +55,7 @@ class ClubsController < ApplicationController
         end
         format.json { render json: @club, status: :created, include: :users }
       else
-        flash[:error] = @club.errors.full_messages.join(", ")
+        flash.now[:error] = @club.errors.full_messages.join(", ")
         format.html { render :new, layout: "application" }
         format.json { render json: @club.errors, status: :unprocessable_entity }
       end
@@ -59,8 +63,9 @@ class ClubsController < ApplicationController
   end
 
   def update
+    permit!(current_user, "club", "update")
     respond_to do |format|
-      flash[:notice] = "Club updated successfully."
+      flash.now[:notice] = "Club updated successfully."
       if @club.update(club_params)
         format.turbo_stream do
           render turbo_stream: [
@@ -76,10 +81,11 @@ class ClubsController < ApplicationController
   end
 
   def destroy
+    permit!(current_user, "club", "delete")
     @club.destroy
     respond_to do |format|
       @clubs = current_user.clubs
-      flash[:notice] = "Club deleted successfully."
+      flash.now[:notice] = "Club deleted successfully."
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.update("main-container", template: "clubs/index"),
@@ -91,6 +97,7 @@ class ClubsController < ApplicationController
   end
 
   def search_members
+    permit!(current_user, "club_member", "create")
     @query = params[:query]
     @users = Clubs::SearchMemberQuery.new(@club, @query).run
 
@@ -100,11 +107,12 @@ class ClubsController < ApplicationController
   end
 
   def add_member
+    permit!(current_user, "club_member", "create")
     user = User.find(params[:user_id])
 
     if @club.memberships.create(user: user)
       respond_to do |format|
-        flash[:notice] = "Club member added successfully."
+        flash.now[:notice] = "Club member added successfully."
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.append("club_members", partial: "clubs/member", locals: { user: user }),
@@ -116,7 +124,7 @@ class ClubsController < ApplicationController
         end
       end
     else
-      flash[:error] = "Club member could not be added."
+      flash.now[:error] = "Club member could not be added."
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.update("flash", partial: "shared/flash") }
       end
@@ -124,14 +132,15 @@ class ClubsController < ApplicationController
   end
 
   def delete_member
+    permit!(current_user, "club_member", "delete")
     @club = Club.find(params[:id])
     membership = @club.memberships.find_by(user_id: params[:user_id])
 
     if membership&.destroy
-      flash[:notice] = "Club member removed successfully."
+      flash.now[:notice] = "Club member removed successfully."
       redirect_to @club, notice: "Member removed successfully."
     else
-      flash[:error] = "Club member could not be removed. #{membership.errors.full_messages.join(", ")}"
+      flash.now[:error] = "Club member could not be removed. #{membership.errors.full_messages.join(", ")}"
       redirect_to @club, alert: "Failed to remove member."
     end
   end
