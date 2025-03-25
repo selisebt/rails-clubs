@@ -1,95 +1,70 @@
-<%= form_with(model: announcement, class: "space-y-8") do |f| %>
+<%= form_with(model: announcement, class: "space-y-8", data: { turbo_frame: 'main-container' }) do |f| %>
   <div class="space-y-8 ">
 
-      <div class="flex flex-wrap w-full justify-between">
+    <div class="flex flex-wrap w-full justify-between">
 
-        <div class="mb-4 w-[calc(40%-32px)] ">
-          <%= f.label :title, class: "form-label" %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", 
-              class: "form-input",
-              placeholder: "Title*" %>
-        </div>
-
-        <div class="w-[calc(30%)]">
-          <%= f.label :priority, class: "form-label" %>
-          <div class="mt-1 w-full">
-            <div class="dropdown w-full">
-              <button type="button" onclick="togglePriorityDropdown()" class="form-input w-full flex items-center justify-between">
-                <span id="selectedPriority"><%= announcement.priority&.titleize || 'Select Priority' %></span>
-                <i class="fas fa-chevron-down ml-2 text-sm"></i>
-              </button>
-              <div id="priorityDropdown" class="dropdown-content">
-                <div class="dropdown-item" onclick="selectPriority('low')">
-
-                  <div>
-                    <p class="font-medium">Low</p>
-                  </div>
-                </div>
-                <div class="dropdown-divider"></div>
-                <div class="dropdown-item" onclick="selectPriority('medium')">
-
-                  <div>
-                    <p class="font-medium">Medium</p>
-                  </div>
-                </div>
-                <div class="dropdown-divider"></div>
-                <div class="dropdown-item" onclick="selectPriority('high')">
-
-                  <div>
-                    <p class="font-medium">High</p>
-                  </div>
-                </div>
-              </div>
-              <%= f.hidden_field :priority %>
-            </div>
-          </div>
-        </div>
-
-        <div class="w-[30%]">
-          <%= f.label :club_id, "Club", class: "form-label" %>
-          <div class="mt-1 w-full">
-            <div class="dropdown w-full">
-              <button type="button" onclick="toggleClubDropdown()" class="form-input w-full flex items-center justify-between">
-                <span id="selectedClub"><%= announcement.club&.name || 'Select Club' %></span>
-                <i class="fas fa-chevron-down ml-2 text-sm"></i>
-              </button>
-              <div id="clubDropdown" class="dropdown-content">
-                <% Club.all.each do |club| %>
-                  <div class="dropdown-item" onclick="selectClub('<%= club.id %>', '<%= club.name %>')">
-
-                    <div>
-                      <p class="font-medium"><%= club.name %></p>
-                    </div>
-                  </div>
-                  <% unless club == Club.last %>
-                    <div class="dropdown-divider"></div>
-                  <% end %>
-                <% end %>
-              </div>
-              <%= f.hidden_field :club_id %>
-            </div>
-          </div>
-        </div>
-
-        <div class="w-[calc(60%-16px)]">
-          <%= f.label :message, class: "form-label" %>
-          <div class="mt-1">
-            <%= f.text_area :message, rows: 3, class: "form-input" %>
-          </div>
-        </div>
-
-        
+      <div class="mb-4 w-[calc(60%-32px)]">
+        <%= f.hidden_field :club_id, value: @club.id %>
+        <%= f.label :title, class: "form-label" %>
+        <%= f.text_field :title, autofocus: true, autocomplete: "email",
+                         class: "form-input",
+                         placeholder: "Title*" %>
       </div>
+
+      <div class="w-[calc(30%-32px)]">
+        <%= f.label :priority, class: "form-label" %>
+        <div class="mt-1 w-full">
+          <div class="dropdown w-full">
+            <button type="button" onclick="togglePriorityDropdown()" class="form-input w-full flex items-center justify-between">
+              <span id="selectedPriority"><%= announcement.priority&.titleize || 'Select Priority' %></span>
+              <i class="fas fa-chevron-down ml-2 text-sm"></i>
+            </button>
+            <div id="priorityDropdown" class="dropdown-content">
+              <div class="dropdown-item" onclick="selectPriority('low')">
+
+                <div>
+                  <p class="font-medium">Low</p>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item" onclick="selectPriority('medium')">
+
+                <div>
+                  <p class="font-medium">Medium</p>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item" onclick="selectPriority('high')">
+
+                <div>
+                  <p class="font-medium">High</p>
+                </div>
+              </div>
+            </div>
+            <%= f.hidden_field :priority %>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-[calc(60%-16px)]">
+        <%= f.label :message, class: "form-label" %>
+        <div class="mt-1">
+          <%= f.text_area :message, rows: 3, class: "form-input", placeholder: "Message*" %>
+        </div>
+      </div>
+
+
+    </div>
 
   </div>
 
   <div class="flex justify-end pt-5">
     <div class="flex justify-end w-fit space-x-2">
-      <%= link_to "Cancel", announcements_path, class: "bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+      <%= link_to "Cancel", cancel_path, class: "bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
       <%= f.submit class: "btn-primary" %>
     </div>
   </div>
-<% end %> 
+<% end %>
 
 
 <script>
@@ -114,7 +89,7 @@
   }
 
   // Close dropdowns when clicking outside
-  document.addEventListener('click', function(event) {
+  document.addEventListener('click', function (event) {
     if (!event.target.closest('.dropdown')) {
       const dropdowns = document.getElementsByClassName("dropdown-content");
       Array.from(dropdowns).forEach(dropdown => {
