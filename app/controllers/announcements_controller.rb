@@ -1,8 +1,9 @@
 class AnnouncementsController < ApplicationController
   def index
-    @announcements = Announcement.all
+    @club = club
+    @announcements = club.announcements
     respond_to do |format|
-      format.html
+      format.html { render :index, layout: "application" }
       format.json { render json: @announcements }
     end
   end
@@ -10,45 +11,89 @@ class AnnouncementsController < ApplicationController
   def show
     @announcement = announcement
     respond_to do |format|
-      format.html
+      format.html { render :show, layout: "application" }
       format.json { render json: @announcement }
     end
   end
 
   def new
-    @announcement = Announcement.new
+    @club = club
+    @announcement = Announcement.new(club_id: club.id)
     respond_to do |format|
-      format.html
+      format.html { render :new, layout: "application" }
     end
   end
 
   def create
-    Announcement.create!(announcement_params)
+    announcement = Announcement.new(announcement_params)
+    @club = club
+    @announcements = club.announcements
     respond_to do |format|
-      format.html
-      format.json { render json: { done: true } }
+      if announcement.save
+        flash.now[:notice] = "Announcement created successfully."
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update("main-container", template: "announcements/index"),
+            turbo_stream.update("flash", partial: "shared/flash")
+          ]
+        end
+        format.json { render json: { done: true } }
+      else
+        flash.now[:error] = announcement.errors.full_messages.join(", ")
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update("main-container", template: "announcements/index"),
+            turbo_stream.update("flash", partial: "shared/flash")
+          ]
+        end
+      end
     end
   end
 
   def update
-    announcement.update!(announcement_params)
     respond_to do |format|
-      format.html
-      format.json { render json: { done: true } }
+      if announcement.update(announcement_params)
+        flash.now[:notice] = "Announcement updated successfully."
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update("main-container", template: "announcements/show"),
+            turbo_stream.update("flash", partial: "shared/flash")
+          ]
+        end
+        format.json { render json: { done: true } }
+      else
+        flash.now[:error] = announcement.errors.full_messages.join(", ")
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update("main-container", template: "announcements/show"),
+            turbo_stream.update("flash", partial: "shared/flash")
+          ]
+        end
+      end
     end
   end
 
   def edit
     @announcement = announcement
+    @club = announcement.club
+    @cancel_path = params[:cancel_path]
     respond_to do |format|
-      format.html
+      format.html { render :edit, layout: "application" }
     end
   end
 
   def destroy
+    @club = announcement.club
     announcement.destroy!
+    @announcements = club.announcements
     respond_to do |format|
-      format.html
+      flash.now[:notice] = "Announcement updated successfully."
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update("main-container", template: "announcements/index"),
+          turbo_stream.update("flash", partial: "shared/flash")
+        ]
+      end
       format.json { render json: { done: true } }
     end
   end
@@ -56,10 +101,14 @@ class AnnouncementsController < ApplicationController
   private
 
   def announcement_params
-    params.require(:announcement).permit(:message, :priority, :club_id)
+    params.require(:announcement).permit(:title, :message, :priority, :club_id)
   end
 
   def announcement
     @announcement ||= Announcement.find(params[:id])
+  end
+
+  def club
+    @club ||= Club.find(params[:club_id] || announcement_params[:club_id])
   end
 end
