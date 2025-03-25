@@ -74,3 +74,26 @@ This will create a docker container with the name `cst-clubhouse` and run the `t
   rails db:migrate
   rails s -b 0.0.0.0
 ```
+
+### Useful `git` commands (not to run inside container)
+
+The following commands are useful when working with `git` for this workshop:
+
+Run these commands in the project folder.
+
+1. Check the status of the project
+
+```bash
+
+  git status
+```
+
+2. Change Branch
+
+```bash
+
+  git fetch && git checkout <branch-name>
+```
+
+3. TODO: Reset all changes
+
