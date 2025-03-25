@@ -1,5 +1,8 @@
 class ClubsController < ApplicationController
+  include ActionView::Helpers::TextHelper
+
   before_action :set_club, only: %i[show edit update destroy search_members add_member]
+  before_action :ensure_admin_for_create, only: %i[create]
 
   def index
     @clubs = current_user.clubs
@@ -30,7 +33,6 @@ class ClubsController < ApplicationController
   end
 
   def create
-    raise StandardError, "You are not authorized to create a club" unless [ "admin" ].include?(current_user.role.name)
     @club = Club.new(club_params)
 
     respond_to do |format|
@@ -43,7 +45,7 @@ class ClubsController < ApplicationController
         flash[:notice] = "Club created successfully."
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.update("main-container", template: 'clubs/index'),
+            turbo_stream.update("main-container", template: "clubs/index"),
             turbo_stream.update("flash", partial: "shared/flash", locals: { message: "Club created successfully.", type: "success" })
           ]
         end
@@ -58,9 +60,14 @@ class ClubsController < ApplicationController
 
   def update
     respond_to do |format|
+      flash[:notice] = "Club updated successfully."
       if @club.update(club_params)
-        format.html { redirect_to @club, notice: "Club was successfully updated." }
-        format.json { render json: @club, include: :users }
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update("main-container", template: "clubs/show"),
+            turbo_stream.update("flash", partial: "shared/flash", locals: { message: "Club created successfully.", type: "success" })
+          ]
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @club.errors, status: :unprocessable_entity }
@@ -71,7 +78,14 @@ class ClubsController < ApplicationController
   def destroy
     @club.destroy
     respond_to do |format|
-      format.html { redirect_to clubs_url, notice: "Club was successfully deleted." }
+      @clubs = current_user.clubs
+      flash[:notice] = "Club deleted successfully."
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update("main-container", template: "clubs/index"),
+          turbo_stream.update("flash", partial: "shared/flash", locals: { message: "Club created successfully.", type: "success" })
+        ]
+      end
       format.json { head :no_content }
     end
   end
@@ -82,9 +96,6 @@ class ClubsController < ApplicationController
                  .where("email LIKE ? OR name LIKE ?", "%#{@query}%", "%#{@query}%")
                  .limit(10)
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.update("search-results", partial: "search_results")
-      end
       format.html { render partial: "search_results" }
     end
   end
@@ -94,18 +105,21 @@ class ClubsController < ApplicationController
 
     if @club.memberships.create(user: user)
       respond_to do |format|
+        flash[:notice] = "Club member added successfully."
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.append("club_members", partial: "clubs/member", locals: { user: user }),
-            turbo_stream.update("search-results", "")
+            turbo_stream.update("search-results", ""),
+            turbo_stream.update("flash", partial: "shared/flash"),
+            turbo_stream.replace("clubs_user_count", partial: "clubs/member_count"),
+            turbo_stream.replace("user_stats_count", partial: "clubs/member_stats_count")
           ]
         end
-        format.html { redirect_to @club, notice: "Member added successfully." }
       end
     else
+      flash[:error] = "Club member could not be added."
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.update("flash", partial: "shared/flash", locals: { alert: "Failed to add member." }) }
-        format.html { redirect_to @club, alert: "Failed to add member." }
+        format.turbo_stream { render turbo_stream: turbo_stream.update("flash", partial: "shared/flash") }
       end
     end
   end
@@ -115,8 +129,10 @@ class ClubsController < ApplicationController
     membership = @club.memberships.find_by(user_id: params[:user_id])
 
     if membership&.destroy
+      flash[:notice] = "Club member removed successfully."
       redirect_to @club, notice: "Member removed successfully."
     else
+      flash[:error] = "Club member could not be removed. #{membership.errors.full_messages.join(", ")}"
       redirect_to @club, alert: "Failed to remove member."
     end
   end
@@ -125,9 +141,23 @@ class ClubsController < ApplicationController
 
   def set_club
     @club = Club.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to clubs_url, alert: "Club not found." }
+      format.json { render json: { error: "Club not found" }, status: :not_found }
+    end
   end
 
   def club_params
     params.require(:club).permit(:name, :description)
+  end
+  
+  def ensure_admin_for_create
+    unless current_user.role.name == "admin"
+      respond_to do |format|
+        format.html { redirect_to clubs_url, alert: "You are not authorized to create a club." }
+        format.json { render json: { error: "You are not authorized to create a club" }, status: :forbidden }
+      end
+    end
   end
 end
