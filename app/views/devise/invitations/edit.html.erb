@@ -26,7 +26,7 @@
             <%= f.hidden_field :invitation_token, readonly: true %>
 
             <% if f.object.class.require_password_on_accepting %>
-              <div class="field">
+              <div class="field mb-[16px]">
                 <%= f.label :password %><br/>
                 <%= f.password_field :password, class: "form-input" %>
               </div>
@@ -42,7 +42,7 @@
                            class: "btn-primary" %>
             </button>
           <% end %>
-          <div class="flex justify-end mb-4">
+          <div class="flex justify-end mb-4 text-[12px]">
             <%= render "devise/shared/links" %>
           </div>
         </div>
