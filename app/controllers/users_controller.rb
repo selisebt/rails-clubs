@@ -5,6 +5,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("all_users", partial: "users/user_list")
+      end
       format.json { render json: @users }
     end
   end
@@ -47,7 +50,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.update("all_users", template: "users/index", layout: false),
+          turbo_stream.update("all_users", partial: "users/user_list"),
           turbo_stream.update("flash", partial: "shared/flash", locals: { message: "User deleted successfully", type: "success" })
         ]
       end
@@ -64,8 +67,7 @@ class UsersController < ApplicationController
 
   def users
     User.all
-        .search_by_name(params[:query])
-        .search_by_email(params[:query])
+        .search(params[:query])
         .where.not(id: current_user.id)
   end
 
