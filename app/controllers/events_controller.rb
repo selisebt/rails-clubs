@@ -30,11 +30,18 @@ class EventsController < ApplicationController
 
   def create
     @event = @club.events.build(event_params)
+    @events = @club.events
 
     if @event.save
       respond_to do |format|
-        # format.turbo_stream
-        format.html { redirect_to club_events_path(@club), notice: "Event was successfully created." }
+        format.turbo_stream do
+          flash.now[:notice] = "Event created successfully."
+          render turbo_stream: [
+            turbo_stream.update("main-container", template: "events/index"),
+            turbo_stream.update("flash", partial: "shared/flash")
+          ]
+        end
+        format.html { redirect_to club_events_path(@club), notice: "Event created successfully" }
       end
     else
       render :new, status: :unprocessable_entity
@@ -43,8 +50,15 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(event_params)
+      @events = @club.events
       respond_to do |format|
-        # format.turbo_stream
+        format.turbo_stream do
+          flash.now[:notice] = "Event updated successfully."
+          render turbo_stream: [
+            turbo_stream.update("main-container", template: "events/index"),
+            turbo_stream.update("flash", partial: "shared/flash")
+          ]
+        end
         format.html { redirect_to club_events_path(@club), notice: "Event was successfully updated." }
       end
     else
@@ -55,8 +69,15 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      # format.turbo_stream
-      format.html { redirect_to club_events_path(@club), notice: "Event was successfully deleted." }
+      @events = @club.events
+      flash.now[:notice] = "Event deleted successfully."
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update("main-container", template: "events/index"),
+          turbo_stream.update("flash", partial: "shared/flash")
+        ]
+      end
+      format.html { redirect_to club_events_path(@club), notice: "Event was successfully destroyed." }
     end
   end
 

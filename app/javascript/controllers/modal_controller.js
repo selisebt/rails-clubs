@@ -21,6 +21,7 @@ export default class extends Controller {
     const clubId = button.dataset.clubId
     const userId = button.dataset.userId
     const userName = button.dataset.userName
+    const eventId = button.dataset.eventId
 
     if (clubId) {
       // Club deletion
@@ -38,6 +39,12 @@ export default class extends Controller {
       document.getElementById('delete-member-form').action = `/clubs/${this.element.dataset.clubId}/delete_member?user_id=${userId}`
       document.getElementById('delete-member-form').classList.remove('hidden')
       document.getElementById('delete-club-form').classList.add('hidden')
+    }
+    else if (eventId) {
+      this.currentAction = 'event'
+      this.titleTarget.textContent = 'Remove an Event'
+      this.messageTarget.textContent = 'Are you sure you want to delete this event? This action cannot be undone.'
+      document.getElementById('delete-event-form').action = `/clubs/${event.currentTarget.dataset.eventClubId}/events/${eventId}`
     }
 
     this.modalTarget.classList.remove('hidden')
