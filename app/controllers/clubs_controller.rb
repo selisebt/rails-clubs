@@ -92,9 +92,8 @@ class ClubsController < ApplicationController
 
   def search_members
     @query = params[:query]
-    @users = User.where.not(id: @club.users.pluck(:id))
-                 .where("email LIKE ? OR name LIKE ?", "%#{@query}%", "%#{@query}%")
-                 .limit(10)
+    @users = Clubs::SearchMemberQuery.new(@club, @query).run
+
     respond_to do |format|
       format.html { render partial: "search_results" }
     end
