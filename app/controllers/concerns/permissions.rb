@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Permission
+module Permissions
   def permit(user, resource, action, additional_check = true)
     permission = user&.role&.permissions&.find_by(resource: resource)
     return false unless permission.present?
