@@ -1,116 +1,57 @@
-<%= turbo_frame_tag 'all_users' do %>
-  <div class="container mx-auto px-4 py-8" data-controller="users-index">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-gray-700">All Users</h1>
-      <div class="dropdown">
-        <button type="button" data-action="users-index#toggleDropdown" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
-          <i class="fas fa-plus mr-2"></i>
-          Invite User
-          <i class="fas fa-chevron-down ml-2 text-sm"></i>
-        </button>
-        <div id="inviteDropdown" data-users-index-target="inviteDropdown" class="dropdown-content">
-          <div class="dropdown-divider"></div>
-          <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openAddUserModal">
-            <i class="fas fa-user-plus mr-3"></i>
-            <div>
-              <div class="font-medium">Add a user</div>
-              <div class="text-sm text-gray-400">Add a single user manually</div>
-            </div>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openCsvModal">
-            <i class="fas fa-file-upload mr-3"></i>
-            <div>
-              <div class="font-medium">CSV Upload</div>
-              <div class="text-sm text-gray-400">Bulk import users via CSV</div>
-            </div>
-          </a>
-        </div>
+<div class="p-[24px] pb-0 bg-gray-50" data-controller="users-index">
+  <div class="flex justify-between items-center mb-6 bg-white rounded-lg shadow py-[24px] px-[18px]">
+    <div class="flex items-center space-x-4">
+      <div class="icon-style">
+        <i class="fa fa-users text-white"></i>
       </div>
-    </div>
-    <!-- Table -->
-    <div class="bg-white rounded-lg shadow table-container overflow-y-auto">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-white sticky-header">
-        <tr>
-          <th scope="col" class="table-header">
-            Name
-          </th>
-          <th scope="col" class="table-header">
-            Email
-          </th>
-          <th scope="col" class="table-header">
-            Role
-          </th>
-          <th scope="col" class="table-header">
-            Action
-          </th>
-        </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-        <% @users.each do |user| %>
-          <tr class="hover:bg-gray-50 transition-colors duration-200" data-row>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="flex items-center">
-                <div class="profile-circle" style="background-image: url(<%= user.attachment&.file&.attached? ?  url_for(user.attachment.file)  : nil %>)">
-                  <% unless user.attachment&.file&.attached? %>
-                    <i class="fas fa-user text-xl"></i>
-                  <% end %>
-                </div>
-                <div class="ml-4 text-sm font-medium text-gray-900">
-                  <%= user.name %>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <%= user.email %>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm">
-              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                <%= user.role.name == 'admin' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' %>">
-                <%= user.role.name.capitalize %>
-              </span>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-              <div class="flex justify-end space-x-3">
-                <%= link_to edit_user_path(id: user.id),
-                            data: { action: 'users-index#openEditModal', turbo_frame: 'edit_user' },
-                            method: :get,
-                            class: 'text-gray-400 hover:text-gray-500',
-                            title: 'Edit User' do %>
-                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                  </svg>
-                <% end %>
-                <%= link_to delete_user_path(id: user.id),
-                            data: { action: 'users-index#openDeleteModal', turbo_frame: 'delete_user' },
-                            method: :get,
-                            class: 'text-gray-400 hover:text-red-500',
-                            title: 'Delete User' do %>
-                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                  </svg>
-                <% end %>
-              </div>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
+      <h1 class="text-2xl font-semibold text-gray-900">All Users</h1>
 
-    <!-- Pagination -->
-    <div class="mt-4 flex justify-center">
-      <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
     </div>
-
-    <!-- Render modals -->
-    <div id="inviteModal" data-users-index-target="inviteModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-[100]">
-      <%= render partial: 'shared/modals/invite_user_modal' %>
+    <div class="flex items-center space-x-2">
+      <%= form_with url: users_path, method: :get, class: "flex items-center space-x-2", data: { turbo_frame: "all_users", turbo_action: "advance" } do |f| %>
+        <div class="relative">
+          <%= f.text_field :query,
+                           value: params[:query],
+                           class: "form-input pl-10 w-64",
+                           placeholder: "Search users...",
+                           data: { controller: "debounce", debounce_target: "input", action: "input->debounce#search" } %>
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-search text-gray-400"></i>
+          </div>
+        </div>
+      <% end %>
+      <!-- UNCOMMENT HERE -->
+      <%# if permit(current_user, 'users', 'create') %>
+        <div class="dropdown">
+          <button type="button" data-action="users-index#toggleDropdown" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
+            <i class="fas fa-plus mr-2"></i>
+            Invite User
+            <i class="fas fa-chevron-down ml-2 text-sm"></i>
+          </button>
+          <div id="inviteDropdown" data-users-index-target="inviteDropdown" class="dropdown-content">
+            <div class="dropdown-divider"></div>
+            <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openAddUserModal">
+              <i class="fas fa-user-plus mr-3"></i>
+              <div>
+                <div class="font-medium">Add a user</div>
+                <div class="text-sm text-gray-400">Add a single user manually</div>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openCsvModal">
+              <i class="fas fa-file-upload mr-3"></i>
+              <div>
+                <div class="font-medium">CSV Upload</div>
+                <div class="text-sm text-gray-400">Bulk import users via CSV</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      <%# end %>
     </div>
-    <%= render partial: 'shared/modals/csv_upload_modal' %>
-    <%= render partial: 'shared/modals/edit_user_modal' %>
-    <%= render partial: 'shared/modals/delete_user_modal' %>
-    <%= render partial: 'shared/modals/add_user_modal' %>
   </div>
-<% end %>
+
+  <%= turbo_frame_tag 'all_users' do %>
+    <%= render "user_list", users: @users %>
+  <% end %>
+</div>

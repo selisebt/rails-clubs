@@ -15,38 +15,45 @@
     <td class="px-6 py-4 whitespace-nowrap">
       <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
         <%= case event.status
-            when 'ongoing'
-              'bg-green-100 text-green-800'
-            when 'completed'
-              'bg-gray-100 text-gray-800'
-            else
-              'bg-yellow-100 text-yellow-800'
-            end %>">
+                               when 'ongoing'
+                                 'bg-green-100 text-green-800'
+                               when 'completed'
+                                 'bg-gray-100 text-gray-800'
+                               else
+                                 'bg-yellow-100 text-yellow-800'
+                               end %>">
         <%= event&.status&.titleize %>
       </span>
     </td>
     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
       <div class="flex justify-end space-x-2">
-        <%= link_to club_event_path(@club, event), class: "text-gray-400 hover:text-gray-500", title: "View Event" do %>
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
+        <% if permit!(current_user, "event", "read") %>
+          <%= link_to club_event_path(@club, event), class: "text-gray-400 hover:text-gray-500", title: "View Event" do %>
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+          <% end %>
         <% end %>
-        <%= link_to edit_club_event_path(@club, event), class: "text-gray-400 hover:text-gray-500", title: "Edit Event" do %>
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-          </svg>
+        <% if permit!(current_user, "event", "update", @club.memberships.find_by(user_id: current_user.id)&.manager?) %>
+          <%= link_to edit_club_event_path(@club, event), class: "text-gray-400 hover:text-gray-500", title: "Edit Event" do %>
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+          <% end %>
         <% end %>
-        <button type="button" 
-                class="text-gray-400 hover:text-red-500" 
-                title="Delete Event"
-                data-action="modal#open"
-                data-event-id="<%= event.id %>">
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-          </svg>
-        </button>
+        <% if permit!(current_user, "event", "delete", @club.memberships.find_by(user_id: current_user.id)&.manager?) %>
+          <button type="button"
+                  class="text-gray-400 hover:text-red-500"
+                  title="Delete Event"
+                  data-action="modal#open"
+                  data-event-club-id="<%= @club.id %>"
+                  data-event-id="<%= event.id %>">
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+          </button>
+        <% end %>
       </div>
     </td>
   </tr>

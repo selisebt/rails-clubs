@@ -1,7 +1,3 @@
-<style>
-  
-</style>
-
 <%= form_with(model: [@club, event]) do |f| %>
   <div class="bg-white rounded-lg shadow-sm p-6 my-[16px] flex items-center">
     <div class="icon-style">
@@ -9,7 +5,7 @@
     </div>
     <div class="ml-4">
       <h3 class="text-lg leading-6 font-medium text-gray-900">
-        <%= event.new_record? ? "New Event" : "Edit Event" %>
+        <%= event.new_record? ? "New Event for #{@club.name}" : "Edit Event for #{@club.name}" %>
       </h3>
       <p class="mt-1 text-sm text-gray-500">
         <%= event.new_record? ? "Create a new event." : "Update the event details." %>

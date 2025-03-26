@@ -7,6 +7,7 @@ module ErrorHandler
       rescue_from NoMethodError, with: :bad_request
       rescue_from ActionController::ParameterMissing, with: :bad_request
       rescue_from ActiveRecord::RecordNotFound, with: :document_not_found
+      rescue_from ActionController::InvalidAuthenticityToken, with: :unauthorized
     end
   end
 
@@ -26,8 +27,12 @@ module ErrorHandler
     render_error_page(504, error: { message: error.message })
   end
 
-  def unauthorized(error)
+  def unauthenticated(error)
     render_error_page(401, error: { message: error.message })
+  end
+
+  def unauthorized(error)
+    render_error_page(403, error: { message: error.message })
   end
 
   def bad_request(error)

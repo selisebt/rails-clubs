@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= content_for(:title) || "Rails Clubs" %></title>
+  <title><%= content_for(:title) || "CST Club House" %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -15,6 +15,7 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
+
   <%= yield :head %>
 
   <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
@@ -23,7 +24,7 @@
   <link rel="icon" href="/icon.png" type="image/png">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icon.png">
-
+  <link rel="icon" href="<%= asset_path('favicon.ico') %>">
   <%# Includes all stylesheet files in app/assets/stylesheets %>
   <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
@@ -39,17 +40,28 @@
   /users/invitation/accept
 ].include?(request.path) %>
   <!-- Sidebar Navigation -->
-  <div class="w-[300px] min-h-screen bg-white shadow-lg text-gray-700 p-4" data-controller="navigation">
+  <div class="w-[320px] min-h-screen bg-white shadow-lg text-gray-700" data-controller="navigation">
     <!-- Logo Area -->
-    <div class="mb-8 flex justify-center items-center">
-      <img src="<%= asset_path('selise-logo.svg') %>" alt="logo">
+    <div class="mb-8 flex justify-center items-center h-[144px]  bg-gray-100 relative overflow-x-clip">
+    <div class="flex justify-center items-center w-[150px] z-[1] absolute top-[25px]">
+      <img src="<%= asset_path('cst-logo.png') %>" class="h-full" alt="logo">
+    </div>
+      <div class="w-[110%] h-[190px]  bg-gray-100   rounded-[50%] absolute bottom-[-59px]"> </div>
+
     </div>
 
+
     <!-- Navigation Links -->
-    <nav class="space-y-4">
+    <nav class="space-y-4 px-[16px] mt-[96px]">
+        <%= button_to account_settings_path, method: :get, class: "w-full flex items-center space-x-3 p-3 rounded-lg group nav-item #{'/account_settings'.include?(request.path) ? 'active' : ''}", data: { action: 'click->navigation#setActiveNav' } do %>
+        <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
+          <i class="fas fa-user text-gray-500"></i>
+        </div>
+        <span class="text-gray-700 flex-1 flex items-start justify-start">Profile</span>
+      <% end %>
       <%= button_to clubs_path, method: :get, class: "w-full flex items-center space-x-3 p-3 rounded-lg group nav-item #{'/clubs'.include?(request.path) ? 'active' : ''}", data: { action: 'click->navigation#setActiveNav' } do %>
         <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
-          <i class="fas fa-calendar text-gray-500"></i>
+          <i class="fas fa-home text-gray-500"></i>
         </div>
         <span class="text-gray-700 flex-1 flex items-start justify-start">Clubs</span>
       <% end %>
@@ -80,19 +92,13 @@
     </nav>
 
     <!-- User Profile at Bottom -->
-    <div class="absolute bottom-4 left-4 flex items-center space-x-3 p-3">
-
-      <%= link_to account_settings_path, class: "flex items-center space-x-3" do %>
-        <div>
-          <p class="text-sm font-medium text-gray-700">Account settings</p>
-          </div>
-
-      <% end %>
+    <div class="absolute bottom-4 left-4 flex items-center space-x-3 p-3 group">
+      <i class="fas fa-sign-out-alt text-gray-500 group-hover:text-red-400"></i>
       <%= button_to(
             "Log Out",
             destroy_user_session_path,
             method: :delete,
-            class: "ml-4 text-sm text-gray-700 hover:text-gray-900"
+            class: "ml-1 text-sm text-gray-700 group-hover:text-red-400"
           ) %>
     </div>
   </div>

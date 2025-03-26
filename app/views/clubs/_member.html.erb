@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="flex items-center justify-start space-x-2">
-    <% if [ 'admin' ].include?(current_user.role.name) && user.email != current_user.email %>
+    <% if permit(current_user, 'club_member', 'delete', @club.memberships.find_by(user_id: current_user.id)&.manager?) && user.id != current_user.id %>
       <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <button type="button"
                 class="text-red-600 hover:text-red-900"

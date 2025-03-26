@@ -1,5 +1,6 @@
 class Users::InvitationsController < Devise::InvitationsController
   def create
+    permit!(current_user, "user", "create")
     if params[:csv]
       csv_data = params[:csv].read
       BulkInviteUsersJob.perform_later(csv_data, current_user.id)
