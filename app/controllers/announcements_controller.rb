@@ -1,5 +1,6 @@
 class AnnouncementsController < ApplicationController
   def index
+    permit!(current_user, "announcement", "read")
     @club = club
     @announcements = club.announcements
     respond_to do |format|
@@ -9,6 +10,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def show
+    permit!(current_user, "announcement", "read")
     @announcement = announcement
     respond_to do |format|
       format.html { render :show, layout: "application" }
@@ -17,6 +19,12 @@ class AnnouncementsController < ApplicationController
   end
 
   def new
+    permit!(
+      current_user,
+      "announcement",
+      "create",
+      club.memberships.find_by(user_id: current_user.id)&.manager?
+    )
     @club = club
     @announcement = Announcement.new(club_id: club.id)
     respond_to do |format|
@@ -25,6 +33,12 @@ class AnnouncementsController < ApplicationController
   end
 
   def create
+    permit!(
+      current_user,
+      "announcement",
+      "create",
+      club.memberships.find_by(user_id: current_user.id)&.manager?
+    )
     @club = club
     @announcements = club.announcements
     respond_to do |format|
@@ -50,6 +64,12 @@ class AnnouncementsController < ApplicationController
   end
 
   def update
+    permit!(
+      current_user,
+      "announcement",
+      "update",
+      club.memberships.find_by(user_id: current_user.id)&.manager?
+    )
     respond_to do |format|
       if announcement.update(announcement_params)
         flash.now[:notice] = "Announcement updated successfully."
@@ -73,6 +93,12 @@ class AnnouncementsController < ApplicationController
   end
 
   def edit
+    permit!(
+      current_user,
+      "announcement",
+      "update",
+      announcement.club.memberships.find_by(user_id: current_user.id)&.manager?
+    )
     @announcement = announcement
     @club = announcement.club
     @cancel_path = params[:cancel_path]
@@ -82,6 +108,12 @@ class AnnouncementsController < ApplicationController
   end
 
   def destroy
+    permit!(
+      current_user,
+      "announcement",
+      "delete",
+      announcement.club.memberships.find_by(user_id: current_user.id)&.manager?
+    )
     @club = announcement.club
     announcement.destroy!
     @announcements = club.announcements
