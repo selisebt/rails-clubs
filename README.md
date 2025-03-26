@@ -56,16 +56,15 @@ This will create a docker container with the name `cst-clubhouse` and run the `t
   docker ps
 ```
 
-5. Open your Code Editor / IDE and navigate to the project folder
-
-6. Use the following command to enter the container
+5. Use the following command to enter the container
 
 ```bash
 
   docker exec -it cst-clubhouse bash
+  cd app/
 ```
 
-7. Run the following commands inside the container to run the rails project (In next session)
+6. **(In the next session)** Run the following commands inside the container to run the rails project
 
 ```bash
 
