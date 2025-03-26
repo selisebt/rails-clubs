@@ -128,7 +128,7 @@
             <div class="flex gap-[16px] mt-[16px]">
               <% if permit(current_user, 'announcement', 'read') %>
                 <div class="flex-1">
-                  <%= link_to "#", class: "btn-primary flex items-center justify-center flex-col py-[24px]" do %>
+                  <%= link_to announcements_path(club_id: @club.id), class: "btn-primary flex items-center justify-center flex-col py-[24px]" do %>
                     <i class="fas fa-bullhorn text-[30px]"></i>
                     <span class="text-[15px] mt-[8px]">Announcements</span>
                   <% end %>
