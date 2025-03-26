@@ -1,5 +1,4 @@
-<%= turbo_frame_tag @announcement do %>
-  <div class="p-[24px] pb-0">
+<div class="p-[24px] pb-0">
 
   <div class="bg-white rounded-lg shadow-sm p-6 mb-[16px] flex items-center">
     <div class="icon-style">
@@ -7,55 +6,56 @@
     </div>
     <div class="ml-4 flex-1">
       <h3 class="text-lg leading-6 font-medium text-gray-900">
-      Announcement Details
+        Announcement Details
       </h3>
       <p class="mt-1 text-sm text-gray-500">
-      Detailed information about this announcement.
+        Detailed information about this announcement.
       </p>
     </div>
     <div class="flex space-x-3">
-          <%= link_to edit_announcement_path(@announcement), class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
-            Edit
-          <% end %>
-          <%= link_to announcements_path, class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
-            Back to List
-          <% end %>
-        </div>
-</div>
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-      <div class="border-t border-gray-200">
-        <dl>
-          <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Title</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @announcement.message %></dd>
-          </div>
-          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Club</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @announcement.club&.name %></dd>
-          </div>
-          
-          <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Priority</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
-                <%= case @announcement.priority
-                    when 'high'
-                      'bg-red-100 text-red-800'
-                    when 'medium'
-                      'bg-yellow-100 text-yellow-800'
-                    else
-                      'bg-green-100 text-green-800'
-                    end %>">
-                <%= @announcement.priority&.titleize %>
-              </span>
-            </dd>
-          </div>
-          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Message</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @announcement.message %></dd>
-          </div>
-        </dl>
-      </div>
+      <% if permit(current_user, "announcement", "update", @announcement.club.memberships.find_by(user_id: current_user.id)&.manager?) %>
+        <%= link_to edit_announcement_path(@announcement, cancel_path: announcement_path(@announcement, club_id: @announcement.club_id)), class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+          Edit
+        <% end %>
+      <% end %>
+      <%= link_to announcements_path(club_id: @announcement.club_id), class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
+        Back to List
+      <% end %>
     </div>
   </div>
-<% end %> 
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="border-t border-gray-200">
+      <dl>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Title</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @announcement.title %></dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Club</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @announcement.club&.name %></dd>
+        </div>
+
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Priority</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+                <%= case @announcement.priority
+                                               when 'high'
+                                                 'bg-red-100 text-red-800'
+                                               when 'medium'
+                                                 'bg-yellow-100 text-yellow-800'
+                                               else
+                                                 'bg-green-100 text-green-800'
+                                               end %>">
+                <%= @announcement.priority&.titleize %>
+              </span>
+          </dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Message</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @announcement.message %></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>

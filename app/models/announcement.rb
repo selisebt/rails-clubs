@@ -3,5 +3,5 @@ class Announcement < ApplicationRecord
 
   enum :priority, { low: 0, medium: 1, high: 2 }
 
-  broadcasts_to "announcements"
+  validates :message, :title, presence: true
 end
