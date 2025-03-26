@@ -109,13 +109,14 @@ The following branches are available in the project:
 6. `feature/fe/user-management-4` - User management frontend
 7. `feature/clubs-5` - Clubs
 8. `feature/fe/clubs-6` - Clubs frontend
-9. `feature/club-api-tests-7` - Club API tests
-10. `feature/announcements-8` - Announcements
-11. `feature/fe/announcements-9` - Announcements frontend
-12. `feature/events-10` - Events
-13. `feature/fe/events-11` - Events frontend
-14. `feature/event-reminder-12` - Event remainder
-15. `feature/budgeting-13` - Budgeting
-16. `feature/fe/budgeting-14` - Budgeting frontend
-17. `feature/containerization-15` - Containerization
-18. `feature/CICD-16` - CI/CD
+9. `feature/club-api-tests-7` - Club API tests setup
+10. `feature/club-api-tests-7.1` - Club API tests
+11. `feature/announcements-8` - Announcements
+12. `feature/fe/announcements-9` - Announcements frontend
+13. `feature/events-10` - Events
+14. `feature/fe/events-11` - Events frontend
+15. `feature/event-reminder-12` - Event remainder
+16. ~~`feature/budgeting-13` - Budgeting~~
+17. ~~`feature/fe/budgeting-14` - Budgeting frontend~~
+18. `feature/containerization-15` - Containerization
+19. `feature/CICD-16` - CI/CD
