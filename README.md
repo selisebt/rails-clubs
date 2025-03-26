@@ -94,7 +94,14 @@ Run these commands in the project folder.
   git fetch && git checkout <branch-name>
 ```
 
-3. TODO: Reset all changes
+3. Reset all changes (run this before switching/checking out to another branch)
+
+```bash
+
+git checkout .
+git clean -ffdx
+
+```
 
 
 ## Branches
