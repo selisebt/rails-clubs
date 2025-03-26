@@ -118,7 +118,7 @@
               <% end %>
               <% if permit(current_user, 'event', 'read') %>
                 <div class="flex-1">
-                  <%= link_to "#", class: "btn-primary flex items-center justify-center flex-col py-[24px] bg-green-500 hover:bg-green-600" do %>
+                  <%= link_to club_events_path(@club), class: "btn-primary flex items-center justify-center flex-col py-[24px] bg-green-500 hover:bg-green-600" do %>
                     <i class="fas fa-calendar-alt text-[30px]"></i>
                     <span class="text-[15px] mt-[8px]">View Events</span>
                   <% end %>
