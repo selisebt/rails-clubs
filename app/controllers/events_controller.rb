@@ -64,7 +64,14 @@ class EventsController < ApplicationController
         format.html { redirect_to club_events_path(@club), notice: "Event created successfully" }
       end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream do
+          flash.now[:error] = @event.errors.full_messages.join(", ")
+          render turbo_stream: [
+            turbo_stream.update("flash", partial: "shared/flash")
+          ]
+        end
+      end
     end
   end
 
