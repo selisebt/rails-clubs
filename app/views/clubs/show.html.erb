@@ -107,9 +107,9 @@
         <div class="bg-white shadow-sm rounded-lg">
           <div class="px-4 py-5">
             <h2 class="text-lg font-medium text-gray-800 mb-4">Quick Actions</h2>
-            <div class="flex gap-[16px]">
+            <div class="flex flex-row flex-wrap gap-[16px]">
               <% if permit(current_user, 'event', 'create', @club.memberships.find_by(user_id: current_user.id)&.manager?) %>
-                <div class="flex-1">
+                <div class="w-[calc(50%-8px)]">
                   <%= link_to "#", class: "btn-primary flex items-center justify-center flex-col py-[24px]" do %>
                     <i class="fas fa-calendar-plus text-[30px]"></i>
                     <span class="text-[15px] mt-[8px]">Create Event</span>
@@ -117,24 +117,22 @@
                 </div>
               <% end %>
               <% if permit(current_user, 'event', 'read') %>
-                <div class="flex-1">
+                <div class="w-[calc(50%-8px)]">
                   <%= link_to "#", class: "btn-primary flex items-center justify-center flex-col py-[24px] bg-green-500 hover:bg-green-600" do %>
                     <i class="fas fa-calendar-alt text-[30px]"></i>
                     <span class="text-[15px] mt-[8px]">View Events</span>
                   <% end %>
                 </div>
               <% end %>
-            </div>
-            <div class="flex gap-[16px] mt-[16px]">
               <% if permit(current_user, 'announcement', 'read') %>
-                <div class="flex-1">
+                <div class="w-[calc(50%-8px)]">
                   <%= link_to "#", class: "btn-primary flex items-center justify-center flex-col py-[24px]" do %>
                     <i class="fas fa-bullhorn text-[30px]"></i>
                     <span class="text-[15px] mt-[8px]">Announcements</span>
                   <% end %>
                 </div>
               <% end %>
-            </div>
+            
           </div>
         </div>
       </div>
