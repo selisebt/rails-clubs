@@ -122,10 +122,10 @@ end
 
 puts "Creating an admin user..."
 User.create!(
-  email: 'td@selisegroup.com',
+  email: ENV['DEFAULT_USER_EMAIL'],
   name: 'Thinley Jimmy Dorji',
-  password: 'password123',
-  password_confirmation: 'password123',
+  password: ENV['DEFAULT_USER_PASSWORD'],
+  password_confirmation: ENV['DEFAULT_USER_PASSWORD'],
   role_id: Role.find_by(name: 'admin').id
 )
 puts "User seed completed successfully!"
