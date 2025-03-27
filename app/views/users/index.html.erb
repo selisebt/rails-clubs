@@ -5,47 +5,50 @@
         <i class="fa fa-users text-white"></i>
       </div>
       <h1 class="text-2xl font-semibold text-gray-900">All Users</h1>
-      
+
     </div>
-   <div class="flex items-center space-x-2">
-   <%= form_with url: users_path, method: :get, class: "flex items-center space-x-2", data: { turbo_frame: "all_users", turbo_action: "advance" } do |f| %>
-    <div class="relative">
-      <%= f.text_field :query,
-          value: params[:query],
-          class: "form-input pl-10 w-64",
-          placeholder: "Search users...",
-          data: { controller: "debounce", debounce_target: "input", action: "input->debounce#search" } %>
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <i class="fas fa-search text-gray-400"></i>
-      </div>
+    <div class="flex items-center space-x-2">
+      <%= form_with url: users_path, method: :get, class: "flex items-center space-x-2", data: { turbo_frame: "all_users", turbo_action: "advance" } do |f| %>
+        <div class="relative">
+          <%= f.text_field :query,
+                           value: params[:query],
+                           class: "form-input pl-10 w-64",
+                           placeholder: "Search users...",
+                           data: { controller: "debounce", debounce_target: "input", action: "input->debounce#search" } %>
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-search text-gray-400"></i>
+          </div>
+        </div>
+      <% end %>
+      <!-- UNCOMMENT HERE -->
+      <%# if permit(current_user, 'users', 'create') %>
+        <div class="dropdown">
+          <button type="button" data-action="users-index#toggleDropdown" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
+            <i class="fas fa-plus mr-2"></i>
+            Invite User
+            <i class="fas fa-chevron-down ml-2 text-sm"></i>
+          </button>
+          <div id="inviteDropdown" data-users-index-target="inviteDropdown" class="dropdown-content">
+            <div class="dropdown-divider"></div>
+            <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openAddUserModal">
+              <i class="fas fa-user-plus mr-3"></i>
+              <div>
+                <div class="font-medium">Add a user</div>
+                <div class="text-sm text-gray-400">Add a single user manually</div>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openCsvModal">
+              <i class="fas fa-file-upload mr-3"></i>
+              <div>
+                <div class="font-medium">CSV Upload</div>
+                <div class="text-sm text-gray-400">Bulk import users via CSV</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      <%# end %>
     </div>
-  <% end %>
-   <div class="dropdown">
-   <button type="button" data-action="users-index#toggleDropdown" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
-     <i class="fas fa-plus mr-2"></i>
-     Invite User
-     <i class="fas fa-chevron-down ml-2 text-sm"></i>
-   </button>
-   <div id="inviteDropdown" data-users-index-target="inviteDropdown" class="dropdown-content">
-     <div class="dropdown-divider"></div>
-     <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openAddUserModal">
-       <i class="fas fa-user-plus mr-3"></i>
-       <div>
-         <div class="font-medium">Add a user</div>
-         <div class="text-sm text-gray-400">Add a single user manually</div>
-       </div>
-     </a>
-     <div class="dropdown-divider"></div>
-     <a href="javascript:void(0);" data-turbo="false" class="dropdown-item" data-action="users-index#openCsvModal">
-       <i class="fas fa-file-upload mr-3"></i>
-       <div>
-         <div class="font-medium">CSV Upload</div>
-         <div class="text-sm text-gray-400">Bulk import users via CSV</div>
-       </div>
-     </a>
-   </div>
- </div>
-   </div>
   </div>
 
   <%= turbo_frame_tag 'all_users' do %>
