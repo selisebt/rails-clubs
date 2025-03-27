@@ -1,0 +1,221 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+.form-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.form-label {
+  display: block;
+  color: #4b5563; /* text-gray-600 */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem; /* py-2 px-3 */
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 0.375rem; /* rounded-md */
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* focus:ring-2 focus:ring-blue-500 */
+}
+
+.btn-primary {
+  @apply w-full bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg transition-colors duration-200;
+}
+
+.btn-primary {
+  width: 100%;
+  background-color: #3b82f6; /* bg-blue-500 */
+  color: white;
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  border-radius: 0.5rem; /* rounded-lg */
+  transition: background-color 200ms; /* transition-colors duration-200 */
+}
+
+.btn-primary:hover {
+  background-color: #60a5fa; /* hover:bg-blue-400 */
+}
+
+.auth-section {
+  background-image: url("/assets/auth-selise-bg-035da0a4.svg");
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100vh;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: cover;
+}
+
+.auth-section {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100vh;
+  height: 100vh;
+}
+
+
+.auth-section .auth-container {
+  min-height: calc(100vh - 138px);
+}
+
+.auth-section .auth-container .auth-wrapper {
+  color: #444;
+  width: 360px;
+}
+
+.auth-title {
+  color: #444;
+  font-weight: 300;
+}
+
+
+.body-text {
+  letter-spacing: 0.6px;
+  line-height: 24px;
+  font-weight: 300;
+}
+
+.auth-section .auth-footer .footer-logo-size {
+  max-width: 90px;
+  height: auto;
+}
+
+
+@keyframes ani {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 400% 0;
+  }
+}
+
+.header-note {
+  height: 75vh;
+}
+
+.header-note--shadow {
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.loader-container {
+  min-height: 300px;
+}
+
+.auth-container {
+  z-index: 3;
+}
+
+.auth-wrapper {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 3px 3px 10px 0 rgba(0, 123, 255, 0.16);
+}
+
+.auth-wrapper::before {
+  position: absolute;
+  right: -17.625rem;
+  bottom: 3.375rem;
+  width: 29.375rem;
+  height: 100%;
+  transform: rotate(145deg);
+  border-radius: 1.875rem;
+  background-color: rgba(0, 123, 255, 0.16);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.042);
+  content: '';
+  z-index: 1;
+}
+
+.auth-logo {
+  height: 74px;
+}
+
+.aside-container {
+  height: 100dvh;
+  width: 400px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: white;
+}
+
+.gray-border {
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid #E0E0E0;
+}
+
+.mt-100 {
+  margin-top: 100px;
+}
+
+.auth-content {
+  position: relative;
+  z-index: 10;
+}
+
+.text-alto-gray {
+  color: #E0E0E0;
+}
+
+.logo-3d {
+  transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+  transition: transform 0.3s ease;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.auth-wrapper:hover .logo-3d {
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
+
+
+.flash-message {
+  animation: flashMessage 6s forwards;
+}
+@keyframes flashMessage {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+  8% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  92% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+}
+
+.table-header {
+  padding-left: 1.5rem; /* px-6 */
+  padding-right: 1.5rem; /* px-6 */
+  padding-top: 0.75rem; /* py-3 */
+  padding-bottom: 0.75rem; /* py-3 */
+  text-align: left; /* text-left */
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 500; /* font-medium */
+  color: #6b7280; /* text-gray-500 */
+  text-transform: uppercase; /* uppercase */
+  letter-spacing: 0.05em; /* tracking-wider */
+  background-color: #f9fafb; /* bg-gray-50 */
+}
