@@ -12,7 +12,7 @@ class Users::InvitationsController < Devise::InvitationsController
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.update("flash", partial: "shared/flash"),
-            turbo_stream.update("all_users", template: "users/index", layout: false)
+            turbo_stream.update("main-container", template: "users/index", layout: false)
           ]
         end
         format.json { render json: { message: "User bulk invite queued." } }
@@ -32,7 +32,7 @@ class Users::InvitationsController < Devise::InvitationsController
           format.turbo_stream do
             render turbo_stream: [
               turbo_stream.update("flash", partial: "shared/flash"),
-              turbo_stream.update("all_users", template: "users/index", layout: false)
+              turbo_stream.update("main-container", template: "users/index", layout: false)
             ]
           end
           format.json { render json: { done: true } }
