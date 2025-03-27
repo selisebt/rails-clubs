@@ -67,3 +67,5 @@ gem "pagy", "~> 9.3"
 gem "devise", "~> 4.9"
 
 gem "devise_invitable", "~> 2.0"
+
+gem 'dotenv-rails'
