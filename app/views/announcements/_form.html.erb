@@ -3,7 +3,7 @@
 
     <div class="flex flex-wrap w-full justify-between">
 
-      <div class="mb-4 w-[calc(60%-32px)]">
+      <div class="mb-4 w-[calc(60%-16px)]">
         <%= f.hidden_field :club_id, value: @club.id %>
         <%= f.label :title, class: "form-label" %>
         <%= f.text_field :title, autofocus: true, autocomplete: "email",
@@ -11,7 +11,7 @@
                          placeholder: "Title*" %>
       </div>
 
-      <div class="w-[calc(30%-32px)]">
+      <div class="w-[40%]">
         <%= f.label :priority, class: "form-label" %>
         <div class="mt-1 w-full">
           <div class="dropdown w-full">
