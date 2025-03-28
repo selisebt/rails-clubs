@@ -12,7 +12,7 @@ class BulkInviteUsersJob < ApplicationJob
       next if email.blank?
 
       User.invite!(
-        { email: email, name: name },
+        { email: email, name: name, role_id: role_id },
         User.find(inviter_id)
       )
     end
