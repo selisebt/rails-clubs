@@ -4,16 +4,10 @@ class BulkInviteUsersJob < ApplicationJob
   def perform(csv_data, inviter_id)
     require "csv"
 
-<<<<<<< Updated upstream
-    CSV.parse(csv_data, headers: true) do |row|
-      email = row["email"]
-      name = row["name"]
-=======
     CSV.parse(csv_data, headers: true, skip_blanks: true) do |row|
       email = row["email"]&.strip
       name = row["name"]&.strip
       role_id = row["role_id"]&.strip
->>>>>>> Stashed changes
 
       next if email.blank?
 
