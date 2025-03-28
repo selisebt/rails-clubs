@@ -1,6 +1,6 @@
 <%= turbo_frame_tag 'flash' do %>
   <% flash.each do |type, message| %>
-    <div class="fixed top-20 w-min right-0 transform z-50 text-nowrap bg-gray-300 shadow-lg p-4 rounded-lg flex items-center justify-between flash-message"
+    <div class="fixed top-[16px] max-w-[40vw] right-[16px] transform z-50 bg-gray-200 shadow-lg p-4 rounded-lg flex items-center justify-between flash-message"
          role="alert"
          data-controller="flash">
       <div class="flex items-center mr-6">

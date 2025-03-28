@@ -117,6 +117,9 @@ permissions.each do |permission|
   Permission.find_or_create_by!(permission)
 end
 
+# Quick access to change member type to 'manager'.
+# Club.find(8).memberships.find(13).update(member_type: 'manager')
+
 puts "Creating an admin user..."
 User.create!(
   email: ENV['DEFAULT_USER_EMAIL'],
