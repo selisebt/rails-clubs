@@ -2,6 +2,7 @@ class ClubsController < ApplicationController
   include ActionView::Helpers::TextHelper
 
   before_action :set_club, only: %i[show edit update destroy search_members add_member]
+  before_action :ensure_admin_for_create, only: %i[create]
 
   def index
     permit!(current_user, "club", "read")
@@ -149,9 +150,23 @@ class ClubsController < ApplicationController
 
   def set_club
     @club = Club.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to clubs_url, alert: "Club not found." }
+      format.json { render json: { error: "Club not found" }, status: :not_found }
+    end
   end
 
   def club_params
     params.require(:club).permit(:name, :description)
+  end
+
+  def ensure_admin_for_create
+    unless current_user.role.name == "admin"
+      respond_to do |format|
+        format.html { redirect_to clubs_url, alert: "You are not authorized to create a club." }
+        format.json { render json: { error: "You are not authorized to create a club" }, status: :forbidden }
+      end
+    end
   end
 end

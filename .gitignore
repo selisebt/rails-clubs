@@ -37,3 +37,6 @@
 !/app/assets/builds/.keep
 .ruby-lsp
 
+
+# Test Coverage
+/coverage
