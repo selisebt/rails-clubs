@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       post :add_member
       delete :delete_member
     end
+
+    resources :events
   end
 
   resources :announcements

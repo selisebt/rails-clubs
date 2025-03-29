@@ -80,10 +80,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_25_164341) do
     t.string "description"
     t.datetime "from"
     t.datetime "to"
-    t.integer "status"
+    t.integer "status", default: 0, null: false
     t.integer "club_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["club_id"], name: "index_events_on_club_id"
   end
 

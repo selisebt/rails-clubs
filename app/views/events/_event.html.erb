@@ -1,0 +1,33 @@
+<%= turbo_frame_tag event do %>
+  <tr>
+    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+      <%= link_to event.description, club_event_path(@club, event), class: "hover:text-blue-600" %>
+    </td>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+      <%= event.from.strftime("%B %d, %Y %H:%M") %>
+    </td>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+      <%= event.to.strftime("%B %d, %Y %H:%M") %>
+    </td>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+      <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+        <%= case event.status
+            when 'published'
+              'bg-green-100 text-green-800'
+            when 'cancelled'
+              'bg-red-100 text-red-800'
+            else
+              'bg-yellow-100 text-yellow-800'
+            end %>">
+        <%= event.status.titleize %>
+      </span>
+    </td>
+    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+      <div class="flex justify-end space-x-2">
+        <%= link_to "View", club_event_path(@club, event), class: "text-green-600 hover:text-green-900" %>
+        <%= link_to "Edit", edit_club_event_path(@club, event), class: "text-blue-600 hover:text-blue-900" %>
+        <%= button_to "Delete", club_event_path(@club, event), method: :delete, class: "text-red-600 hover:text-red-900", form: { data: { turbo_confirm: "Are you sure?" } } %>
+      </div>
+    </td>
+  </tr>
+<% end %> 

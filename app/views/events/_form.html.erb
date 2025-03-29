@@ -1,0 +1,73 @@
+<%= form_with(model: [@club, event], class: "space-y-8 divide-y divide-gray-200") do |f| %>
+  <div class="space-y-8 divide-y divide-gray-200">
+    <div>
+      <div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          <%= event.new_record? ? "New Event" : "Edit Event" %>
+        </h3>
+        <p class="mt-1 text-sm text-gray-500">
+          <%= event.new_record? ? "Create a new event." : "Update the event details." %>
+        </p>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+        <% if event.errors.any? %>
+          <div class="sm:col-span-6">
+            <div class="bg-red-50 p-4 rounded-md">
+              <h2 class="text-red-700 text-sm font-medium mb-2">
+                <%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:
+              </h2>
+              <ul class="list-disc list-inside text-red-600 text-sm">
+                <% event.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="sm:col-span-6">
+          <%= f.label :description, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.text_area :description, rows: 3, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <%= f.label :from, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.datetime_local_field :from, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <%= f.label :to, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.datetime_local_field :to, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <%= f.label :status, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.select :status, 
+                options_for_select([
+                  ['Draft', 'draft'],
+                  ['Published', 'published'],
+                  ['Cancelled', 'cancelled']
+                ], event.status),
+                {},
+                class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-5">
+    <div class="flex justify-end space-x-3">
+      <%= link_to 'Cancel', club_events_path(@club), class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= f.submit class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    </div>
+  </div>
+<% end %> 
