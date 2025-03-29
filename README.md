@@ -42,14 +42,14 @@ You may have to run the following git global config to set your username and ema
 3. Run the following command to run the project in a docker container for development
 
 ```bash
+  # Use Powershell if you are on windows.
+  # Replace PWD with the absolute path to the project folder (use pwd output from above)
+  docker run --name cst-clubhouse -v PWD:/app -p 3000:3000 -d ruby:3.4.2 tail -f /dev/null
 
-  # Replace $(pwd) with the absolute path to the project folder (use pwd output from above)
-  docker run --name cst-clubhouse -v $(pwd):/app -p 3000:3000 -d ruby:3.4.2 tail -f /dev/null
 ```
-
 This will create a docker container with the name `cst-clubhouse` and run the `tail -f /dev/null` command to keep the container running.
 
-4. Run the following command to check if the container is running
+5. Run the following command to check if the container is running
 
 ```bash
 
