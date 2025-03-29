@@ -1,0 +1,56 @@
+<%= form_with(model: announcement, class: "space-y-8 divide-y divide-gray-200") do |f| %>
+  <div class="space-y-8 divide-y divide-gray-200">
+    <div>
+      <div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          <%= announcement.new_record? ? "New Announcement" : "Edit Announcement" %>
+        </h3>
+        <p class="mt-1 text-sm text-gray-500">
+          <%= announcement.new_record? ? "Create a new announcement." : "Update the announcement details." %>
+        </p>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+        <div class="sm:col-span-4">
+          <%= f.label :message, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.text_area :message, rows: 3, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <%= f.label :priority, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.select :priority, 
+                options_for_select([
+                  ['Low', 'low'],
+                  ['Medium', 'medium'],
+                  ['High', 'high']
+                ], announcement.priority),
+                {},
+                class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <%= f.label :club_id, "Club", class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.collection_select :club_id, 
+                Club.all, 
+                :id, 
+                :name, 
+                { include_blank: "Select a club" },
+                class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-5">
+    <div class="flex justify-end">
+      <%= link_to "Cancel", announcements_path, class: "bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+      <%= f.submit class: "ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+  </div>
+<% end %> 
