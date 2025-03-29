@@ -1,30 +1,111 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= content_for(:title) || "Rails Clubs" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title><%= content_for(:title) || "CST Club House" %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
 
-    <%= yield :head %>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
-  </body>
+  <%= yield :head %>
+
+  <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+  <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <link rel="icon" href="<%= asset_path('favicon.ico') %>">
+  <%# Includes all stylesheet files in app/assets/stylesheets %>
+  <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+
+<body class="min-h-screen bg-cover bg-center bg-no-repeat flex bg-[#fafafa]">
+<%= render "shared/flash" %>
+<% unless %w[
+  /users/sign_in
+  /users/password/new
+  /users/password
+  /users/password/edit
+  /users/invitation/accept
+].include?(request.path) %>
+  <!-- Sidebar Navigation -->
+  <div class="w-[320px] min-h-screen bg-white shadow-lg text-gray-700" data-controller="navigation">
+    <!-- Logo Area -->
+    <div class="mb-8 flex justify-center items-center h-[144px]  bg-gray-100 relative overflow-x-clip">
+    <div class="flex justify-center items-center w-[150px] z-[1] absolute top-[25px]">
+      <img src="<%= asset_path('cst-logo.png') %>" class="h-full" alt="logo">
+    </div>
+      <div class="w-[110%] h-[190px]  bg-gray-100   rounded-[50%] absolute bottom-[-59px]"> </div>
+
+    </div>
+    
+
+    <!-- Navigation Links -->
+    <nav class="space-y-4 px-[16px] mt-[96px]">
+        <%= button_to account_settings_path, method: :get, class: "w-full flex items-center space-x-3 p-3 rounded-lg group nav-item #{'/account_settings'.include?(request.path) ? 'active' : ''}", data: { action: 'click->navigation#setActiveNav' } do %>
+        <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
+          <i class="fas fa-user text-gray-500"></i>
+        </div>
+        <span class="text-gray-700 flex-1 flex items-start justify-start">Profile</span>
+      <% end %>
+      <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-item" data-action="click->navigation#setActiveNav">
+        <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
+          <i class="fas fa-home text-gray-500"></i>
+        </div>
+        <span class="text-gray-700 flex-1 flex items-start justify-start">Club</span>
+      </button>
+
+      <!--      <div class="relative">-->
+      <%= button_to users_path, method: :get, class: "w-full flex items-center space-x-3 p-3 rounded-lg group nav-item #{'/users'.include?(request.path) ? 'active' : ''}", data: { action: 'click->navigation#setActiveNav' } do %>
+        <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
+          <i class="fas fa-users text-gray-500"></i>
+        </div>
+        <span class="text-gray-700 flex-1 flex items-start justify-start">User Management</span>
+        <!--          <i class="fas fa-chevron-down text-gray-500 transform transition-transform duration-300" data-navigation-target="userManagementIcon"></i>-->
+      <% end %>
+      <!--        <div class="<%#= '/users'.include?(request.path) ? '' : 'hidden' %> pl-12 mt-2 space-y-2" data-navigation-target="userManagement">-->
+      <!--          <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item <%#= '/users'.include?(request.path) ? 'active' : '' %>" data-action="click->navigation#setActiveSubNav">-->
+      <!--            <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">-->
+      <!--              <i class="fas fa-user text-gray-500"></i>-->
+      <!--            </div>-->
+      <!--            <span class="text-gray-700 flex-1 flex items-start justify-start">Users</span>-->
+      <!--          </button>-->
+      <!--          <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-sub-item" data-action="click->navigation#setActiveSubNav">-->
+      <!--            <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">-->
+      <!--              <i class="fas fa-user-tag text-gray-500"></i>-->
+      <!--            </div>-->
+      <!--            <span class="text-gray-700 flex-1 flex items-start justify-start">Permissions</span>-->
+      <!--          </button>-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </nav>
+
+    <!-- User Profile at Bottom -->
+    <div class="absolute bottom-4 left-4 flex items-center space-x-3 p-3 group">
+      <i class="fas fa-sign-out-alt text-gray-500 group-hover:text-red-400"></i>
+      <%= button_to(
+            "Log Out",
+            destroy_user_session_path,
+            method: :delete,
+            class: "ml-1 text-sm text-gray-700 group-hover:text-red-400"
+          ) %>
+    </div>
+  </div>
+<% end %>
+<%= turbo_frame_tag 'main-container', class: 'flex-1' do %>
+  <main class="flex-1">
+    <%= yield %>
+  </main>
+<% end %>
+</body>
 </html>

@@ -8,3 +8,624 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+.pagy {
+  display: flex;
+  font-family: sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.pagy > :not([hidden]) ~ :not([hidden]) {
+  --space-reverse: 0;
+  margin-right: calc(0.25rem * var(--space-reverse));
+  margin-left: calc(0.25rem * calc(1 - var(--space-reverse)));
+}
+
+.pagy a:not(.gap) {
+  display: block;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  background-color: #e5e7eb;
+  padding: 0.25rem 0.75rem;
+  color: inherit;
+}
+
+.pagy a:not(.gap):hover {
+  background-color: #d1d5db;
+}
+
+.pagy a:not(.gap):not([href]) {
+  /* disabled links */
+  cursor: default;
+  background-color: #f3f4f6;
+  color: #d1d5db;
+}
+
+.pagy a:not(.gap).current {
+  background-color: #9ca3af;
+  color: white;
+}
+
+.pagy label {
+  white-space: nowrap;
+  display: inline-block;
+  border-radius: 0.5rem;
+  background-color: #e5e7eb;
+  padding: 0.125rem 0.75rem;
+}
+
+.pagy label input {
+  line-height: 1.5rem;
+  border-radius: 0.375rem;
+  border-style: none;
+  background-color: #f3f4f6;
+}
+
+/* Global scrollbar hiding */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.form-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.form-label {
+  display: block;
+  color: #4b5563; /* text-gray-600 */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem; /* py-2 px-3 */
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 0.375rem; /* rounded-md */
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* focus:ring-2 focus:ring-blue-500 */
+}
+
+.btn-primary {
+  @apply w-full bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg transition-colors duration-200;
+}
+
+.btn-primary {
+  width: 100%;
+  background-color: #3b82f6; /* bg-blue-500 */
+  color: white;
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  border-radius: 0.5rem; /* rounded-lg */
+  transition: background-color 200ms; /* transition-colors duration-200 */
+}
+
+.btn-primary:hover {
+  background-color: #60a5fa; /* hover:bg-blue-400 */
+}
+
+.auth-section {
+  background-image: url("auth-selise-bg.svg");
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100vh;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: cover;
+}
+
+.auth-section {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100vh;
+  height: 100vh;
+}
+
+.auth-section .auth-container {
+  min-height: calc(100vh - 138px);
+}
+
+.auth-section .auth-container .auth-wrapper {
+  color: #444;
+  width: 360px;
+}
+
+.auth-title {
+  color: #444;
+  font-weight: 300;
+}
+
+.body-text {
+  letter-spacing: 0.6px;
+  line-height: 24px;
+  font-weight: 300;
+}
+
+.auth-section .auth-footer .footer-logo-size {
+  max-width: 90px;
+  height: auto;
+}
+
+@keyframes ani {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 400% 0;
+  }
+}
+
+.header-note {
+  height: 75vh;
+}
+
+.header-note--shadow {
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.loader-container {
+  min-height: 300px;
+}
+
+.auth-container {
+  z-index: 3;
+}
+
+.auth-wrapper {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 3px 3px 10px 0 rgba(0, 123, 255, 0.16);
+}
+
+.auth-wrapper::before {
+  position: absolute;
+  right: -17.625rem;
+  bottom: 3.375rem;
+  width: 29.375rem;
+  height: 100%;
+  transform: rotate(145deg);
+  border-radius: 1.875rem;
+  background-color: rgba(0, 123, 255, 0.16);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.042);
+  content: "";
+  z-index: 1;
+}
+
+.auth-logo {
+  height: 74px;
+}
+
+.aside-container {
+  height: 100dvh;
+  width: 400px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: white;
+}
+
+.gray-border {
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid #e0e0e0;
+}
+
+.mt-100 {
+  margin-top: 100px;
+}
+
+.auth-content {
+  position: relative;
+  z-index: 10;
+}
+
+.text-alto-gray {
+  color: #e0e0e0;
+}
+
+.logo-3d {
+  transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+  transition: transform 0.3s ease;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.auth-wrapper:hover .logo-3d {
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
+
+.flash-message {
+  animation: flashMessage 6s forwards;
+}
+
+@keyframes flashMessage {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+  8% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  92% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+}
+
+.table-header {
+  padding-left: 1.5rem; /* px-6 */
+  padding-right: 1.5rem; /* px-6 */
+  padding-top: 0.75rem; /* py-3 */
+  padding-bottom: 0.75rem; /* py-3 */
+  text-align: left; /* text-left */
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 500; /* font-medium */
+  color: #6b7280; /* text-gray-500 */
+  text-transform: uppercase; /* uppercase */
+  letter-spacing: 0.05em; /* tracking-wider */
+  background-color: #f9fafb; /* bg-gray-50 */
+}
+
+.table-container {
+  height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+
+.row-checked {
+  background-color: rgba(
+    59,
+    130,
+    246,
+    0.1
+  ); /* Light blue background when checked */
+}
+
+/* Add these new styles for sticky header */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f8fafc; /* Light gray background for better distinction */
+}
+
+/* Update the header cells background to match */
+thead th {
+  background-color: #f8fafc !important; /* Override the existing bg-gray-50 class */
+}
+
+/* Add shadow to header when scrolling */
+.sticky-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
+}
+
+.normal-header.sticky-header::after {
+  background: none;
+}
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #374151;
+  transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.dropdown-item:first-child {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.dropdown-item:last-child {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+/* Add modal styles */
+#inviteModal,
+#csvModal {
+  z-index: 100;
+}
+
+/* Optional: Add a fade-in animation */
+#inviteModal:not(.hidden) {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Optional: If you want to ensure the modal content is above the overlay */
+.modal-content {
+  z-index: 101;
+  position: relative;
+}
+
+/* Add styles for profile pictures */
+.profile-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+  background-color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+}
+
+/* Add styles for profile upload */
+.profile-upload {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  border: 2px dashed #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-upload:hover {
+  border-color: #60a5fa;
+}
+
+.profile-preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Modal styles */
+.modal-content {
+  z-index: 101;
+  position: relative;
+}
+
+.profile-upload {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  border: 2px dashed #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-upload:hover {
+  border-color: #60a5fa;
+}
+
+.profile-preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Animation for modals */
+.modal-fade-in {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.form-input[type="select"],
+select.form-input {
+  padding-right: 2.5rem;
+  background-position: right 0.75rem center;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+}
+
+.fixed {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pagy {
+  @apply inline-flex items-stretch -space-x-px;
+
+  > *:first-child {
+    @apply rounded-l-lg;
+  }
+
+  > *:last-child {
+    @apply rounded-r-lg;
+  }
+}
+
+.pagy a:not(.gap) {
+  @apply flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300;
+
+  &:hover {
+    @apply bg-gray-100 text-gray-700;
+  }
+
+  &:not([href]) {
+    @apply text-gray-300 bg-gray-100 cursor-default;
+  }
+
+  &.current {
+    @apply flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300;
+  }
+
+  label {
+    @apply inline-block whitespace-nowrap bg-gray-200 rounded-lg px-3 py-0.5;
+    input {
+      @apply bg-gray-100 border-none rounded-md;
+    }
+  }
+}
+span.pagy.info {
+  @apply text-sm font-normal text-gray-500;
+}
+/* Custom styles for the dropdown */
+.form-input[type="select"],
+select.form-input {
+  padding-right: 2.5rem; /* Add space for the arrow */
+  background-position: right 0.75rem center; /* Position the arrow */
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #374151;
+  transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.dropdown-item:first-child {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.dropdown-item:last-child {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+.icon-style {
+  background: linear-gradient(to right, rgb(96 165 250), rgb(59 130 246));
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.icon-style i {
+  color: white;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

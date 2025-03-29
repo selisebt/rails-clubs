@@ -1,26 +1,75 @@
-<h2>Log in</h2>
+<section class="auth-section">
+  <div class="flex-wrap flex-center">
+    <div
+      class="auth-container w-[84%] flex justify-between items-center"
+    >
+      <div
+        class="header-note flex w-[36%] justify-end "
+      >
+        <div
+          class="text-[44px] m-0 p-[20px] header-note--shadow text-alto-gray font-bold mt-[40px]">
+          <p class="mb-0 mt-100">WELCOME TO</p>
+          <p class="mt-4">CST Club House</p>
+        </div>
+      </div>
+      <div
+        class="auth-wrapper bg-white rounded-[24px] p-[32px] mr-[16px] mt-[24px] "
+      >
+        <div class="flex justify-center items-center z-[3] relative">
+          <img src="<%= asset_path('cst-logo.png') %>" alt="logo" class="logo-3d rounded-full w-[150px] h-[150px] overflow-hidden">
+        </div>
+        <div class="auth-content">
+          <h3 class="auth-title text-center my-[12px]">
+            Sign in to your account
+          </h3>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
+            <div class="mb-4">
+              <%= f.label :email, class: "form-label" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                                class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+                                placeholder: "Email*" %>
+            </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+            <div class="mb-4">
+              <%= f.label :password, class: "form-label" %>
+              <%= f.password_field :password, autocomplete: "current-password",
+                                   class: "form-input",
+                                   placeholder: "Password*" %>
+            </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+            <div class="flex justify-end mb-4">
+              <%= link_to "Forgot Password?", new_password_path(resource_name), class: "text-blue-600 text-sm" %>
+            </div>
+
+            <button class="actions mb-6 w-full">
+              <%= f.submit "LOGIN",
+                           class: "btn-primary" %>
+            </button>
+
+
+          <% end %>
+
+        </div>
+
+      </div>
     </div>
-  <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+
+    <div class="auth-footer w-full flex justify-center items-center ">
+      <div class="w-[76%] relative left-[-40px]">
+        <div class="flex justify-start items-center w-[80%]">
+          <div class="mb-[8px]">
+            <img src="<%= asset_path('selise-logo.svg') %>" class="footer-logo-size" alt="logo">
+          </div>
+        </div>
+        <div class="gray-border"></div>
+        <p class="text-white text-sm mt-2">© 2025 SELISE CPQ. All rights reserved.</p>
+      </div>
+    </div>
   </div>
-<% end %>
+</section>
 
-<%= render "devise/shared/links" %>
+<div class="aside-container">
+
+</div>

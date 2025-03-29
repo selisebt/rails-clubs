@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
   include ErrorHandler
   include Permissions
+  include Pagy::Backend
+  helper Pagy::Frontend
 
   before_action :authenticate_user!
 end

@@ -1,0 +1,51 @@
+<%= turbo_frame_tag 'edit_user' do %>
+  <%= form_with(model: user, id: "editUserForm", class: "space-y-6", data: { turbo_frame: 'all_users' }) do |f| %>
+    <!-- Modal Body -->
+    <div class="px-6 py-4">
+      <%= f.hidden_field :id, data: { users_index_target: "editUserId" } %>
+      <div class="space-y-6">
+        <!-- Profile Picture Section -->
+        <div class="flex flex-col items-center justify-center">
+          <div class="profile-upload bg-cover" style="background-image: url(<%= user.attachment&.file&.attached? ?  url_for(user.attachment.file)  : nil %>)">
+            <% unless user.attachment&.file&.attached? %>
+              <div class="bg-gray-100 w-full h-full flex items-center justify-center rounded-full">
+              <i class="fas fa-user text-[30px] text-gray-400"></i>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="form-label">Full Name</label>
+            <%= f.text_field :name, data: { users_index_target: "editName" }, class: "form-input" %>
+          </div>
+
+          <div>
+            <label class="form-label">Email Address</label>
+            <div class="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 text-gray-500 sm:text-sm p-2">
+              <%= user.email %>
+            </div>
+          </div>
+
+          <div>
+            <label class="form-label">Role</label>
+            <div class="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 text-gray-500 sm:text-sm p-2">
+              <%= user.role.name&.titleize %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end space-x-3">
+      <button data-action="users-index#closeEditModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+        Cancel
+      </button>
+      <button class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+        Save Changes
+      </button>
+    </div>
+  <% end %>
+<% end %>
