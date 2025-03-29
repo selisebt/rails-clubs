@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "clubs_user_count" do %>
+  <%= pluralize(@club.users.count, 'member') %>
+<% end %>

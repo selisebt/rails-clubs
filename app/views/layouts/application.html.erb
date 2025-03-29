@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
+  <meta name="turbo-prefetch" content="false">
 
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -48,7 +49,7 @@
       <div class="w-[110%] h-[190px]  bg-gray-100   rounded-[50%] absolute bottom-[-59px]"> </div>
 
     </div>
-    
+
 
     <!-- Navigation Links -->
     <nav class="space-y-4 px-[16px] mt-[96px]">
@@ -58,12 +59,12 @@
         </div>
         <span class="text-gray-700 flex-1 flex items-start justify-start">Profile</span>
       <% end %>
-      <button class="w-full flex items-center space-x-3 p-3 rounded-lg group nav-item" data-action="click->navigation#setActiveNav">
+      <%= button_to clubs_path, method: :get, class: "w-full flex items-center space-x-3 p-3 rounded-lg group nav-item #{'/clubs'.include?(request.path) ? 'active' : ''}", data: { action: 'click->navigation#setActiveNav' } do %>
         <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent">
           <i class="fas fa-home text-gray-500"></i>
         </div>
-        <span class="text-gray-700 flex-1 flex items-start justify-start">Club</span>
-      </button>
+        <span class="text-gray-700 flex-1 flex items-start justify-start">Clubs</span>
+      <% end %>
 
       <!--      <div class="relative">-->
       <%= button_to users_path, method: :get, class: "w-full flex items-center space-x-3 p-3 rounded-lg group nav-item #{'/users'.include?(request.path) ? 'active' : ''}", data: { action: 'click->navigation#setActiveNav' } do %>
