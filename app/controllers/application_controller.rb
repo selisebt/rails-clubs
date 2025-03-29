@@ -3,4 +3,6 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   include ErrorHandler
+
+  before_action :authenticate_user!
 end
