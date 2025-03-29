@@ -14,6 +14,13 @@ Rails.application.routes.draw do
       get :delete
     end
   end
+  resources :clubs do
+    member do
+      get :search_members
+      post :add_member
+      delete :delete_member
+    end
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -26,5 +33,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "users#index"
+  root "clubs#index"
 end
