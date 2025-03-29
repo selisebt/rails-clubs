@@ -5,7 +5,7 @@
     </div>
     <div class="flex-1 mx-[12px]">
       <h1 class="text-2xl font-semibold text-gray-900"><%= @club.name %></h1>
-      <p class="mt-1 text-sm text-gray-500">Created <%= time_ago_in_words(@club.created_at) %> ago</p>
+      <p class="text-sm text-gray-500">Created <%= time_ago_in_words(@club.created_at) %> ago</p>
     </div>
     <div class="flex space-x-3">
       <% if permit(current_user, 'club', 'update', @club.memberships.find_by(user_id: current_user.id)&.manager?) %>
@@ -126,13 +126,13 @@
               <% end %>
               <% if permit(current_user, 'announcement', 'read') %>
                 <div class="w-[calc(50%-8px)]">
-                  <%= link_to "#", class: "btn-primary flex items-center justify-center flex-col py-[24px]" do %>
+                  <%= link_to announcements_path(club_id: @club.id), class: "btn-primary flex items-center justify-center flex-col py-[24px]" do %>
                     <i class="fas fa-bullhorn text-[30px]"></i>
                     <span class="text-[15px] mt-[8px]">Announcements</span>
                   <% end %>
                 </div>
               <% end %>
-            
+
           </div>
         </div>
       </div>
