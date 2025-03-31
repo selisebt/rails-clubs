@@ -1,0 +1,36 @@
+# production:
+#   periodic_cleanup:
+#     class: CleanSoftDeletedRecordsJob
+#     queue: background
+#     args: [ 1000, { batch_size: 500 } ]
+#     schedule: every hour
+#   periodic_command:
+#     command: "SoftDeletedRecord.due.delete_all"
+#     priority: 2
+#     schedule: at 5am every day
+
+development:
+  event_reminder:
+    class: EventReminderJob
+    queue: default
+    schedule: every day at 9am
+  update_event_status:
+    class: UpdateEventStatusJob
+    queue: default
+    schedule: every hour
+
+test:
+  update_event_status:
+    class: UpdateEventStatusJob
+    queue: default
+    schedule: every hour
+
+production:
+  event_reminder:
+    class: EventReminderJob
+    queue: default
+    schedule: every day at 9am
+  update_event_status:
+    class: UpdateEventStatusJob
+    queue: default
+    schedule: every hour

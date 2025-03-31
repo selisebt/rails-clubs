@@ -1,0 +1,13 @@
+<div class="min-h-screen w-full bg-gray-50 flex  justify-center p-[24px]">
+
+    <div class="bg-white rounded-lg shadow-md p-6 w-full">
+    <div class="flex items-center mb-[16px]">
+      <div class="icon-style">
+          <i class="fas fa-pencil-alt text-white"></i>
+      </div>
+      <h2 class="text-3xl font-bold text-gray-500 ml-3">Edit Club</h2>
+    </div>
+      <%= render 'form', club: @club, cancel_path: params[:cancel_path] %>
+    </div>
+
+</div> 

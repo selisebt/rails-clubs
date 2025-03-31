@@ -1,0 +1,20 @@
+<div class="mt-8" data-controller="search">
+  <p class="text-[16px] font-bold mb-4 text-gray-500">Add Members</p>
+  <%= form_with url: search_members_club_path(@club),
+                method: :get,
+                data: {turbo: false,
+                  search_target: "form",
+                  action: "input->search#perform"
+                } do |f| %>
+    <div class="flex space-x-2">
+      <%= f.text_field :query,
+                       placeholder: "Search members...",
+                       class: "form-input",
+                       data: { search_target: "input" } %>
+    </div>
+  <% end %>
+
+  <div id="search-results" class="mt-4" data-search-target="results">
+    <%= render 'search_results' %>
+  </div>
+</div> 
