@@ -1,0 +1,129 @@
+<%= form_with(model: [@club, event]) do |f| %>
+  <div class="bg-white rounded-lg shadow-sm p-6 my-[16px] flex items-center">
+    <div class="icon-style">
+      <i class="fas fa-calendar text-white"></i>
+    </div>
+    <div class="ml-4">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">
+        <%= event.new_record? ? "New Event for #{@club.name}" : "Edit Event for #{@club.name}" %>
+      </h3>
+      <p class="mt-1 text-sm text-gray-500">
+        <%= event.new_record? ? "Create a new event." : "Update the event details." %>
+      </p>
+    </div>
+  </div>
+  <div class="space-y-8 shadow-sm bg-white rounded-lg p-6 my-[16px]">
+
+      <div class="mt-6 flex-1">
+        <% if event.errors.any? %>
+          <div class="sm:col-span-6">
+            <div class="bg-red-50 p-4 rounded-md">
+              <h2 class="text-red-700 text-sm font-medium mb-2">
+                <%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:
+              </h2>
+              <ul class="list-disc list-inside text-red-600 text-sm">
+                <% event.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+         <div class="flex flex-row flex-wrap justify-between">
+         <div class="mb-4 w-[calc(50%-32px)]">
+              <%= f.label :Name, class: "form-label" %>
+              <%= f.text_field :name, autofocus: true, autocomplete: "Name", 
+                  class: "form-input",
+                  placeholder: "Event Name*" %>
+        </div>
+
+        <div class="w-[calc(25%)]">
+          <%= f.label :from, class: "form-label" %>
+          <div class="mt-1">
+            <%= f.datetime_local_field :from, class: "form-input" %>
+          </div>
+        </div>
+
+        <div class="w-[25%]">
+          <%= f.label :to, class: "form-label" %>
+          <div class="mt-1">
+            <%= f.datetime_local_field :to, class: "form-input" %>
+          </div>
+        </div>
+        <div class="w-[calc(50%-32px)] mt-[16px]">
+          <%= f.label :status, class: "form-label" %>
+          <div class="mt-1 w-full">
+            <div class="dropdown w-full">
+              <button type="button" onclick="toggleStatusDropdown()" class="form-input w-full flex items-center justify-between">
+                <span id="selectedStatus"><%= event.status&.titleize || 'Select Status' %></span>
+                <i class="fas fa-chevron-down ml-2 text-sm"></i>
+              </button>
+              <div id="statusDropdown" class="dropdown-content">
+                <div class="dropdown-item" onclick="selectStatus('scheduled')">
+                  <i class="fas fa-clock mr-3"></i>
+                  <div>
+                    <p class="font-medium">Scheduled</p>
+                  </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item" onclick="selectStatus('ongoing')">
+                  <i class="fas fa-play-circle mr-3"></i>
+                  <div>
+                    <p class="font-medium">Ongoing</p>
+                  </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item" onclick="selectStatus('completed')">
+                  <i class="fas fa-check-circle mr-3"></i>
+                  <div>
+                    <p class="font-medium">Completed</p>
+                  </div>
+                </div>
+              </div>
+              <%= f.hidden_field :status %>
+            </div>
+          </div>
+        </div>
+        <div class="w-[100%] mt-[16px]">
+          <%= f.label :description, class: "form-label" %>
+          <div class="mt-1">
+            <%= f.text_area :description, rows: 3, class: "form-input" %>
+          </div>
+        </div>
+         </div>
+      </div>
+
+  </div>
+
+  <div class="pt-5 flex justify-end">
+  <div class="w-[20%] flex justify-end space-x-3 ">
+      <%= link_to 'Cancel', club_events_path(@club), class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= f.submit class: "btn-primary" %>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  function toggleStatusDropdown() {
+    document.getElementById("statusDropdown").classList.toggle("show");
+  }
+
+  function selectStatus(status) {
+    document.getElementById("selectedStatus").textContent = status.charAt(0).toUpperCase() + status.slice(1);
+    document.getElementById("event_status").value = status;
+    document.getElementById("statusDropdown").classList.remove("show");
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('.dropdown')) {
+      const dropdowns = document.getElementsByClassName("dropdown-content");
+      Array.from(dropdowns).forEach(dropdown => {
+        if (dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+        }
+      });
+    }
+  });
+</script> 

@@ -1,0 +1,34 @@
+<% if @users&.any? %>
+  <div class="space-y-2">
+    <% @users.each do |user| %>
+      <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow">
+        <div class="flex items-center">
+          <% if user.attachment&.file&.attached? %>
+            <%= image_tag user.attachment.file, class: "h-8 w-8 rounded-full" %>
+          <% else %>
+            <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+              <svg class="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+          <% end %>
+          <div class="ml-3">
+            <p class="text-sm font-medium"><%= "Name: #{user.name}" %></p>
+            <p class="text-sm text-gray-600"><%= "Email: #{user.email}" %></p>
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                <%= user.role.name == 'admin' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' %>">
+              <%="Role: #{user.role.name.capitalize}" %>
+            </span>
+          </div>
+        </div>
+        <%= button_to add_member_club_path(@club, user_id: user.id),
+                      class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                      data: { turbo: true } do %>
+          Add Member
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% elsif @query.present? %>
+  <p class="text-gray-500 text-sm">No users found matching your search.</p>
+<% end %> 

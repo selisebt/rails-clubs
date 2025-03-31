@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+      /* Email styles need to be inline */
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333333;
+        margin: 0;
+        padding: 0;
+      }
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+      }
+      .header {
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 1px solid #eeeeee;
+      }
+      .logo {
+        max-width: 200px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+      .content {
+        padding: 20px 0;
+      }
+      .footer {
+        text-align: center;
+        padding: 20px 0;
+        border-top: 1px solid #eeeeee;
+        font-size: 12px;
+        color: #666666;
+      }
+      .button {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #007bff;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 4px;
+        margin: 20px 0;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="email-container">
+      <div class="header">
+        <img src="<%= asset_url('cst-logo.png') %>" class="logo" alt="CST Logo">
+      </div>
+      
+      <div class="content">
+        <p>Hello <%= @resource.email %>!</p>
+
+        <p>Your account has been locked due to an excessive number of unsuccessful sign in attempts.</p>
+
+        <p>Click the button below to unlock your account:</p>
+
+        <%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token), class: "button" %>
+      </div>
+
+      <div class="footer">
+        <p>© <%= Time.current.year %> CST. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html> 

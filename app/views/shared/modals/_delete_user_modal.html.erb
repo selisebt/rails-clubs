@@ -1,0 +1,14 @@
+<div id="deleteModal" data-users-index-target="deleteModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-[100]">
+  <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-gray-200">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-gray-900">Delete User</h3>
+        <button data-action="users-index#closeDeleteModal" class="text-gray-400 hover:text-gray-500">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <%= turbo_frame_tag 'delete_user' %>
+  </div>
+</div> 
