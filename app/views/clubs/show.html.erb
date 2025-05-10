@@ -110,7 +110,7 @@
             <div class="flex flex-row flex-wrap gap-[16px]">
               <% if permit(current_user, 'event', 'create', @club.memberships.find_by(user_id: current_user.id)&.manager?) %>
                 <div class="w-[calc(50%-8px)]">
-                  <%= link_to "#", class: "btn-primary flex items-center justify-center flex-col py-[24px]" do %>
+                  <%= link_to new_club_event_path(@club), class: "btn-primary flex items-center justify-center flex-col py-[24px]" do %>
                     <i class="fas fa-calendar-plus text-[30px]"></i>
                     <span class="text-[15px] mt-[8px]">Create Event</span>
                   <% end %>
@@ -118,7 +118,7 @@
               <% end %>
               <% if permit(current_user, 'event', 'read') %>
                 <div class="w-[calc(50%-8px)]">
-                  <%= link_to "#", class: "btn-primary flex items-center justify-center flex-col py-[24px] bg-green-500 hover:bg-green-600" do %>
+                  <%= link_to club_events_path(@club), class: "btn-primary flex items-center justify-center flex-col py-[24px] bg-green-500 hover:bg-green-600" do %>
                     <i class="fas fa-calendar-alt text-[30px]"></i>
                     <span class="text-[15px] mt-[8px]">View Events</span>
                   <% end %>
